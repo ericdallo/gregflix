@@ -1,7 +1,11 @@
-FROM java:8-alpine
-RUN mkdir -p /app /app/resources
+FROM naartjie/alpine-lein
+
+RUN mkdir -p /app
+
 WORKDIR /app
-COPY target/gregflix-*-standalone.jar .
-COPY resources/public resources/public
-CMD java -jar gregflix-*-standalone.jar
+
+COPY . /app
+
+ENTRYPOINT /app/docker/startup.sh
+
 EXPOSE 8080
