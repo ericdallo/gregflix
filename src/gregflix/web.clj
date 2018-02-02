@@ -1,21 +1,20 @@
 (ns gregflix.web
 	(:gen-class)
     (:use compojure.core)
-    (:use ring.middleware.json-params)
     (:use ring.adapter.jetty)
-    (:require [clj-json.core :as json]))
+    (:use compojure.handler)
+    (:use ring.middleware.reload)
+    (:use selmer.parser)
+	(:require [compojure.route :as route]))
 
-(defn json-response [data & [status]]
-	{:status (or status 200)
-	:headers {"Content-Type" "application/json"}
-	:body (json/generate-string data)})
+(selmer.parser/set-resource-path! (clojure.java.io/resource "templates"))
 
-(defroutes handler
-	(GET "/status" []
-		(json-response {"status" "UP"})))
-(def app
-	(-> handler
-		wrap-json-params))
+(defroutes all-routes
+	(GET "/login" []
+		(render-file "login.html" {}))
+
+	(route/resources "/")
+	(route/not-found "Not Found"))
 
 (defn -main [& args]
- (run-jetty app {:port 8080}))
+ 	(run-jetty (site all-routes) {:port 8080}))

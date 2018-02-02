@@ -6,11 +6,14 @@
        [ring/ring-core "1.6.3"]
        [ring/ring-devel "1.6.3"]
        [ring/ring-jetty-adapter "1.6.3"]
-       [ring-json-params "0.1.3"]
        [compojure "1.6.0"]
-       [clj-json "0.3.2"]]
-  :dev-dependencies
-      [[lein-run "2.8.1"]]
-  :plugins [[lein-ring "0.12.3"]]
+       [selmer "1.11.6"]]
+  :plugins 
+      [[lein-ring "0.12.3"]
+      [lein-sass "0.4.0"]]
   :ring {:handler gregflix.web/app}
+  :sass {:src "resources/sass"
+         :output-directory "resources/public/css"
+         :style :compressed}
+  :hooks [leiningen.sass]
   :main gregflix.web)
