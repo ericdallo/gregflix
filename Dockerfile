@@ -1,4 +1,4 @@
-FROM naartjie/alpine-lein
+FROM ericdallo/lein-sass
 
 RUN mkdir -p /app
 
