@@ -1,20 +1,29 @@
 (ns gregflix.web
 	(:gen-class)
-    (:use compojure.core)
-    (:use ring.adapter.jetty)
-    (:use compojure.handler)
-    (:use ring.middleware.reload)
-    (:use selmer.parser)
-	(:require [compojure.route :as route]))
+	(:use compojure.core)
+	(:use ring.adapter.jetty)
+	(:use ring.middleware.reload)
+	(:use selmer.parser)
+	(:require [compojure.route :as route]
+						[compojure.handler :as handler]
+						[gregflix.auth :as auth]
+						[cemerick.friend :as friend]))
 
 (selmer.parser/set-resource-path! (clojure.java.io/resource "templates"))
 
-(defroutes all-routes
+(defroutes app-routes
 	(GET "/login" []
 		(render-file "login.html" {}))
+	(GET "/" []
+		(friend/authorize #{::user} (render-file "home.html" {})))
 
+	(friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
 	(route/resources "/")
 	(route/not-found "Not Found"))
 
+(def app
+	(handler/site
+		(auth/authenticate app-routes)))
+
 (defn -main [& args]
- 	(run-jetty (site all-routes) {:port 8080}))
+	(run-jetty app {:port 8080}))
