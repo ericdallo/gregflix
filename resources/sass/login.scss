@@ -14,7 +14,10 @@ body {
 	}
 
 	.login {
+		margin: auto;
 		margin-top: 4em;
+		position: relative;
+		width: 90%;
 
 		.email-field {
 			@extend %field;
@@ -26,17 +29,34 @@ body {
 
 		%field {
 			display: block;
-			margin: 0.5em auto;
+			margin: 0.5em 0;
+			width: 100%;
 			padding: 0;
 			font-family: "Museo Sans";
 			text-align: center;
 			line-height: 2.5em;
-			width: 90%;
 			font-size: 1.5em;
 			color: #111;
 			background: white;
 			border: none;
 			outline: none;
+		}
+
+		.invalid {
+			 position: relative;
+
+			 &:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 0;
+				height: 0;
+				display: block;
+				border-right: 1.2em solid transparent;
+				border-bottom: 1.2em solid transparent;
+				border-top: 1.2em solid #e84118;
+			 }
 		}
 
 		$fab-shadow: 4px;
@@ -66,5 +86,57 @@ body {
 				box-shadow: 0 0 $fab-shadow*2 rgba(0,0,0,.14),0 $fab-shadow*2 $fab-shadow*4 rgba(0,0,0,.28);
 			}
 		}
+	}
+}
+
+@media (min-width: 520px) {
+	.page {
+		.login {
+			width: 75%;
+		}		
+	}
+}
+
+@media (min-width: 620px) {
+	.page {
+		.login {
+			width: 60%;		
+		}		
+	}
+}
+
+@media (min-width: 799px) {
+	.page {
+		.login {
+			width: 40%;
+
+			%field {
+				line-height: 2.2em;
+			}
+
+			.fab {
+				position: absolute;
+				bottom: -4em;
+				right: 0;
+			}
+		}		
+	}
+}
+
+@media (min-width: 1024px) {
+	.page {
+		.login {
+			width: 30%;
+			margin-top: 5em;
+		}		
+	}
+}
+
+@media (min-width: 1600px) {
+	.page {
+		.login {
+			width: 25%;
+			margin-top: 8em;
+		}		
 	}
 }

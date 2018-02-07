@@ -12,8 +12,8 @@
 (selmer.parser/set-resource-path! (clojure.java.io/resource "templates"))
 
 (defroutes app-routes
-	(GET "/login" []
-		(render-file "login.html" {}))
+	(GET "/login" [:as req]
+		(render-file "login.html" req))
 	(GET "/" []
 		(friend/authorize #{::user} (render-file "home.html" {})))
 

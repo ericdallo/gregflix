@@ -14,8 +14,12 @@
 		<span>x</span>
 	</h1>
 	<form action="/login" method="POST" class="login">
-		<input type="text" name="username" class="email-field" placeholder="E-mail" autofocus>
-		<input type="password" name="password" placeholder="Password" class="password-field">
+		<div class="{% if query-params.login_failed %}invalid{% endif %}">
+			<input type="text" name="username" placeholder="E-mail" class="email-field" required autofocus>
+		</div>
+		<div class="{% if query-params.login_failed %}invalid{% endif %}">
+			<input type="password" name="password" placeholder="Password" class="password-field" required>
+		</div>
 		<button class="fab"></button>
 	</form>
 </main>
