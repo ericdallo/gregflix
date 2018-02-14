@@ -29,4 +29,4 @@
                   :subname "//localhost/gregflix"
                   :user "root"
                   :password "123mudar"}}
-  :main gregflix.web)
+  :main gregflix.main)
