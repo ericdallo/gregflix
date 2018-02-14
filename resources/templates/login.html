@@ -3,16 +3,7 @@
 {% block css %}login{% endblock%}
 {% block body %}
 <main class="page">
-	<h1 class="logo">
-		<span>g</span>
-		<span>r</span>
-		<span>e</span>
-		<span>g</span>
-		<span>f</span>
-		<span>l</span>
-		<span>i</span>
-		<span>x</span>
-	</h1>
+	{% include "_logo.html" %}
 	<form action="/login" method="POST" class="login">
 		<div class="{% if query-params.login_failed %}invalid{% endif %}">
 			<input type="text" name="username" placeholder="E-mail" class="email-field" required autofocus>
