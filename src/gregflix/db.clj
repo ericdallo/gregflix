@@ -4,6 +4,6 @@
 (defdb db (mysql
             { :classname "com.mysql.jdbc.Driver"
               :subprotocol "mysql"
-              :subname "//localhost/gregflix"
+              :subname "//mysql/gregflix"
               :user "root"
               :password "123mudar"}))
