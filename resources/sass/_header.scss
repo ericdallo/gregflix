@@ -37,12 +37,10 @@
     background-color: $base-blue-light;
     font-family: 'Bebas Neue';
 
-    .logo-link {
+    .header-title {
         padding-top: 0.5em;
-        align-items: center;
-        justify-content: center;
-        display: flex;
         font-size: 1.1em;
+        text-align: center;
     }
 
     .menu {

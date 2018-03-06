@@ -1,0 +1,13 @@
+{% extends "page.html"%}
+{% block title %}{{video.title}}{% endblock%}
+{% block css %}movie{% endblock%}
+{% block body %}
+{% include "_header.html" %}
+<main class="content">
+  <section class="video">
+    <h1>{{video.title}}</h1>
+    <video></video>
+    <p class="description">{{video.description}}</p>
+  </section>
+</main>
+{% endblock %}

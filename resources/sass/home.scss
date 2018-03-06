@@ -1,3 +1,120 @@
 @import 'base';
 @import 'logo';
 @import 'header';
+
+$duration:450ms;
+$videoWidth:250px;
+$videoHeight:$videoWidth / (16/9);
+$iconSize:50px;
+$growFactor:1.5;
+
+$moveLeft:-($videoWidth * ($growFactor - 1) / 2);
+$moveRight:$videoWidth * ($growFactor - 1);
+
+.content {
+  padding: 0 3em;
+}
+
+.caroussel-title {
+  font-size: 1.8em;
+  font-family: 'Museo Sans';
+  margin: 1em 0;
+}
+
+.caroussel {
+  transition: $duration transform;
+  white-space: nowrap;
+  text-align: center;
+
+  &:hover {
+    transform: translate3d($moveLeft, 0, 0);  
+
+    .video {
+      opacity: .3;
+
+      &:hover {
+        transform: scale($growFactor);
+        opacity: 1;
+      }
+    }
+  }
+
+}
+.video {
+  position: relative;
+  display: inline-block;
+  width: $videoWidth;
+  height: $videoHeight;
+  text-decoration: none;
+  transition: $duration all;
+  transform-origin: center left;
+
+  &:hover {
+
+    .video-details {
+      opacity: 1;
+    }
+
+    ~ .video {
+      transform: translate3d($moveRight, 0, 0);    
+    }
+  }
+}
+
+.video-img {
+  width: $videoWidth;
+  height: $videoHeight;
+  object-fit: cover;
+}
+.video-details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  font-family: 'Museo Sans';
+  opacity: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  transition: $duration opacity;
+
+  &:after,
+  &:before {
+    color: white;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: black;
+  }
+
+  &:after {
+    margin-top: (-($iconSize / 2));
+    margin-left: (-($iconSize / 2));
+    width: $iconSize;
+    height: $iconSize;
+    border: 3px solid #ecf0f1;
+    line-height: $iconSize;
+    text-align: center;
+    border-radius: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+
+  &:before {
+    content: '▶';
+    left: 0;
+    width: 100%;
+    font-size: 2em;
+    margin-left: 7px;
+    margin-top: -18px;
+    text-align: center;
+    z-index: 2;
+  }
+}
+
+.video-title {
+  position: absolute;
+  bottom: 0;
+  padding: 0.5em;
+  color: white;
+}

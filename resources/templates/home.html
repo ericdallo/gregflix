@@ -4,8 +4,31 @@
 {% block body %}
 {% include "_header.html" %}
 <main class="content">
-	<section class="video-sample">
-		<video width="480" height="360" src="/sample/sample.mp4" controls></video>
-	</section>
+  <article>
+    <h2 class="caroussel-title">Series</h2>
+    <section class="series caroussel">
+      {% for video in series %}
+        <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video">
+          <img class="video-img" src="{{video.preview}}" alt="{{video.title}} preview"/>
+          <div class="video-details">
+            <p class="video-title">{{video.title}}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </section>
+  </article>
+  <article>
+    <h2 class="caroussel-title">Movies</h2>
+    <section class="movies caroussel">
+      {% for video in movies %}
+        <a href="/movies/{{video.slug}}" class="video">
+          <img class="video-img" src="{{video.preview}}" alt="{{video.title}} preview"/>
+          <div class="video-details">
+            <p class="video-title">{{video.title}}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </section>
+  </article>
 </main>
 {% endblock %}
