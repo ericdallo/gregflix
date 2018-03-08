@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title>Tests Serialize ajax.js</title>
+    <meta charset="utf-8">
+    <link href="/css/mocha.css" type="text/css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <form id='form-test'>
+      <input value='value-text-1' name='input-text-1'>
+      <input value='value-text-2' name='input-text-2'>
+      <input value='' name='input-text-3'>
+      <input value='value-text-4' name='input-text-4' disabled>
+
+      <input type='checkbox' checked value='value-checkbox-1' name='input-checkbox-1-text'>
+      <input type='checkbox' value='value-checkbox-2' name='input-checkbox-2-text'>
+
+      <input type='radio' checked value='value-radio-1' name='input-radio-1-text'>
+      <input type='radio' value='value-radio-2' name='input-radio-2-text'>
+
+      <input type='hidden' value='value-hidden-1' name='input-hidden-1-text'>
+      <input type='hidden' value='value-hidden-2' name='input-hidden-2-text'>
+
+      <textarea name='textarea-1'>value-textarea-1</textarea>
+      <textarea name='textarea-2' disabled>value-textarea-2</textarea>
+
+      <select name='select-1'>
+        <option>1</option>
+        <option selected>2</option>
+        <option>3</option>
+      </select>
+
+      <select name='select-2'>
+        <option>1</option>
+        <option>2</option>
+        <option selected>3</option>
+      </select>
+
+      <select name='select-3'>
+        <option></option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
+
+      <select name='select-4' disabled>
+        <option selected>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
+
+      <input type='file' name='input-file' value='file.jpg'>
+
+      <input type='button' name='input-button' value='value-button'>
+      <input type='submit' name='input-submit' value='value-submit'>
+      <input type='reset' name='input-reset' value='value-reset'>
+    </form>
+
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/proclaim/lib/proclaim.js"></script>
+    <script src="/test/helpers.js"></script>
+
+    <script src="/node_modules/define-async/async-define.js"></script>
+    <script src="/ajax.js"></script>
+    <script>
+      var assert = window.proclaim;
+
+      mocha.ui("bdd");
+
+      define(['ajax'], function(ajax) {
+        describe('Ajax Serialize Method', function(){
+          it("should serialize a form element and return a json", function() {
+            var serialize = ajax.serializeObject(document.getElementById('form-test'));
+            var expected = {"input-text-1":"value-text-1","input-text-2":"value-text-2","input-text-3":"","input-checkbox-1-text":"value-checkbox-1","input-radio-1-text":"value-radio-1","input-hidden-1-text":"value-hidden-1","input-hidden-2-text":"value-hidden-2","textarea-1":"value-textarea-1","select-1":"2","select-2":"3","select-3":"","input-button":"value-button","input-submit":"value-submit","input-reset":"value-reset"};
+            assert.deepEqual(expected, serialize);
+          });
+        });
+      });
+    </script>
+    <script>
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+      } else {
+        mocha.run();
+      }
+    </script>
+  </body>
+</html>

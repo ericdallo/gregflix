@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Tests ajax.js</title>
+    <meta charset="utf-8">
+    <link href="/css/mocha.css" type="text/css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/proclaim/lib/proclaim.js"></script>
+    <script src="/test/helpers.js"></script>
+
+    <script src="/node_modules/define-async/async-define.js"></script>
+    <script src="/ajax.js"></script>
+    <script>
+      function knownMethods(){
+        return [
+          'get',
+          'post',
+          'put',
+          'delete',
+          'serializeObject'
+        ];
+      }
+
+      var assert = window.proclaim;
+
+      mocha.ui("bdd");
+
+      define(['ajax'], function(ajax) {
+        describe('Ajax', function(){
+          it("should contains all known methods", function(){
+            var current = [];
+            for(var methodName in ajax) current.push(methodName);
+            assert.equal(arrayEquals(knownMethods(), current), true);
+          });
+        });
+      });
+    </script>
+    <script>
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+      } else {
+        mocha.run();
+      }
+    </script>
+  </body>
+</html>

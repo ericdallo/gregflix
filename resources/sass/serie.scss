@@ -1,3 +1,107 @@
 @import 'base';
 @import 'logo';
 @import 'header';
+
+.video {
+
+	h1 {
+		text-align: center;
+		margin: 1em 0 0;
+		font-size: 1.8em;
+		font-family: 'Museo Sans'
+	}
+
+	.episode {
+		text-align: center;
+		margin: 0.5em 0 1em;
+		color: #888;
+		font-size: 1.5em;
+		font-style: italic;
+		font-family: 'Museo Sans'
+	}
+
+	.media {
+		width: 92%;
+		margin: auto;
+		box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.75);
+
+		video {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.description {
+		margin: 4%;
+		font-family: 'Museo Sans';
+
+		.subtitle {
+			background-color: #eee;
+			position: relative;
+			padding: 0.2em;
+			display: inline-block;
+			color: black;
+			font-family: 'Museo Sans';
+			font-size: 1.2em;
+
+			&:before {
+				content: '';
+				position: absolute;
+				right: -1em;
+				bottom: 0;
+				width: 0;
+				height: 0;
+				border-left: 0 solid #eee;
+				border-right: 1em solid transparent;
+				border-bottom: 1.4em solid #eee;
+				z-index: 2;
+			}
+
+			&:after {
+				content: '';
+				position: absolute;
+				right: -1.3em;
+				bottom: -0.2em;
+				width: 0.5em;
+				height: 0;
+				border-left: 0 solid #eee;
+				border-right: 1em solid transparent;
+				border-bottom: 1.4em solid rgba(0,0,0,0.75);
+				z-index: -1;
+			}
+		}
+
+		.content {
+			background-color: #EEE;
+			z-index: 2;
+			padding: 1em;
+			box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.75);
+		}
+	}
+}
+
+@media (min-width: 799px) {
+	.video {
+
+		.content {
+			display: flex;
+    		justify-content: space-between;
+		}
+
+		.media {
+			width: 55%;
+			margin-left: 3%;
+			display: inline-block;
+		}
+
+		.description {
+
+		}
+
+		.description-content {
+			width: 38%;
+			margin: auto;
+			display: inline-block;
+		}
+	}
+}

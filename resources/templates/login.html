@@ -2,13 +2,14 @@
 {% block title %}Login{% endblock%}
 {% block css %}login{% endblock%}
 {% block body %}
+<script async type="text/javascript" src="/js/login.js" ></script>
 <main class="page">
 	{% include "_logo.html" %}
 	<form action="/login" method="POST" class="login">
-		<div class="{% if query-params.login_failed %}invalid{% endif %}">
-			<input type="text" name="username" placeholder="E-mail" class="email-field" required autofocus>
+		<div class="{% if query-params.login_failed %}invalid{% endif %} invalid-flag">
+			<input type="text" name="username" placeholder="E-mail" class="email-field" required autofocus >
 		</div>
-		<div class="{% if query-params.login_failed %}invalid{% endif %}">
+		<div class="{% if query-params.login_failed %}invalid{% endif %} invalid-flag">
 			<input type="password" name="password" placeholder="Password" class="password-field" required>
 		</div>
 		<button class="fab"></button>

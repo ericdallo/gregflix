@@ -75,7 +75,7 @@ body {
 			background-size: 50%;
 			cursor: pointer;
 			box-shadow: 0 0 $fab-shadow rgba(0,0,0,.14),0 $fab-shadow $fab-shadow*2 rgba(0,0,0,.28);
-			@include transition(box-shadow 0.1s);
+			@include transition(box-shadow 0.1s);			
 
 			&:focus {
 				box-shadow: 0 0 $fab-shadow*2 rgba(0,0,0,.14),0 $fab-shadow*2 $fab-shadow*4 rgba(0,0,0,.28);

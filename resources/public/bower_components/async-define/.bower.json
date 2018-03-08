@@ -1,0 +1,32 @@
+{
+  "name": "async-define",
+  "version": "1.2.0",
+  "description": "AMD-compatible async 'define' modularization.",
+  "main": "async-define.js",
+  "keywords": [
+    "AMD",
+    "Asynchronous",
+    "JS"
+  ],
+  "authors": [
+    "Elo7"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/elo7/async-define",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.0",
+    "commit": "b917e49cbb62572d94fefc01915fdbcc1146be34"
+  },
+  "_source": "https://github.com/elo7/async-define.git",
+  "_target": "v1.2.0",
+  "_originalSource": "https://github.com/elo7/async-define.git"
+}

@@ -1,0 +1,34 @@
+{
+  "name": "elo7-doc-amd",
+  "version": "1.3.1",
+  "license": "BSD-3-Clause",
+  "description": "Elo7 doc amd",
+  "keywords": [
+    "DOM",
+    "js",
+    "querySelector"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/elo7/doc-amd.git"
+  },
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "bash test.sh",
+    "build": "uglifyjs doc.js -o doc.min.js --compress drop_console=true --mangle --screw-ie8"
+  },
+  "author": "Elo7",
+  "dependencies": {
+    "define-async": "1.2.0",
+    "elo7-events-amd": "1.1.3"
+  },
+  "devDependencies": {
+    "bower": "1.8.2",
+    "http-server": "0.10.0",
+    "mocha": "4.0.1",
+    "mocha-phantomjs": "4.1.0",
+    "phantomjs-prebuilt": "2.1.15",
+    "proclaim": "3.4.6",
+    "uglify-js": "3.1.3"
+  }
+}
