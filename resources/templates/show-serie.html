@@ -5,19 +5,15 @@
 {% include "_header.html" %}
 <main class="content">
   <article class="video">
-    <h1>{{video.title}}</h1>
-    <h2 class="episode">S0{{video.season}}e0{{video.episode}}</h2>
-    <div class="content">
-      <div class="media">
-        <video controls preload="auto" crossorigin="anonymous">
-          <source src="{{video.url}}" type="video/mp4" >
-        </video>
-      </div>
+    <video controls preload="auto" crossorigin="anonymous" class="media" controlsList="nodownload">
+      <source src="{{video.url}}" type="video/mp4" >
+      <track label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}"  default >
+    </video>
+    <div class="details">
+      <h1>{{video.title}}</h1>
+      <h2 class="episode">S0{{video.season}}e0{{video.episode}}</h2>
       <section class="description">
-        <strong class="subtitle">Description</strong>  
-        <div class="content">
-          <p>{{video.description}}</p>
-        </div>
+        <p>{{video.description}}</p>
       </section>
     </div>
   </article>

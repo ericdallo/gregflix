@@ -4,9 +4,16 @@
 
 .video {
 
+	.media {
+		margin: auto;
+		width: 100%;
+		height: 100%;
+		
+	}
+
 	h1 {
 		text-align: center;
-		margin: 1em 0 0;
+		margin: 0.5em 0 0;
 		font-size: 1.8em;
 		font-family: 'Museo Sans'
 	}
@@ -20,88 +27,45 @@
 		font-family: 'Museo Sans'
 	}
 
-	.media {
-		width: 92%;
-		margin: auto;
-		box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.75);
-
-		video {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
 	.description {
-		margin: 4%;
+		margin: 4% 0;
 		font-family: 'Museo Sans';
-
-		.subtitle {
-			background-color: #eee;
-			position: relative;
-			padding: 0.2em;
-			display: inline-block;
-			color: black;
-			font-family: 'Museo Sans';
-			font-size: 1.2em;
-
-			&:before {
-				content: '';
-				position: absolute;
-				right: -1em;
-				bottom: 0;
-				width: 0;
-				height: 0;
-				border-left: 0 solid #eee;
-				border-right: 1em solid transparent;
-				border-bottom: 1.4em solid #eee;
-				z-index: 2;
-			}
-
-			&:after {
-				content: '';
-				position: absolute;
-				right: -1.3em;
-				bottom: -0.2em;
-				width: 0.5em;
-				height: 0;
-				border-left: 0 solid #eee;
-				border-right: 1em solid transparent;
-				border-bottom: 1.4em solid rgba(0,0,0,0.75);
-				z-index: -1;
-			}
-		}
-
-		.content {
-			background-color: #EEE;
-			z-index: 2;
-			padding: 1em;
-			box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.75);
-		}
+		background-color: #EEE;
+		padding: 1em;
+		line-height: 1.4em;
 	}
 }
 
 @media (min-width: 799px) {
 	.video {
-
-		.content {
-			display: flex;
-    		justify-content: space-between;
-		}
+		position: relative;
 
 		.media {
-			width: 55%;
-			margin-left: 3%;
+			width: 58%;
+			margin: 2%;
 			display: inline-block;
 		}
 
-		.description {
-
-		}
-
-		.description-content {
+		.details {
+			position: absolute;
+			right: 0;
+			top: 2%;
 			width: 38%;
-			margin: auto;
-			display: inline-block;
+
+			.description {
+				position: relative;
+
+				&:before {
+					content: '';
+					width: 0;
+					height: 0;
+					position: absolute;
+					left: -1em;
+					border-right: 1em solid #eee;
+					border-top: 1em solid transparent;
+					border-bottom: 1em solid transparent;
+				}
+			}
 		}
 	}
 }
