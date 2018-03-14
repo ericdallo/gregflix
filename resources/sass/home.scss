@@ -3,9 +3,9 @@
 @import 'header';
 
 $duration:450ms;
-$videoWidth:250px;
+$videoWidth: 250px;
 $videoHeight:$videoWidth / (16/9);
-$iconSize:50px;
+$iconSize: 3em;
 $growFactor:1.5;
 
 $moveLeft:-($videoWidth * ($growFactor - 1) / 2);
@@ -148,15 +148,14 @@ $moveRight:$videoWidth * ($growFactor - 1);
     position: absolute;
     top: 50%;
     left: 50%;
-    display: black;
   }
 
   &:after {
-    margin-top: (-($iconSize / 2));
-    margin-left: (-($iconSize / 2));
+    margin-top: -($iconSize / 2);
+    margin-left: -($iconSize / 2);
     width: $iconSize;
     height: $iconSize;
-    border: 3px solid #ecf0f1;
+    border: 3px solid white;
     line-height: $iconSize;
     text-align: center;
     border-radius: 100%;
@@ -166,11 +165,10 @@ $moveRight:$videoWidth * ($growFactor - 1);
 
   &:before {
     content: '▶';
-    left: 0;
-    width: 100%;
     font-size: 2em;
-    margin-left: 0.2em;
-    margin-top: -0.55em;
+    top: 50%;
+    left: calc(50% + 0.2em);
+    transform: translate(-50%, -50%);
     text-align: center;
     z-index: 2;
   }
