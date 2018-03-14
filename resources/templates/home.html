@@ -8,12 +8,22 @@
     <h2 class="caroussel-title">Series</h2>
     <section class="series caroussel">
       {% for video in series %}
-        <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video">
+        <div class="video">
           <img class="video-img" src="{{video.preview}}" alt="{{video.title}} preview"/>
-          <div class="video-details">
+          <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
             <p class="video-title">{{video.title}}</p>
+          </a>
+          <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
+          <label for="episodes-{{video.slug}}" class="episodes-flag">🞃</label>
+          <div class="episodes">
+            <h3 class="title">Episodes</h3>
+            {% for episode in series-episodes %}
+              {% ifequal episode.slug video.slug %}
+                <a href="/series/{{episode.slug}}/s/{{episode.season}}/e/{{episode.episode}}" class="link">S{{episode.season}}E{{episode.episode}} - {{episode.episode_name}}</a>
+              {% endifequal %}
+            {% endfor %}
           </div>
-        </a>
+        </div>
       {% endfor %}
     </section>
   </article>

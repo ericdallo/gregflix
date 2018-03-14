@@ -3,5 +3,8 @@
 			  [gregflix.movie :as movies]))
 
 (defn home []
-	{:series (series/find-all)
-	 :movies (movies/find-all)})
+	(let[series (series/find-all-group-by-slug)
+		series-episodes (series/find-all-episodes)]
+		{:series series,
+		 :series-episodes series-episodes,
+	 	 :movies (movies/find-all)}))
