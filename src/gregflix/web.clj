@@ -12,12 +12,15 @@
 
 (selmer.parser/set-resource-path! (clojure.java.io/resource "templates"))
 
+(defn as-int [s]
+   (Integer. (re-find  #"\d+" s )))
+
 (defroutes app-routes
 	(GET "/login" [:as req]
 		(render-file "login.html" req))
 	(GET "/" []
 		(friend/authorize #{:gregflix.auth/user} (render-file "home.html" (home-handler/home))))
-	(GET "/series/:slug/s/:season/e/:episode" [slug season episode]
+	(GET "/series/:slug/s/:season/e/:episode" [slug season :<< as-int episode :<< as-int]
 		(friend/authorize #{:gregflix.auth/user} (render-file "show-serie.html" (serie-handler/show slug season episode))))
 	(GET "/movies/:slug" [slug]
 		(friend/authorize #{:gregflix.auth/user} (render-file "show-movie.html" (movie-handler/show slug))))

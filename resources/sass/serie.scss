@@ -4,11 +4,67 @@
 
 .video {
 
+	.video-container {
+		position: relative;
+
+		.option {
+			position: absolute;
+			bottom: -2.5em;
+			text-decoration: none;
+			color: black;
+			background-color: #EEE;
+			padding: 0.5em;
+			font-family: 'Museo Sans';
+			@include transition(margin 0.2s);
+
+			&:after {
+				content: '';
+				position: absolute;
+				width: 0;
+				height: 0;
+			}
+		}
+
+		$triangleSize: 1em;
+
+		.previous-episode {
+			left: $triangleSize;
+
+			&:after {
+				
+				left: -$triangleSize;
+				top: 0;
+				border-right: $triangleSize solid #EEE;
+				border-top: $triangleSize solid transparent;
+				border-bottom: $triangleSize solid transparent;
+			}
+
+			&:hover {
+				margin-left: -0.5em;
+			}
+		}
+
+		.next-episode {
+			right: $triangleSize;
+
+			&:after {
+				right: -$triangleSize;
+				top: 0;
+				border-left: $triangleSize solid #EEE;
+				border-top: $triangleSize solid transparent;
+				border-bottom: $triangleSize solid transparent;
+			}
+
+			&:hover {
+				margin-right: -0.5em;
+			}
+		}
+	}
+
 	.media {
 		margin: auto;
 		width: 100%;
 		height: 100%;
-		
 	}
 
 	h1 {
@@ -40,9 +96,12 @@
 	.video {
 		position: relative;
 
-		.media {
+		.video-container {
 			width: 58%;
 			margin: 2%;
+		}
+
+		.media {
 			display: inline-block;
 		}
 
