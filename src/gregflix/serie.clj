@@ -6,7 +6,7 @@
 
 (defentity series
   (table :serie)
-  (entity-fields :id :title :slug :description :preview :url :season :episode :episode_name))
+  (entity-fields :id :title :slug :description :url :season :episode :episode_name))
 
 (defn find-all-group-by-slug []
 	(select series

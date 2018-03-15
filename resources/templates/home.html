@@ -9,7 +9,7 @@
     <section class="series caroussel">
       {% for video in series %}
         <div class="video">
-          <img class="video-img" src="{{video.preview}}" alt="{{video.title}} preview"/>
+          <img class="video-img" src="https://s3-sa-east-1.amazonaws.com/download.gregflix.com.br/series/{{video.slug}}/preview.png" alt="{{video.title}} image preview"/>
           <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
             <p class="video-title">{{video.title}}</p>
           </a>
@@ -38,7 +38,7 @@
     <section class="movies caroussel">
       {% for video in movies %}
         <a href="/movies/{{video.slug}}" class="video">
-          <img class="video-img" src="{{video.preview}}" alt="{{video.title}} preview"/>
+          <img class="video-img" src="https://s3-sa-east-1.amazonaws.com/download.gregflix.com.br/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
           <div class="video-details">
             <p class="video-title">{{video.title}}</p>
           </div>

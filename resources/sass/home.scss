@@ -106,6 +106,7 @@ $moveRight:$videoWidth * ($growFactor - 1);
       summary {
         &::-webkit-details-marker { display:none; }
 
+        list-style: none;
         font-family: 'Bebas Neue';
         cursor: pointer;
         text-align: left;
