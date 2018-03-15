@@ -72,7 +72,7 @@ $moveRight:$videoWidth * ($growFactor - 1);
     @include transition(transform 0.3s);
 
     &:hover {
-      color: $base-blue-light;
+      color: #AAA;
     }
   }
 
@@ -82,7 +82,6 @@ $moveRight:$videoWidth * ($growFactor - 1);
     &:checked {
       ~ .episodes-flag {
         @include transform(rotate(180deg));
-        color: $base-blue-light;
       }
 
       ~ .episodes {
@@ -101,6 +100,25 @@ $moveRight:$videoWidth * ($growFactor - 1);
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.2s linear;
+
+    .season-details {
+
+      summary {
+        &::-webkit-details-marker { display:none; }
+
+        font-family: 'Bebas Neue';
+        cursor: pointer;
+        text-align: left;
+        outline: none;
+        padding-top: 0.5em;
+        @include transition(color 0.1s, margin 0.1s);
+
+        &:hover {
+          color: $base-blue;
+          margin-left: 0.2em;
+        }
+      }
+    }
 
     .title {
       position: relative;

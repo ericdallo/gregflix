@@ -12,6 +12,13 @@
 	(select series
 		(group :slug)))
 
+(defn find-all-seasons []
+	(select series
+		(group :season, :slug)
+		(order :slug)
+		(order :season)
+		))
+
 (defn find-all-episodes []
 	(select series
 		(group :season, :episode, :slug)
