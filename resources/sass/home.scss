@@ -3,72 +3,67 @@
 @import 'header';
 
 $duration:450ms;
-$videoWidth: 250px;
-$videoHeight:$videoWidth / (16/9);
-$iconSize: 3em;
 $growFactor:1.5;
 
+$videoWidth: 15em;
+$videoHeight:$videoWidth / (16/9);
 $moveLeft:-($videoWidth * ($growFactor - 1) / 2);
 $moveRight:$videoWidth * ($growFactor - 1);
 
-.content {
-  padding: 0 3em;
+$mobileVideoWidth: 13em;
+$mobileVideoHeight:$mobileVideoWidth / (16/9);
+
+$iconSize: 3em;
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
 
 .caroussel-title {
+  position: absolute;
+  width: 100%;
   font-size: 1.8em;
   font-family: 'Museo Sans';
-  margin: 1em 0;
+  margin: 0.5em 0;
+
+  h2 {
+    text-align: center;
+  }
 }
 
 .caroussel {
-  transition: $duration transform;
   white-space: nowrap;
   text-align: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;  
 
-  &:hover {
-    transform: translate3d($moveLeft, 0, 0);  
-
-    .video {
-      opacity: .3;
-
-      &:hover {
-        transform: scale($growFactor);
-        opacity: 1;
-      }
-    }
+  .caroussel-inner {
+    margin:($mobileVideoHeight / 2) 0;
+    transition: $duration transform;
   }
 
 }
 .video {
   position: relative;
   display: inline-block;
-  width: $videoWidth;
-  height: $videoHeight;
+  width: $mobileVideoWidth;
+  height: $mobileVideoHeight;
   text-decoration: none;
   transition: $duration all;
   transform-origin: center left;
-
-  &:hover {
-
-    .video-details {
-      opacity: 1;
-    }
-
-    ~ .video {
-      transform: translate3d($moveRight, 0, 0);    
-    }
-  }
 
   .episodes-flag {
     position: absolute;
     width: 2em;
     height: 1em;
     right: 0;
-    bottom: 0.2em;
+    bottom: .2em;
     color: white;
     cursor: pointer;
     font-size: 1.2em;
+    z-index: 13;
     @include transition(transform 0.3s);
 
     &:hover {
@@ -81,12 +76,21 @@ $moveRight:$videoWidth * ($growFactor - 1);
 
     &:checked {
       ~ .episodes-flag {
-        @include transform(rotate(180deg));
+        @include transform(rotate(180deg)); 
+        color: black;
+      }
+
+      ~ .video-details {
+        opacity: 0;
       }
 
       ~ .episodes {
+        opacity: 0.9;
         visibility: visible;
-        opacity: 1;
+
+        .season-details {
+          display: block;
+        }
       }
     } 
   }
@@ -94,14 +98,18 @@ $moveRight:$videoWidth * ($growFactor - 1);
   .episodes {
     position: absolute;
     padding: 1em;
-    padding-top: 0.5em;
     width: calc(100% - 2em);
     background-color: #eee;
-    visibility: hidden;
+    height: $mobileVideoHeight - 2em;
     opacity: 0;
-    transition: visibility 0s, opacity 0.2s linear;
+    visibility: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 12;
+    @include transition(visibility 0s, opacity 0.2s linear);
 
     .season-details {
+      display: none;
 
       summary {
         &::-webkit-details-marker { display:none; }
@@ -111,7 +119,6 @@ $moveRight:$videoWidth * ($growFactor - 1);
         cursor: pointer;
         text-align: left;
         outline: none;
-        padding-top: 0.5em;
         @include transition(color 0.1s, margin 0.1s);
 
         &:hover {
@@ -145,9 +152,11 @@ $moveRight:$videoWidth * ($growFactor - 1);
 }
 
 .video-img {
-  width: $videoWidth;
-  height: $videoHeight;
-  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: $mobileVideoWidth;
+  height: $mobileVideoHeight;
 }
 .video-details {
   position: absolute;
@@ -199,4 +208,68 @@ $moveRight:$videoWidth * ($growFactor - 1);
   bottom: 0;
   padding: 0.5em;
   color: white;
+}
+
+
+@media (min-width: 799px) {
+
+  $videoWidth: 15em;
+  $videoHeight:$videoWidth / (16/9);
+
+  .caroussel-title {
+    left: 3em;
+    width: calc(100% - 3em);
+    margin: 1em 0;
+
+    h2 {
+      text-align: left;
+    }
+  }
+
+  .caroussel {
+    padding: 0 3em;
+
+    .caroussel-inner {
+      margin:($videoHeight / 2) 0;
+      &:hover {
+        transform: translate3d($moveLeft, 0, 0);
+
+        .video {
+          opacity: .3;
+
+          &:hover {
+            transform: scale($growFactor);
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .video {
+    width: $videoWidth;
+    height: $videoHeight;
+
+    &:hover {
+      transform: scale($growFactor);
+      opacity: 1;
+
+      .video-details {
+        opacity: 1;
+      }
+
+      ~ .video {
+        transform: translate3d($moveRight, 0, 0);
+      }
+    }
+
+    .episodes {
+      height: $videoHeight - 2em;
+    }
+  }
+
+  .video-img {
+    width: $videoWidth;
+    height: $videoHeight;
+  }
 }

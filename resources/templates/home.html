@@ -5,37 +5,41 @@
 {% include "_header.html" %}
 <main class="content">
   <article>
-    <h2 class="caroussel-title">Series</h2>
+    <div class="caroussel-title">
+      <h2>Series</h2>
+    </div>
     <section class="series caroussel">
-      {% for video in series %}
-        <div class="video">
-          <img class="video-img" src="https://s3-sa-east-1.amazonaws.com/download.gregflix.com.br/series/{{video.slug}}/preview.png" alt="{{video.title}} image preview"/>
-          <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
-            <p class="video-title">{{video.title}}</p>
-          </a>
-          <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
-          <label for="episodes-{{video.slug}}" class="episodes-flag">🞃</label>
-          <div class="episodes">
-            {% for season in series-seasons %}
-              {% ifequal season.slug video.slug %}
-                <details class="season-details">
-                  <summary>Season {{season.season}}</summary>
-                  {% for episode in series-episodes %}
-                    {% ifequal episode.slug video.slug %}
-                      <a href="/series/{{episode.slug}}/s/{{episode.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
-                    {% endifequal %}
-                  {% endfor %}      
-                </details>
-              {% endifequal %}
-            {% endfor %}
+      <div class="caroussel-inner">
+        {% for video in series %}
+          <div class="video">
+            <img class="video-img" src="https://s3-sa-east-1.amazonaws.com/download.gregflix.com.br/series/{{video.slug}}/preview.png" alt="{{video.title}} image preview"/>
+            <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
+            <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
+              <p class="video-title">{{video.title}}</p>
+            </a>
+            <label for="episodes-{{video.slug}}" class="episodes-flag">🞃</label>
+            <div class="episodes">
+              {% for season in series-seasons %}
+                {% ifequal season.slug video.slug %}
+                  <details class="season-details">
+                    <summary>Season {{season.season}}</summary>
+                    {% for episode in series-episodes %}
+                      {% ifequal episode.slug video.slug %}
+                        <a href="/series/{{episode.slug}}/s/{{episode.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
+                      {% endifequal %}
+                    {% endfor %}      
+                  </details>
+                {% endifequal %}
+              {% endfor %}
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </section>
   </article>
   <article>
-    <h2 class="caroussel-title">Movies</h2>
     <section class="movies caroussel">
+      <h2 class="caroussel-title">Movies</h2>
       {% for video in movies %}
         <a href="/movies/{{video.slug}}" class="video">
           <img class="video-img" src="https://s3-sa-east-1.amazonaws.com/download.gregflix.com.br/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
