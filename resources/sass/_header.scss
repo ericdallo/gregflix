@@ -36,11 +36,26 @@
 .navigation-menu {
     background-color: $base-blue-light;
     font-family: 'Bebas Neue';
+    position: relative;
 
     .header-title {
         padding-top: 0.5em;
         font-size: 1.1em;
         text-align: center;
+    }
+
+    .logout {
+        font-size: 1.2em;
+        position: absolute;
+        right: 1em;
+        text-decoration: none;
+        top: calc(50% - 0.4em);
+        color: white;
+        display: inline-block;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     .menu {
@@ -105,7 +120,7 @@
         background-color: $base-blue-light;
         height: 100%;
         position: fixed;
-        z-index: 2;
+        z-index: 22;
         @include transition(left 0.3s);
 
         .link a {

@@ -17,7 +17,7 @@
             <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
               <p class="video-title">{{video.title}}</p>
             </a>
-            <label for="episodes-{{video.slug}}" class="episodes-flag">🞃</label>
+            <label for="episodes-{{video.slug}}" class="episodes-flag"></label>
             <div class="episodes">
               {% for season in series-seasons %}
                 {% ifequal season.slug video.slug %}

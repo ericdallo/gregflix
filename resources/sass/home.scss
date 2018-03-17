@@ -10,7 +10,7 @@ $videoHeight:$videoWidth / (16/9);
 $moveLeft:-($videoWidth * ($growFactor - 1) / 2);
 $moveRight:$videoWidth * ($growFactor - 1);
 
-$mobileVideoWidth: 13em;
+$mobileVideoWidth: 14em;
 $mobileVideoHeight:$mobileVideoWidth / (16/9);
 
 $iconSize: 3em;
@@ -25,7 +25,7 @@ $iconSize: 3em;
   width: 100%;
   font-size: 1.8em;
   font-family: 'Museo Sans';
-  margin: 0.5em 0;
+  margin: 1em 0;
 
   h2 {
     text-align: center;
@@ -40,7 +40,7 @@ $iconSize: 3em;
   position: relative;  
 
   .caroussel-inner {
-    margin:($mobileVideoHeight / 2) 0;
+    margin:(($mobileVideoHeight / 2) + 1em) 0 ($mobileVideoHeight / 2) 0;
     transition: $duration transform;
   }
 
@@ -56,6 +56,7 @@ $iconSize: 3em;
 
   .episodes-flag {
     position: absolute;
+    background: url('/images/arrow-down-white.png') center center no-repeat;
     width: 2em;
     height: 1em;
     right: 0;
@@ -76,8 +77,8 @@ $iconSize: 3em;
 
     &:checked {
       ~ .episodes-flag {
-        @include transform(rotate(180deg)); 
-        color: black;
+        @include transform(rotate(180deg));
+        background-image: url('/images/arrow-down.png');
       }
 
       ~ .video-details {
