@@ -17,13 +17,16 @@
         <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode|add:-1}}" class="previous-episode option">Previous</a>
       {% endif%}
     </div>
-    <div class="details">
+    <article class="details">
       <h1>{{video.title}}</h1>
-      <h2 class="episode">S0{{video.season}}e0{{video.episode}}</h2>
+      <small class="episode">S0{{video.season}}E0{{video.episode}}</small>
+      <section class="episode-name">
+        <h2>{{video.episode_name}}</h2>
+      </section>
       <section class="description">
         <p>{{video.description}}</p>
       </section>
-    </div>
+    </article>
   </article>
 </main>
 {% endblock %}

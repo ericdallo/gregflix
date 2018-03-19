@@ -76,6 +76,7 @@
 
 	.episode {
 		text-align: center;
+		display: block;
 		margin: 0.5em 0 1em;
 		color: #888;
 		font-size: 1.5em;
@@ -83,11 +84,23 @@
 		font-family: 'Museo Sans'
 	}
 
+	.episode-name {
+		@extend %info-box;
+
+		font-size: 1.2em;
+		text-align: center;
+		padding: 0.4em;
+	}
+
 	.description {
+		@extend %info-box;
+		padding: 1em;
+	}
+
+	%info-box {
 		margin: 4% 0;
 		font-family: 'Museo Sans';
 		background-color: #EEE;
-		padding: 1em;
 		line-height: 1.4em;
 	}
 }
@@ -111,7 +124,7 @@
 			top: 2%;
 			width: 38%;
 
-			.description {
+			%info-box {
 				position: relative;
 
 				&:before {
@@ -120,6 +133,7 @@
 					height: 0;
 					position: absolute;
 					left: -1em;
+					top: calc(50% - 1em);
 					border-right: 1em solid #eee;
 					border-top: 1em solid transparent;
 					border-bottom: 1em solid transparent;
