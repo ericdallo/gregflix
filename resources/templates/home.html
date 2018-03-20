@@ -25,7 +25,7 @@
                     <summary>Season {{season.season}}</summary>
                     {% for episode in series-episodes %}
                       {% ifequal episode.slug video.slug %}
-                        <a href="/series/{{episode.slug}}/s/{{episode.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
+                        <a href="/series/{{episode.slug}}/s/{{season.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
                       {% endifequal %}
                     {% endfor %}      
                   </details>
