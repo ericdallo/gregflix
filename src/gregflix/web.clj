@@ -30,5 +30,7 @@
 	(route/not-found "Not Found"))
 
 (def app
-	(handler/site
-		(auth/authenticate app-routes)))
+	(-> app-routes
+		(auth/authenticate)
+		(handler/site)
+		))
