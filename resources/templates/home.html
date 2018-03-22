@@ -38,16 +38,20 @@
     </section>
   </article>
   <article>
+    <div class="caroussel-title">
+      <h2>Movies</h2>
+    </div>
     <section class="movies caroussel">
-      <h2 class="caroussel-title">Movies</h2>
-      {% for video in movies %}
-        <a href="/movies/{{video.slug}}" class="video">
-          <img class="video-img" src="http://file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
-          <div class="video-details">
-            <p class="video-title">{{video.title}}</p>
+      <div class="caroussel-inner">
+        {% for video in movies %}
+          <div class="video">
+            <img class="video-img" src="http://file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} image preview"/>
+            <a href="/movies/{{video.slug}}" class="video-details">
+              <p class="video-title">{{video.title}}</p>
+            </a>
           </div>
-       </a>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </section>
   </article>
 </main>

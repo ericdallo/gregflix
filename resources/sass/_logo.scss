@@ -12,7 +12,7 @@
     display: inline-flex;
 
     span {
-        display: block;
+        display: inline-block;
 
         $letters: 8;
         @for $i from 1 through $letters {

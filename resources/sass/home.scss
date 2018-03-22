@@ -40,7 +40,7 @@ $iconSize: 3em;
   position: relative;  
 
   .caroussel-inner {
-    margin:(($mobileVideoHeight / 2) + 1em) 0 ($mobileVideoHeight / 2) 0;
+    margin:(($mobileVideoHeight / 2) + 1em) 0 1em 0;
     transition: $duration transform;
   }
 

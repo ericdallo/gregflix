@@ -6,7 +6,7 @@
 
 (defentity movies
   (table :movie)
-  (entity-fields :id :title :slug :description :preview :url))
+  (entity-fields :id :title :slug :description :url))
 
 (defn find-all []
 		(select movies))
