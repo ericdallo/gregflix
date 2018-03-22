@@ -34,7 +34,7 @@
 }
 
 .navigation-menu {
-    background-color: $base-blue-light;
+    background-color: $base-blue-dark;
     font-family: 'Bebas Neue';
     position: relative;
 
@@ -68,7 +68,7 @@
         text-indent: -9999px;
         border: none;
         cursor: pointer;
-        background-color: $base-blue-light;
+        background-color: $base-blue-dark;
 
         &:focus {
           outline: none;
@@ -117,7 +117,7 @@
     .side-menu {
         left: -300px;
         width: 300px;
-        background-color: $base-blue-light;
+        background-color: $base-blue-dark;
         height: 100%;
         position: fixed;
         z-index: 22;

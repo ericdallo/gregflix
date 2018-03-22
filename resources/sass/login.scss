@@ -2,7 +2,14 @@
 @import 'logo';
 
 body {
-	background-color: $base-blue;
+	background:
+		radial-gradient(circle farthest-side at 0% 50%, $base-blue 23.5%, rgba(240,166,17,0) 0) 21px 30px,
+		radial-gradient(circle farthest-side at 0% 50%, $base-blue-dark 24%, rgba(240,166,17,0) 0) 19px 30px,
+		linear-gradient( $base-blue 14%,rgba(240,166,17,0) 0, rgba(240,166,17,0) 85%, $base-blue 0)0 0,
+		linear-gradient(150deg, $base-blue 24%,$base-blue-dark 0,$base-blue-dark 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,$base-blue-dark 0,$base-blue-dark 76%, $base-blue 0)0 0,
+		linear-gradient(30deg, $base-blue 24%,$base-blue-dark 0,$base-blue-dark 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,$base-blue-dark 0,$base-blue-dark 76%, $base-blue 0)0 0,
+		linear-gradient(90deg,$base-blue-dark 2%, $base-blue 0, $base-blue 98%,$base-blue-dark 0%)0 0  $base-blue;
+		background-size:40px 60px;
 }
 
 .page {
@@ -70,7 +77,7 @@ body {
 			width: 3em;
 			height: 3em;
 			border: none;
-			background: $base-blue-light url($images-dir + 'check.svg') no-repeat;
+			background: $base-blue-button url($images-dir + 'check.svg') no-repeat;
 			background-position: 50%;
 			background-size: 50%;
 			cursor: pointer;
