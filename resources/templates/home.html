@@ -22,10 +22,12 @@
               {% for season in series-seasons %}
                 {% ifequal season.slug video.slug %}
                   <details class="season-details">
-                    <summary>Season {{season.season}}</summary>
+                    <summary class="season-title">Season {{season.season}}</summary>
                     {% for episode in series-episodes %}
                       {% ifequal episode.slug video.slug %}
-                        <a href="/series/{{episode.slug}}/s/{{season.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
+                        {% ifequal episode.season season.season %}
+                          <a href="/series/{{episode.slug}}/s/{{season.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
+                        {% endifequal %}
                       {% endifequal %}
                     {% endfor %}      
                   </details>

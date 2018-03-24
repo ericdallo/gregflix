@@ -91,6 +91,14 @@ $iconSize: 3em;
 
         .season-details {
           display: block;
+
+          .season-title {
+            margin-bottom: 0.1em;
+          }
+
+          .link:last-child {
+            margin-bottom: 0.5em;
+          }
         }
       }
     } 
