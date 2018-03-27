@@ -1,7 +1,10 @@
+@import 'video-controls';
+
 .video {
 
 	.video-container {
 		position: relative;
+		font-size: 0;
 
 		.option {
 			position: absolute;

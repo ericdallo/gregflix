@@ -1,0 +1,37 @@
+$controlsHeight: 3rem;
+
+%videobutton {
+	border: none;
+	background: none;
+	color: white;
+	font-size: 1.2rem;
+	vertical-align: text-bottom;
+	height: 100%;
+}
+
+.video-controls {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: $controlsHeight;
+
+	.play {
+		@extend %videobutton;
+
+		width: 10%;
+	}
+
+	.progress-container {
+		width: 80%;
+		height: 100%;
+		
+		display: inline-block;
+		font-size: 1rem;
+	}
+
+	.fullscreen {
+		@extend %videobutton;
+
+		width: 10%;
+	}
+}
