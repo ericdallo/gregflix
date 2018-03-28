@@ -12,14 +12,14 @@
         <track label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}"  default >
       </video>
       <section id="video-controls" class="video-controls"> 
-        <button id="video-play" title="Play" class="play">&#x25BA;</button>
+        <div class="play"><button id="video-play" title="Play"></button></div>
         <div id="video-progress" class='progress-container'>
-            <div id="video-progress-box">  
-                <span id="video-play-progress"></span> 
+            <div id="video-progress-box" class='progress-bar'>
+                <span id="video-play-progress" class='progress-tooltip'></span> 
             </div>
         </div>
             
-        <button id="video-fullscreen" title="FullScreen Toggle" class='fullscreen'>FS</button>
+        <div class='fullscreen'><button id="video-fullscreen" title="FullScreen Toggle"></button></div>
       </section>
 
       {% if next-episode %}

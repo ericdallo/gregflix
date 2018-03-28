@@ -17,27 +17,31 @@ define(['doc'], function($) {
 
     $videoPlayer.on('loadeddata', function() {
         $videoPlayer.on('mouseover', function() {
-             videoControls.style.opacity = 1; //TODO css
+            $videoControls.removeClass('hide');
+
+            if (isFullscreen) $videoControls.addClass('hide');
         });
 
         $videoControls.on('mouseover', function() {
-             videoControls.style.opacity = 1;
+            $videoControls.removeClass('hide');            
         });
 
         $videoPlayer.on('mouseout', function() {
-             videoControls.style.opacity = 0;
+             $videoControls.addClass('hide');
         });
 
         $videoControls.on('mouseout', function() {
-             videoControls.style.opacity = 0;
+             $videoControls.addClass('hide');
         });
     });
 
     var playPause = function() {
         if (videoPlayer.paused || videoPlayer.ended) {
             videoPlayer.play();
+            $playButton.addClass('paused');
         } else {
             videoPlayer.pause();
+            $playButton.removeClass('paused');
         }
     };
 
@@ -46,7 +50,7 @@ define(['doc'], function($) {
 
     var trackPlayProgress = function() {
         (function progressTrack() { 
-             $videoPlayProgress.first().style.width = ( (videoPlayer.currentTime / videoPlayer.duration) * ($videoProgressBox.first().offsetWidth) ) + "px";
+             $videoPlayProgress.first().style.left = ( (videoPlayer.currentTime / videoPlayer.duration) * ($videoProgressBox.first().offsetWidth) ) + "px";
              playProgressInterval = setTimeout(progressTrack, 50); 
          })(); 
     };
@@ -56,15 +60,13 @@ define(['doc'], function($) {
     };
 
     $videoPlayer.on('play', function() { 
-        this.title = 'Pause';
-        this.innerHTML = '<span id="pauseButton">&#x2590;&#x2590;</span>';
+        $playButton.first().title = 'Pause';
 
         trackPlayProgress();
     }); 
 
     $videoPlayer.on('pause', function() {
-        this.title = 'Play';
-        this.innerHTML = '&#x25BA;';
+        $playButton.first().title = 'Play';
 
         stopTrackPlayProgress();
     });
@@ -73,16 +75,15 @@ define(['doc'], function($) {
         isFullscreen = false;
 
         $videoPlayer.removeClass('fullscreen');
-        $videoControls.removeClass('controls-fullscreen');
+        $videoControls.removeClass('fullscreen');
         $fullScreenButton.removeClass('fullscreen-off');
     };
 
     var fullscreenOn = function() {
         isFullscreen = true;
-        //TODO css
 
         $videoPlayer.addClass('fullscreen');
-        $videoControls.addClass('controls-fullscreen');
+        $videoControls.addClass('fullscreen');
         $fullScreenButton.addClass('fullscreen-off');
 
         $(document).on('keydown' , function(e) {
