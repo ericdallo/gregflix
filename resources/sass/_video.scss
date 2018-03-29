@@ -1,7 +1,10 @@
+@import 'video-controls';
+
 .video {
 
 	.video-container {
 		position: relative;
+		font-size: 0;
 
 		.option {
 			position: absolute;
@@ -61,6 +64,19 @@
 		margin: auto;
 		width: 100%;
 		height: 100%;
+
+		&.fullscreen {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			overflow: hidden;
+			z-index: 10;
+		}
 	}
 
 	h1 {
