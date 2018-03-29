@@ -2,7 +2,7 @@ Number.prototype.leftPad = function (n,str){
     return Array(n-String(this).length+1).join(str||'0')+this;
 }
 
-define(['doc'], function($) {   
+define(['doc'], function($) {
     'use strict'
 
     var $document             = $(document),
@@ -27,6 +27,8 @@ define(['doc'], function($) {
         soundProgressHalfSize = (videoSoundProgress.offsetWidth / 2),
         isFullscreen          = false,
         playProgressInterval  = 0;
+
+    $videoControls.addClass('show');
 
     $videoPlayer.removeAttr('controls');
 
