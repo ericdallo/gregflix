@@ -66,41 +66,77 @@ $controlsHeight: 2.2rem;
 		span {
 			line-height: 0.2rem;
 			top: calc(50% - 0.1rem);
-			left: 0; 
+			left: 12%;
 			position: absolute;
 			display: inline;
 			color: white;
 		}
 	}
 
-	.progress-container {
-		width: 78%;
+	%tooltip-container {
 		height: 100%;
 		display: inline-block;
 		position: relative;
 
-		.progress-bar {
+		div {
 			background-color: white;
 			vertical-align: middle;
-			width: 95%;
-			margin: 0 2.5%;
-			height: 1px;
+			width: 100%;
+			height: 2px;
 			top: $controlsHeight / 2;
 			position: absolute;
 
-			.progress-tooltip {
+			span {
 				cursor: pointer;
 				border: 0.4rem solid white;
 				border-radius: 50%;
 				background: white;
 				position: absolute;
 				top: -0.4rem;
+				left: -0.2rem;
 			}
 		}
 	}
 
+	.progress-container {
+		width: 57%;
+		@extend %tooltip-container;
+	}
+
+	.volume-icon {
+		width: 8%;
+		height: 100%;
+		display: inline-block;
+
+		button {
+			width: 100%;
+			cursor: pointer;
+			height: 100%;
+			border: none;
+			vertical-align: text-bottom;
+			height: 100%;
+			background: url('/images/video/sound-on.png') no-repeat center;
+			background-size: 1.6em;
+			padding: 0;
+
+			&:focus {
+				outline: none;
+			}
+
+			&.mute {
+				background: url('/images/video/sound-off.png') no-repeat center;
+				background-size: 1.6em;
+			}
+		}
+	}
+
+	.volume-container {
+		width: 12%;
+		@extend %tooltip-container;
+	}
+
 	.fullscreen {
-		width: 5%;
+		width: 6%;
 		display: inline-block;
 		height: 100%;
 		cursor: pointer;

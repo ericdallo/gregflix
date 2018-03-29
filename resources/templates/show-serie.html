@@ -18,13 +18,21 @@
             <time id="video-time"></time> / <time id="video-length"></time>
           </span>
         </div>
-        <div id="video-progress" class='progress-container'>
-            <div id="video-progress-box" class='progress-bar'>
-                <span id="video-play-progress" class='progress-tooltip'></span> 
+        <div class="progress-container">
+            <div id="video-progress-box">
+                <span id="video-play-progress"></span> 
             </div>
         </div>
+
+        <div class="volume-icon"><button id="video-sound" title="Sound Toggle"></button></div>
+
+        <div class="volume-container">
+          <div id="video-sound-box">
+            <span id="video-sound-progress"></span>
+          </div>
+        </div>
             
-        <div class='fullscreen'><button id="video-fullscreen" title="FullScreen Toggle"></button></div>
+        <div class="fullscreen"><button id="video-fullscreen" title="FullScreen Toggle"></button></div>
       </section>
 
       {% if next-episode %}
