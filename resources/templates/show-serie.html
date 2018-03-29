@@ -7,33 +7,7 @@
 <main class="content">
   <article class="video">
     <div class="video-container">
-      <video id="video-player" controls preload="auto" crossorigin="anonymous" class="media" controlsList="nodownload">
-        <source src="{{video.url}}" type="video/mp4" >
-        <track label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}"  default >
-      </video>
-      <section id="video-controls" class="video-controls"> 
-        <div class="play"><button id="video-play" title="Play"></button></div>
-        <div class="time">
-          <span>
-            <time id="video-time"></time> / <time id="video-length"></time>
-          </span>
-        </div>
-        <div class="progress-container">
-            <div id="video-progress-box">
-                <span id="video-play-progress"></span> 
-            </div>
-        </div>
-
-        <div class="volume-icon"><button id="video-sound" title="Sound Toggle"></button></div>
-
-        <div class="volume-container">
-          <div id="video-sound-box">
-            <span id="video-sound-progress"></span>
-          </div>
-        </div>
-            
-        <div class="fullscreen"><button id="video-fullscreen" title="FullScreen Toggle"></button></div>
-      </section>
+      {% include "_video.html"%}
 
       {% if next-episode %}
         <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode|add:1}}" class="next-episode option">Next</a>

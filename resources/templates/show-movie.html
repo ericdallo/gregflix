@@ -3,13 +3,11 @@
 {% block css %}movie{% endblock%}
 {% block body %}
 {% include "_header.html" %}
+<script async type="text/javascript" src="/js/video.js" ></script>
 <main class="content">
   <article class="video">
     <div class="video-container">
-      <video controls preload="auto" crossorigin="anonymous" class="media" controlsList="nodownload">
-        <source src="{{video.url}}" type="video/mp4" >
-        <track label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}" default >
-      </video>
+      {% include "_video.html"%}
     </div>
     <article class="details">
       <h1>{{video.title}}</h1>
