@@ -1,7 +1,12 @@
+Number.prototype.leftPad = function (n,str){
+    return Array(n-String(this).length+1).join(str||'0')+this;
+}
+
 define(['doc'], function($) {   
     'use strict'
 
-    var $videoPlayer          = $('#video-player'),
+    var $document             = $(document),
+        $videoPlayer          = $('#video-player'),
         videoPlayer           = $videoPlayer.first(),
         $videoControls        = $('#video-controls'),
         videoControls         = $videoControls.first(),
@@ -9,7 +14,11 @@ define(['doc'], function($) {
         $fullScreenButton     = $videoControls.find('#video-fullscreen'),
         $videoProgress        = $videoControls.find('#video-progress'),
         $videoPlayProgress    = $videoControls.find('#video-play-progress'),
-        $videoProgressBox = $videoControls.find('#video-progress-box'),
+        videoPlayProgress     = $videoPlayProgress.first(),
+        $videoProgressBox     = $videoControls.find('#video-progress-box'),
+        videoProgressBox      = $videoProgressBox.first(),
+        $videoLength          = $videoControls.find('#video-length'),
+        $videoTime            = $videoControls.find('#video-time'),
         isFullscreen          = false,
         playProgressInterval  = 0;
 
@@ -27,12 +36,21 @@ define(['doc'], function($) {
         });
 
         $videoPlayer.on('mouseout', function() {
-             $videoControls.addClass('hide');
+             if (!videoPlayer.paused) $videoControls.addClass('hide');
         });
 
         $videoControls.on('mouseout', function() {
-             $videoControls.addClass('hide');
+             if (!videoPlayer.paused) $videoControls.addClass('hide');
         });
+
+        var hours = parseInt(videoPlayer.duration / 60 / 60, 10),
+            mins = parseInt(videoPlayer.duration / 60, 10),
+            secs = parseInt(videoPlayer.duration % 60, 10),
+            finalLength = hours === 0 ? mins + ':' + secs : hours + ':' + mins + ':' + secs;
+
+        $videoLength.text(finalLength);
+
+        $videoTime.text('00:00');
     });
 
     var playPause = function() {
@@ -49,9 +67,18 @@ define(['doc'], function($) {
     $playButton.on('click', playPause);
 
     var trackPlayProgress = function() {
-        (function progressTrack() { 
-             $videoPlayProgress.first().style.left = ( (videoPlayer.currentTime / videoPlayer.duration) * ($videoProgressBox.first().offsetWidth) ) + "px";
-             playProgressInterval = setTimeout(progressTrack, 50); 
+        (function progressTrack() {
+            var hours = parseInt(videoPlayer.currentTime / 60 / 60, 10),
+                mins = parseInt(videoPlayer.currentTime / 60, 10),
+                secs = parseInt(videoPlayer.currentTime % 60, 10),
+                currentTime = hours === 0 ? 
+                    mins.leftPad(2) + ':' + secs.leftPad(2) : 
+                    hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
+
+            $videoTime.text(currentTime);
+
+            videoPlayProgress.style.left = ( (videoPlayer.currentTime / videoPlayer.duration) * (videoProgressBox.offsetWidth) ) + "px";
+            playProgressInterval = setTimeout(progressTrack, 50); 
          })(); 
     };
 
@@ -59,13 +86,14 @@ define(['doc'], function($) {
         clearTimeout(playProgressInterval);
     };
 
-    $videoPlayer.on('play', function() { 
+    $videoPlayer.on('play', function() {
         $playButton.first().title = 'Pause';
 
         trackPlayProgress();
     }); 
 
     $videoPlayer.on('pause', function() {
+
         $playButton.first().title = 'Play';
 
         stopTrackPlayProgress();
@@ -86,7 +114,7 @@ define(['doc'], function($) {
         $videoControls.addClass('fullscreen');
         $fullScreenButton.addClass('fullscreen-off');
 
-        $(document).on('keydown' , function(e) {
+        $document.on('keydown' , function(e) {
             e = e || window.event; 
             if ( (e.keyCode || e.which) === 27 ) fullscreenOff();
         });
@@ -94,6 +122,46 @@ define(['doc'], function($) {
 
     $fullScreenButton.on('click', function() {
         isFullscreen ? fullscreenOff() : fullscreenOn();
+    });
+
+    var findPosX = function(progressBox) { 
+        var curleft = progressBox.offsetLeft;
+        while( progressBox = progressBox.offsetParent ) {
+            curleft += progressBox.offsetLeft;
+        } 
+        return curleft; 
+    }
+
+    var setPlayProgress = function(clickX) {
+        var progressBox = $videoControls.find('#video-progress-box').first();
+
+        var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(progressBox)) / progressBox.offsetWidth) ); 
+        videoPlayer.currentTime = newPercent * videoPlayer.duration; 
+        videoPlayProgress.style.left = newPercent * (progressBox.offsetWidth)  + "px";
+    }
+
+    $videoPlayProgress.on('mousedown', function() {
+        stopTrackPlayProgress();
+
+        playPause();
+
+        $document.on('mousemove', function(e) {
+            setPlayProgress(e.pageX);
+        });
+
+        $videoProgressBox.on('mouseup', function(e) {
+            $document.off('mousedown');
+            $document.off('mousemove');
+
+            videoPlayer.play();
+            setPlayProgress(e.pageX);
+            trackPlayProgress();
+        });
+    });
+
+    $document.on('keydown' , function(e) {
+        e = e || window.event; 
+        if ( (e.keyCode || e.which) === 32 ) playPause();
     });
 });
 

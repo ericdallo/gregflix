@@ -55,8 +55,26 @@ $controlsHeight: 2.2rem;
 		}
 	}
 
+	.time {
+		width: 12%;
+		height: 100%;
+		text-align: center;
+		display: inline-block;
+		position: relative;
+		font-size: 0.8rem;
+
+		span {
+			line-height: 0.2rem;
+			top: calc(50% - 0.1rem);
+			left: 0; 
+			position: absolute;
+			display: inline;
+			color: white;
+		}
+	}
+
 	.progress-container {
-		width: 90%;
+		width: 78%;
 		height: 100%;
 		display: inline-block;
 		position: relative;
@@ -71,11 +89,12 @@ $controlsHeight: 2.2rem;
 			position: absolute;
 
 			.progress-tooltip {
-				border: 0.5rem solid white;
+				cursor: pointer;
+				border: 0.4rem solid white;
 				border-radius: 50%;
 				background: white;
 				position: absolute;
-				top: -0.5rem;
+				top: -0.4rem;
 			}
 		}
 	}
