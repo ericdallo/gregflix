@@ -2,7 +2,7 @@ Number.prototype.leftPad = function (n,str){
     return Array(n-String(this).length+1).join(str||'0')+this;
 }
 
-define(['doc'], function($) {
+/*define(['doc'], function($) {
     'use strict'
 
     var $document             = $(document),
@@ -201,3 +201,4 @@ define(['doc'], function($) {
     });
 });
 
+*/

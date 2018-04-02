@@ -47,7 +47,7 @@
       <div class="caroussel-inner">
         {% for video in movies %}
           <div class="video">
-            <img class="video-img" src="http://file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} image preview"/>
+            <img class="video-img" src="http://file.gregflix.site/movies/{{video.slug}}/preview.png" crossorigin="anonymous" alt="{{video.title}} image preview"/>
             <a href="/movies/{{video.slug}}" class="video-details">
               <p class="video-title">{{video.title}}</p>
             </a>
