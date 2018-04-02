@@ -2,7 +2,7 @@ Number.prototype.leftPad = function (n,str){
     return Array(n-String(this).length+1).join(str||'0')+this;
 }
 
-/*define(['doc'], function($) {
+define(['doc'], function($) {
     'use strict'
 
     var $document             = $(document),
@@ -10,6 +10,7 @@ Number.prototype.leftPad = function (n,str){
         videoPlayer           = $videoPlayer.first(),
         $videoControls        = $('#video-controls'),
         videoControls         = $videoControls.first(),
+        $startButton          = $('.start-video'),
         $playButton           = $videoControls.find('#video-play'),
         $fullScreenButton     = $videoControls.find('#video-fullscreen'),
         $videoPlayProgress    = $videoControls.find('#video-play-progress'),
@@ -25,18 +26,24 @@ Number.prototype.leftPad = function (n,str){
         $videoSoundProgress   = $videoControls.find('#video-sound-progress'),
         videoSoundProgress    = $videoSoundProgress.first(),
         soundProgressHalfSize = (videoSoundProgress.offsetWidth / 2),
-        isFullscreen          = false,
         playProgressInterval  = 0;
 
+    var isFullscreen = function() {
+        return document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen;
+    }
+
     $videoControls.addClass('show');
+    $startButton.addClass('show');
 
     $videoPlayer.removeAttr('controls');
 
     $videoPlayer.on('loadeddata', function() {
+        $startButton.removeClass('loading');
+
         $videoPlayer.on('mouseover', function() {
             $videoControls.removeClass('hide');
 
-            if (isFullscreen) $videoControls.addClass('hide');
+            if (isFullscreen()) $videoControls.addClass('hide');
         });
 
         $videoControls.on('mouseover', function() {
@@ -68,15 +75,14 @@ Number.prototype.leftPad = function (n,str){
     var playPause = function() {
         if (videoPlayer.paused || videoPlayer.ended) {
             videoPlayer.play();
-            $playButton.addClass('paused');
         } else {
             videoPlayer.pause();
-            $playButton.removeClass('paused');
         }
     };
 
     $videoPlayer.on('click', playPause);
     $playButton.on('click', playPause);
+    $startButton.on('click', playPause);
 
     $videoSound.on('click', function() {
         videoPlayer.muted = !videoPlayer.muted;
@@ -105,40 +111,29 @@ Number.prototype.leftPad = function (n,str){
 
     $videoPlayer.on('play', function() {
         $playButton.first().title = 'Pause';
-
+        $startButton.removeClass('show');
+        $playButton.addClass('paused');
         trackPlayProgress();
     }); 
 
     $videoPlayer.on('pause', function() {
-
+        $playButton.removeClass('paused');
         $playButton.first().title = 'Play';
 
         stopTrackPlayProgress();
     });
 
     var fullscreenOff = function() {
-        isFullscreen = false;
-
-        $videoPlayer.removeClass('fullscreen');
-        $videoControls.removeClass('fullscreen');
-        $fullScreenButton.removeClass('fullscreen-off');
+        document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen;
     };
 
     var fullscreenOn = function() {
-        isFullscreen = true;
-
-        $videoPlayer.addClass('fullscreen');
-        $videoControls.addClass('fullscreen');
-        $fullScreenButton.addClass('fullscreen-off');
-
-        $document.on('keydown' , function(e) {
-            e = e || window.event; 
-            if ( (e.keyCode || e.which) === 27 ) fullscreenOff();
-        });
+        var requestFullscreen = videoPlayer.requestFullscreen || videoPlayer.msRequestFullscreen || videoPlayer.mozRequestFullScreen || videoPlayer.webkitRequestFullscreen;
+        requestFullscreen.call(videoPlayer); 
     };
 
     $fullScreenButton.on('click', function() {
-        isFullscreen ? fullscreenOff() : fullscreenOn();
+        isFullscreen() ? fullscreenOff() : fullscreenOn();
     });
 
     var findPosX = function(box) { 
@@ -188,11 +183,10 @@ Number.prototype.leftPad = function (n,str){
         $document.on('mousemove', function(e) {
             setSoundProgress(e.pageX);
         });
+    });
 
-        $document.on('mouseup', function(e) {
-            $document.off('mousemove');
-            $document.off('mouseup');
-        });
+    $document.on('mouseup', function(e) {
+        $document.off('mousemove');
     });
 
     $document.on('keydown' , function(e) {
@@ -201,4 +195,3 @@ Number.prototype.leftPad = function (n,str){
     });
 });
 
-*/

@@ -9,14 +9,6 @@ $controlsHeight: 2.2rem;
 	opacity: 0;
 	visibility: hidden;
 
-	&.fullscreen {
-		position: fixed;
-		left: 0;
-		bottom: 0;
-		overflow: hidden;
-		z-index: 11;
-	}
-
 	&.show {
 		opacity: 1;
 		visibility: visible;
@@ -29,7 +21,7 @@ $controlsHeight: 2.2rem;
 
 	.play {
 		display: inline-block;
-		width: 5%;
+		width: 8%;
 
 		button {
 			position: relative;
@@ -55,20 +47,17 @@ $controlsHeight: 2.2rem;
 				border-style: double;
 				border-width: 0 0 0 16px;
 			}
-
-			&:hover {
-				border-color: transparent transparent transparent #E5E5E5;
-			}
 		}
 	}
 
 	.time {
-		width: 12%;
+		width: 28%;
 		height: 100%;
 		text-align: center;
-		display: inline-block;
+		display: none;
 		position: relative;
 		font-size: 0.8rem;
+	    user-select: none;
 
 		span {
 			line-height: 0.2rem;
@@ -106,12 +95,12 @@ $controlsHeight: 2.2rem;
 	}
 
 	.progress-container {
-		width: 57%;
+		width: 28%;
 		@extend %tooltip-container;
 	}
 
 	.volume-icon {
-		width: 8%;
+		width: 10%;
 		height: 100%;
 		display: inline-block;
 
@@ -138,12 +127,12 @@ $controlsHeight: 2.2rem;
 	}
 
 	.volume-container {
-		width: 12%;
+		width: 13%;	
 		@extend %tooltip-container;
 	}
 
 	.fullscreen {
-		width: 6%;
+		width: 13%;
 		display: inline-block;
 		height: 100%;
 
@@ -164,6 +153,101 @@ $controlsHeight: 2.2rem;
 		}
 	}
 }
+
+@media (min-width: 340px) {
+	.video-controls {
+		.time {
+			display: inline-block;
+		}
+	}
+}
+
+@media (min-width: 420px) {
+	.video-controls {
+		.play {
+			width: 6%;
+		}
+
+		.time {
+			width: 22%;
+		}
+
+		.progress-container {
+			width: 31%;
+		}
+
+		.volume-icon {
+			width: 12%;
+		}
+
+		.volume-container {
+			width: 16%;
+		}
+	}
+}
+
+@media (min-width: 560px) {
+	.video-controls {
+		.play {
+			width: 5%;
+
+			button {
+				&:hover {
+					border-color: transparent transparent transparent #E5E5E5;
+				}
+			}
+		}
+
+		.time {
+			width: 18%;
+		}
+
+		.progress-container {
+			width: 51%;
+		}
+
+		.volume-icon {
+			width: 8%;
+		}
+
+		.volume-container {
+			width: 10%;
+		}
+
+		.fullscreen {
+			width: 8%;
+		}
+	}
+}
+
+@media (min-width: 760px) {
+	.video-controls {
+		.play {
+			width: 5%;
+		}
+
+		.time {
+			width: 12%;
+		}
+
+		.progress-container {
+			width: 57%;
+		}
+
+		.volume-icon {
+			width: 8%;
+		}
+
+		.volume-container {
+			width: 12%;
+		}
+
+		.fullscreen {
+			width: 6%;
+		}
+	}
+}
+
 
 @keyframes hide-controls {
     0% {
