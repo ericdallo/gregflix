@@ -6,101 +6,103 @@ define(['doc'], function($) {
     'use strict'
 
     var $document             = $(document),
-        $videoPlayer          = $('#video-player'),
-        videoPlayer           = $videoPlayer.first(),
-        $videoControls        = $('#video-controls'),
-        videoControls         = $videoControls.first(),
+        $player               = $('#video-player'),
+        player                = $player.first(),
+        $controls             = $('#video-controls'),
+        controls              = $controls.first(),
         $startButton          = $('.start-video'),
-        $playButton           = $videoControls.find('#video-play'),
-        $fullScreenButton     = $videoControls.find('#video-fullscreen'),
-        $videoPlayProgress    = $videoControls.find('#video-play-progress'),
-        videoPlayProgress     = $videoPlayProgress.first(),
-        playProgressHalfSize  = (videoPlayProgress.offsetWidth / 2),
-        $videoProgressBox     = $videoControls.find('#video-progress-box'),
-        videoProgressBox      = $videoProgressBox.first(),
-        $videoLength          = $videoControls.find('#video-length'),
-        $videoTime            = $videoControls.find('#video-time'),
-        $videoSound           = $videoControls.find('#video-sound'),
-        $videoSoundBox        = $videoControls.find('#video-sound-box'),
-        videoSoundBox         = $videoSoundBox.first(),
-        $videoSoundProgress   = $videoControls.find('#video-sound-progress'),
-        videoSoundProgress    = $videoSoundProgress.first(),
-        soundProgressHalfSize = (videoSoundProgress.offsetWidth / 2),
+        $playButton           = $controls.find('#video-play'),
+        $fullScreenButton     = $controls.find('#video-fullscreen'),
+        $playProgress         = $controls.find('#video-play-progress'),
+        $selectableProgress   = $controls.find('#video-progress-selectable'),
+        playProgress          = $playProgress.first(),
+        playProgressHalfSize  = (playProgress.offsetWidth / 2),
+        $progressBox          = $controls.find('#video-progress-box'),
+        progressBox           = $progressBox.first(),
+        $length               = $controls.find('#video-length'),
+        $time                 = $controls.find('#video-time'),
+        $sound                = $controls.find('#video-sound'),
+        $soundBox             = $controls.find('#video-sound-box'),
+        soundBox              = $soundBox.first(),
+        $soundProgress        = $controls.find('#video-sound-progress'),
+        $selectableSound      = $controls.find('#video-volume-selectable'),
+        soundProgress         = $soundProgress.first(),
+        soundProgressHalfSize = (soundProgress.offsetWidth / 2),
         playProgressInterval  = 0;
 
     var isFullscreen = function() {
         return document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen;
     }
 
-    $videoControls.addClass('show');
+    $controls.addClass('show');
     $startButton.addClass('show');
 
-    $videoPlayer.removeAttr('controls');
+    $player.removeAttr('controls');
 
-    $videoPlayer.on('loadeddata', function() {
+    $player.on('loadeddata', function() {
         $startButton.removeClass('loading');
 
-        $videoPlayer.on('mouseover', function() {
-            $videoControls.removeClass('hide');
+        $player.on('mouseover', function() {
+            $controls.removeClass('hide');
 
-            if (isFullscreen()) $videoControls.addClass('hide');
+            if (isFullscreen()) $controls.addClass('hide');
         });
 
-        $videoControls.on('mouseover', function() {
-            $videoControls.removeClass('hide');            
+        $controls.on('mouseover', function() {
+            $controls.removeClass('hide');            
         });
 
-        $videoPlayer.on('mouseout', function() {
-             if (!videoPlayer.paused) $videoControls.addClass('hide');
+        $player.on('mouseout', function() {
+             if (!player.paused) $controls.addClass('hide');
         });
 
-        $videoControls.on('mouseout', function() {
-             if (!videoPlayer.paused) $videoControls.addClass('hide');
+        $controls.on('mouseout', function() {
+             if (!player.paused) $controls.addClass('hide');
         });
 
-        var hours = parseInt(videoPlayer.duration / 60 / 60, 10),
-            mins = parseInt(videoPlayer.duration / 60, 10),
-            secs = parseInt(videoPlayer.duration % 60, 10),
+        var hours = parseInt(player.duration / 60 / 60, 10),
+            mins = parseInt(player.duration / 60, 10),
+            secs = parseInt(player.duration % 60, 10),
             finalLength = hours === 0 ? mins + ':' + secs : hours + ':' + mins + ':' + secs;
 
-        $videoLength.text(finalLength);
+        $length.text(finalLength);
 
-        $videoTime.text('00:00');
+        $time.text('00:00');
 
-        var soundBox = $videoControls.find('#video-sound-box').first();
+        var soundBox = $controls.find('#video-sound-box').first();
 
-        videoSoundProgress.style.left = soundBox.offsetWidth - soundProgressHalfSize + "px";
+        soundProgress.style.left = soundBox.offsetWidth - soundProgressHalfSize + "px";
     });
 
     var playPause = function() {
-        if (videoPlayer.paused || videoPlayer.ended) {
-            videoPlayer.play();
+        if (player.paused || player.ended) {
+            player.play();
         } else {
-            videoPlayer.pause();
+            player.pause();
         }
     };
 
-    $videoPlayer.on('click', playPause);
+    $player.on('click', playPause);
     $playButton.on('click', playPause);
     $startButton.on('click', playPause);
 
-    $videoSound.on('click', function() {
-        videoPlayer.muted = !videoPlayer.muted;
-        $videoSound.toggleClass('mute');
+    $sound.on('click', function() {
+        player.muted = !player.muted;
+        $sound.toggleClass('mute');
     });
 
     var trackPlayProgress = function() {
         (function progressTrack() {
-            var hours = parseInt(videoPlayer.currentTime / 60 / 60, 10),
-                mins = parseInt(videoPlayer.currentTime / 60, 10),
-                secs = parseInt(videoPlayer.currentTime % 60, 10),
+            var hours = parseInt(player.currentTime / 60 / 60, 10),
+                mins = parseInt(player.currentTime / 60, 10),
+                secs = parseInt(player.currentTime % 60, 10),
                 currentTime = hours === 0 ? 
                     mins.leftPad(2) + ':' + secs.leftPad(2) : 
                     hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
 
-            $videoTime.text(currentTime);
+            $time.text(currentTime);
 
-            videoPlayProgress.style.left = ( (videoPlayer.currentTime / videoPlayer.duration) * (videoProgressBox.offsetWidth) - playProgressHalfSize ) + "px";
+            playProgress.style.left = ( (player.currentTime / player.duration) * (progressBox.offsetWidth) - playProgressHalfSize ) + "px";
             playProgressInterval = setTimeout(progressTrack, 50); 
          })(); 
     };
@@ -109,14 +111,14 @@ define(['doc'], function($) {
         clearTimeout(playProgressInterval);
     };
 
-    $videoPlayer.on('play', function() {
+    $player.on('play', function() {
         $playButton.first().title = 'Pause';
         $startButton.removeClass('show');
         $playButton.addClass('paused');
         trackPlayProgress();
     }); 
 
-    $videoPlayer.on('pause', function() {
+    $player.on('pause', function() {
         $playButton.removeClass('paused');
         $playButton.first().title = 'Play';
 
@@ -128,8 +130,8 @@ define(['doc'], function($) {
     };
 
     var fullscreenOn = function() {
-        var requestFullscreen = videoPlayer.requestFullscreen || videoPlayer.msRequestFullscreen || videoPlayer.mozRequestFullScreen || videoPlayer.webkitRequestFullscreen;
-        requestFullscreen.call(videoPlayer); 
+        var requestFullscreen = player.requestFullscreen || player.msRequestFullscreen || player.mozRequestFullScreen || player.webkitRequestFullscreen;
+        requestFullscreen.call(player); 
     };
 
     $fullScreenButton.on('click', function() {
@@ -145,22 +147,22 @@ define(['doc'], function($) {
     }
 
     var setPlayProgress = function(clickX) {
-        var progressBox = $videoControls.find('#video-progress-box').first();
+        var progressBox = $controls.find('#video-progress-box').first();
 
         var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(progressBox)) / progressBox.offsetWidth) ); 
-        videoPlayer.currentTime = newPercent * videoPlayer.duration; 
-        videoPlayProgress.style.left = newPercent * (progressBox.offsetWidth) - playProgressHalfSize + "px";
+        player.currentTime = newPercent * player.duration; 
+        playProgress.style.left = newPercent * (progressBox.offsetWidth) - playProgressHalfSize + "px";
     }
 
     var setSoundProgress = function(clickX) {
-        var soundBox = $videoControls.find('#video-sound-box').first();
+        var soundBox = $controls.find('#video-sound-box').first();
 
         var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(soundBox)) / soundBox.offsetWidth) );
-        videoPlayer.volume = newPercent;
-        videoSoundProgress.style.left = newPercent * (soundBox.offsetWidth) - soundProgressHalfSize + "px";
+        player.volume = newPercent;
+        soundProgress.style.left = newPercent * (soundBox.offsetWidth) - soundProgressHalfSize + "px";
     }
 
-    $videoPlayProgress.on('mousedown', function() {
+    $playProgress.on('mousedown', function() {
         stopTrackPlayProgress();
 
         playPause();
@@ -173,16 +175,24 @@ define(['doc'], function($) {
             $document.off('mousemove');
             $document.off('mouseup');
 
-            videoPlayer.play();
+            player.play();
             setPlayProgress(e.pageX);
             trackPlayProgress();
         });
     });
 
-    $videoSoundProgress.on('mousedown', function() {
+    $selectableProgress.on('click', function(e) {
+        setPlayProgress(e.pageX);
+    });
+
+    $soundProgress.on('mousedown', function() {
         $document.on('mousemove', function(e) {
             setSoundProgress(e.pageX);
         });
+    });
+
+    $selectableSound.on('click', function(e) {
+        setSoundProgress(e.pageX);
     });
 
     $document.on('mouseup', function(e) {

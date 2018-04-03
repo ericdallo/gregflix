@@ -74,22 +74,35 @@ $controlsHeight: 2.2rem;
 		display: inline-block;
 		position: relative;
 
-		div {
-			background-color: white;
-			vertical-align: middle;
-			width: 100%;
-			height: 2px;
-			top: $controlsHeight / 2;
+		> div {
 			position: absolute;
+			top: 25%;
+			width: 100%;
+			height: 50%;
+			cursor: pointer;
 
-			span {
-				cursor: pointer;
-				border: 0.4rem solid white;
-				border-radius: 50%;
-				background: white;
+			> div {
+				background-color: white;
+				vertical-align: middle;
+				width: 100%;
+				height: 2px;
+				top: $controlsHeight / 4;
 				position: absolute;
-				top: -0.4rem;
-				left: -0.2rem;
+
+				> span {
+					cursor: pointer;
+					border: 0.4rem solid white;
+					border-radius: 50%;
+					background: white;
+					position: absolute;
+					top: -0.4rem;
+					left: -0.4rem;
+					@include transition(box-shadow 0.1s);
+
+					&:hover {
+						box-shadow: 0px 0px 14px 0px white;
+					}
+				}
 			}
 		}
 	}
