@@ -13,8 +13,6 @@ $moveRight:$videoWidth * ($growFactor - 1);
 $mobileVideoWidth: 14em;
 $mobileVideoHeight:$mobileVideoWidth / (16/9);
 
-$iconSize: 3em;
-
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
@@ -187,13 +185,17 @@ $iconSize: 3em;
     left: 50%;
   }
 
+  $playBorderSize: 3em;
+  $borderSize: 0.2em;
+  $playSize: 0.9em;
+  $playMargin: -($playBorderSize / 2) - ($borderSize / 2);
+
   &:after {
-    margin-top: -($iconSize / 2);
-    margin-left: -($iconSize / 2);
-    width: $iconSize;
-    height: $iconSize;
-    border: 3px solid white;
-    line-height: $iconSize;
+    margin-top: $playMargin;
+    margin-left: $playMargin;
+    width: $playBorderSize;
+    height: $playBorderSize;
+    border: $borderSize solid white;
     text-align: center;
     border-radius: 100%;
     background: rgba(0,0,0,0.5);
@@ -201,12 +203,13 @@ $iconSize: 3em;
   }
 
   &:before {
-    content: '▶';
-    font-size: 2em;
-    top: 50%;
-    left: calc(50% + 0.2em);
-    transform: translate(-50%, -50%);
-    text-align: center;
+    margin-left: -($playSize / 1.5);
+    margin-top: -$playSize;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: $playSize 0 $playSize $playSize * 1.8;
+    border-color: transparent transparent transparent #ffffff;
     z-index: 2;
   }
 
