@@ -30,6 +30,10 @@
         ~ .navigation-menu .side-menu {
             left: 0;
         }
+
+        ~ .content {
+            margin-left: 300px;
+        }
     }
 }
 
@@ -147,4 +151,9 @@
             }
         }
     }
+}
+
+.content {
+    @include transition(margin 0.3s);
+    position: relative;
 }
