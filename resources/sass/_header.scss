@@ -126,16 +126,38 @@
         position: fixed;
         z-index: 22;
         @include transition(left 0.3s);
+        padding-top: 0.5em;
 
-        .link a {
-            padding-left: 1em;
-            padding-top: 0.5em;
-            padding-bottom: 0.5em;
-            text-decoration: none;
-            color: white;    
-            font-size: 1.5em;
-            letter-spacing: 2px;
-            display: block;            
+        .link {
+            position: relative;
+            $iconSize: 1.5em;
+
+            &:before {
+                content: '';
+                width: $iconSize;
+                height: $iconSize;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                margin-top: -($iconSize / 2);
+                margin-left: 1em;
+                cursor: pointer;
+            }
+
+            &.home:before { background: url($images-dir + 'home.png') no-repeat center; background-size: 100%; }
+            &.serie:before { background: url($images-dir + 'serie.png') no-repeat center; background-size: 100%; }
+            &.movie:before { background: url($images-dir + 'movie.png') no-repeat center; background-size: 100%; }
+
+            a {
+                padding-left: 3em;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;
+                text-decoration: none;
+                color: white;    
+                font-size: 1.5em;
+                letter-spacing: 2px;
+                display: block;            
+            }
         }
 
         .github {
