@@ -161,11 +161,23 @@
         }
 
         .github {
+            $size: 2.5em;
+
             position: absolute;
-            left: calc(50% - 2em);
-            bottom: 4em;
-            width: 2.5em;
-            height: 2.5em;
+            left: 50%;
+            margin-left: -($size / 2);
+            bottom: $size * 2;
+            width: $size;
+            height: $size;
+            border-radius: 50%;
+            background-color: white;
+            @include transition(box-shadow 0.2s);
+            @include transition(transform 0.3s ease);
+
+            &:hover {
+                box-shadow: 0px 0px 14px 0px white;
+                @include transform(rotateY(180deg));
+            }
 
             img {
                 width: 100%;
