@@ -262,6 +262,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
     width: $videoWidth;
     height: $videoHeight;
 
+    &:focus,
     &:hover {
       transform: scale($growFactor);
       opacity: 1;

@@ -96,23 +96,20 @@
 		$triangleSize: 1em;
 
 		.previous-episode {
+			font-size: 1rem;
 			left: $triangleSize;
 
 			&:after {
-				
 				left: -$triangleSize;
 				top: 0;
 				border-right: $triangleSize solid #EEE;
 				border-top: $triangleSize solid transparent;
 				border-bottom: $triangleSize solid transparent;
 			}
-
-			&:hover {
-				margin-left: -0.5em;
-			}
 		}
 
 		.next-episode {
+			font-size: 1rem;
 			right: $triangleSize;
 
 			&:after {
@@ -121,10 +118,6 @@
 				border-left: $triangleSize solid #EEE;
 				border-top: $triangleSize solid transparent;
 				border-bottom: $triangleSize solid transparent;
-			}
-
-			&:hover {
-				margin-right: -0.5em;
 			}
 		}
 	}
@@ -206,6 +199,14 @@
 						display: none;
 					}
 				}
+			}
+
+			.previous-episode:hover {
+				margin-left: -0.5em;
+			}
+
+			.next-episode:hover {
+				margin-right: -0.5em;
 			}
 		}
 

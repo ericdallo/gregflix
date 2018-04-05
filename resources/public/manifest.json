@@ -2,7 +2,7 @@
     "name": "Gregflix",
     "short_name": "gregflix",
     "start_url": "/?gregflix_source=web_app_manifest",
-    "display": "standalone",
+    "display": "fullscreen",
     "orientation": "portrait",
     "theme_color": "#3498db",
     "background_color": "#C11430",
