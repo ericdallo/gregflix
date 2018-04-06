@@ -36,6 +36,7 @@ define(['doc'], function($) {
 
     $controls.addClass('show');
     $startButton.addClass('show');
+    $player.addClass('custom-controls');
 
     $player.removeAttr('controls');
 
@@ -200,8 +201,19 @@ define(['doc'], function($) {
     });
 
     $document.on('keydown' , function(e) {
-        e = e || window.event; 
-        if ( (e.keyCode || e.which) === 32 ) playPause();
+        e = e || window.event;
+
+        var pressedKey = (e.keyCode || e.which);
+        if (pressedKey === 32) playPause();
+
+        if (pressedKey === 37) {
+            player.currentTime -= 10;
+            $controls.toggleClass('hide');
+        }
+        if (pressedKey === 39) {
+            player.currentTime += 10;
+            $controls.toggleClass('hide');
+        }
     });
 });
 

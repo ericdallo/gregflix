@@ -8,6 +8,7 @@ $controlsHeight: 2.2rem;
 	@include transition(opacity 200ms);
 	opacity: 0;
 	visibility: hidden;
+	z-index: 2147483647; // Chrome fullscreen magical-number
 
 	&.show {
 		opacity: 1;

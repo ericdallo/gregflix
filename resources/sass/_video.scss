@@ -127,6 +127,12 @@
 		width: 100%;
 		height: 100%;
 
+		&.custom-controls {
+			&::-webkit-media-controls {
+			  display:none !important;
+			}
+		}
+
 		&.fullscreen {
 			position: fixed;
 			top: 0;
