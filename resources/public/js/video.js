@@ -36,7 +36,6 @@ define(['doc'], function($) {
 
     $controls.addClass('show');
     $startButton.addClass('show');
-    $player.addClass('custom-controls');
 
     $player.removeAttr('controls');
 
