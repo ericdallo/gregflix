@@ -113,8 +113,8 @@ define(['doc'], function($) {
     };
 
     $player.on('play', function() {
-        $playButton.first().title = 'Pause';
         $startButton.removeClass('show');
+        $playButton.first().title = 'Pause';
         $playButton.addClass('paused');
         trackPlayProgress();
     }); 
@@ -215,5 +215,16 @@ define(['doc'], function($) {
             $controls.toggleClass('hide');
         }
     });
+
+    $player.on('waiting', function () {
+        $startButton.addClass('downloading');
+        $startButton.addClass('show');
+    });
+
+    $player.on('playing', function () {
+        $startButton.removeClass('show');
+        $startButton.removeClass('downloading');
+    });
 });
+
 

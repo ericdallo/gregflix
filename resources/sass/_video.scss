@@ -39,7 +39,7 @@
 			margin-top: $playMargin;
 			left: 50%;
 			top: 50%;
-			z-index: 20;
+			z-index: 2147483647; // Chrome fullscreen magical-number
 			border: $borderSize solid white;
 			border-radius: 50%;
 			background-color: rgba(0, 0 ,0 ,0.4);
@@ -72,6 +72,16 @@
 
 			&.fullscreen {
 				position: fixed;
+			}
+
+			&.downloading {
+				background: url('http://file.gregflix.site/images/video/downloading.gif') no-repeat center;
+				background-size: 100%;
+				border: none;
+
+				&:after {
+					display: none;
+				}
 			}
 		}
 
@@ -200,6 +210,9 @@
 				&.loading {
 					background: url('http://file.gregflix.site/images/video/loading.gif') no-repeat center;
 					background-size: 100%;
+					border: none;
+					opacity: 1;
+					visibility: visible;
 
 					&:after {
 						display: none;
