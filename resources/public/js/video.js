@@ -30,22 +30,21 @@ define(['doc'], function($) {
         soundProgressHalfSize = (soundProgress.offsetWidth / 2),
         playProgressInterval  = 0;
 
-    var isFullscreen = function() {
-        return document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen;
-    }
+    var initControls = function() {
+        $controls.addClass('show');
+        $startButton.addClass('show');
+        $player.removeAttr('controls');
+    }();
 
-    $controls.addClass('show');
-    $startButton.addClass('show');
-
-    $player.removeAttr('controls');
+    var playPause = function() {
+        (player.paused || player.ended) ? player.play() : player.pause()
+    };
 
     $player.on('loadeddata', function() {
         $startButton.removeClass('loading');
 
         $player.on('mouseover', function() {
             $controls.removeClass('hide');
-
-            if (isFullscreen()) $controls.addClass('hide');
         });
 
         $controls.on('mouseover', function() {
@@ -73,14 +72,6 @@ define(['doc'], function($) {
 
         soundProgress.style.left = soundBox.offsetWidth - soundProgressHalfSize + "px";
     });
-
-    var playPause = function() {
-        if (player.paused || player.ended) {
-            player.play();
-        } else {
-            player.pause();
-        }
-    };
 
     $player.on('click', playPause);
     $playButton.on('click', playPause);
@@ -125,17 +116,13 @@ define(['doc'], function($) {
         stopTrackPlayProgress();
     });
 
-    var fullscreenOff = function() {
-        document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen;
-    };
-
-    var fullscreenOn = function() {
-        var requestFullscreen = player.requestFullscreen || player.msRequestFullscreen || player.mozRequestFullScreen || player.webkitRequestFullscreen;
-        requestFullscreen.call(player); 
-    };
-
     $fullScreenButton.on('click', function() {
-        isFullscreen() ? fullscreenOff() : fullscreenOn();
+        if (document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen) {
+            document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen;
+        } else {
+            var requestFullscreen = player.requestFullscreen || player.msRequestFullscreen || player.mozRequestFullScreen || player.webkitRequestFullscreen;
+            requestFullscreen.call(player); 
+        }
     });
 
     var findPosX = function(box) { 

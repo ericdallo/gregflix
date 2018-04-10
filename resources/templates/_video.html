@@ -1,8 +1,8 @@
-<span class="start-video loading"></span>
 <video id="video-player" autobuffer defaultMuted controls preload="auto" crossorigin="anonymous" class="media" controlsList="nodownload">
   <source src="{{video.url}}" type="video/mp4" >
   <track label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}"  default >
 </video>
+<span class="start-video loading downloading"></span>
 <section id="video-controls" class="video-controls"> 
   <div class="play"><button id="video-play" title="Play"></button></div>
   <div class="time">
