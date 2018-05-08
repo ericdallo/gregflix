@@ -51,7 +51,7 @@ $controlsHeight: 2.2rem;
 	}
 
 	.time {
-		width: 28%;
+		width: 30%;
 		height: 100%;
 		text-align: center;
 		display: none;
@@ -108,7 +108,7 @@ $controlsHeight: 2.2rem;
 	}
 
 	.progress-container {
-		width: 28%;
+		width: 26%;
 		@extend %tooltip-container;
 	}
 
@@ -178,15 +178,15 @@ $controlsHeight: 2.2rem;
 @media (min-width: 420px) {
 	.video-controls {
 		.play {
-			width: 6%;
+			width: 5%;
 		}
 
 		.time {
-			width: 22%;
+			width: 30%;
 		}
 
 		.progress-container {
-			width: 31%;
+			width: 25%;
 		}
 
 		.volume-icon {
@@ -194,7 +194,11 @@ $controlsHeight: 2.2rem;
 		}
 
 		.volume-container {
-			width: 16%;
+			width: 18%;
+		}
+
+		.fullscreen {
+			width: 10%;
 		}
 	}
 }
@@ -212,11 +216,11 @@ $controlsHeight: 2.2rem;
 		}
 
 		.time {
-			width: 18%;
+			width: 20%;
 		}
 
 		.progress-container {
-			width: 51%;
+			width: 49%;
 		}
 
 		.volume-icon {
@@ -233,18 +237,102 @@ $controlsHeight: 2.2rem;
 	}
 }
 
-@media (min-width: 760px) {
+@media (min-width: 799px) {
 	.video-controls {
 		.play {
 			width: 5%;
 		}
 
 		.time {
-			width: 18%;
+			width: 26%;
 		}
 
 		.progress-container {
-			width: 51%;
+			width: 39%;
+		}
+
+		.volume-icon {
+			width: 8%;
+		}
+
+		.volume-container {
+			width: 12%;
+		}
+
+		.fullscreen {
+			width: 10%;
+		}
+	}
+}
+
+@media (min-width: 1200px) {
+	.video-controls {
+		.play {
+			width: 5%;
+		}
+
+		.time {
+			width: 20%;
+		}
+
+		.progress-container {
+			width: 47%;
+		}
+
+		.volume-icon {
+			width: 8%;
+		}
+
+		.volume-container {
+			width: 12%;
+		}
+
+		.fullscreen {
+			width: 8%;
+		}
+	}
+}
+
+@media (min-width: 1440px) {
+	.video-controls {
+		.play {
+			width: 4%;
+		}
+
+		.time {
+			width: 15%;
+		}
+
+		.progress-container {
+			width: 55%;
+		}
+
+		.volume-icon {
+			width: 8%;
+		}
+
+		.volume-container {
+			width: 10%;
+		}
+
+		.fullscreen {
+			width: 8%;
+		}
+	}
+}
+
+@media (min-width: 1920px) {
+	.video-controls {
+		.play {
+			width: 3%;
+		}
+
+		.time {
+			width: 14%;
+		}
+
+		.progress-container {
+			width: 57%;
 		}
 
 		.volume-icon {
