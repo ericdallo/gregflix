@@ -9,4 +9,4 @@
 		{:series (shuffle series),
 		 :series-seasons series-seasons,
 		 :series-episodes series-episodes,
-	 	 :movies (movies/find-all)}))
+	 	 :movies (shuffle (movies/find-all))}))

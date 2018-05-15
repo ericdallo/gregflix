@@ -25,6 +25,10 @@
       <section class="description">
         <p>{{video.description}}</p>
       </section>
+      <section class="download">
+        <a target="_blank" href="{{video.url}}" download class="download-video">Download video</a>
+        <a target="_blank" href="{{video.url|replace:.mp4:.srt}}" download class="download-subtitle">Download subtitle</a>
+      </section>
     </article>
   </article>
 </main>
