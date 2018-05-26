@@ -1,5 +1,5 @@
 <video id="video-player" autobuffer defaultMuted controls preload="auto" crossorigin="anonymous" class="media" controlsList="nodownload">
-  <source src="{{video.url}}" type="video/mp4" >
+  <source src="/js/test.mp4" type="video/mp4" >
   <track label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}"  default >
 </video>
 <span class="start-video loading"></span>
@@ -27,6 +27,8 @@
       </div>
     </div>
   </div>
-      
+  
+  <!--<div class="cast"><button id="cast-on"></button></div>-->
+  <div class="cast"><button is="google-cast-button"></button></div>
   <div class="fullscreen"><button id="video-fullscreen" title="FullScreen Toggle"></button></div>
 </section>

@@ -28,7 +28,15 @@ define(['doc'], function($) {
         $selectableSound      = $controls.find('#video-volume-selectable'),
         soundProgress         = $soundProgress.first(),
         soundProgressHalfSize = (soundProgress.offsetWidth / 2),
-        playProgressInterval  = 0;
+        playProgressInterval  = 0
+
+    var initCastOptions = function() {
+        cast.framework.CastContext.getInstance().setOptions({
+          receiverApplicationId:
+            chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        });
+    };
 
     var initControls = function() {
         $controls.addClass('show');
@@ -41,6 +49,7 @@ define(['doc'], function($) {
     };
 
     $player.on('loadeddata', function() {
+        initCastOptions();
         $startButton.removeClass('loading');
 
         $player.on('mouseover', function() {
@@ -216,6 +225,7 @@ define(['doc'], function($) {
         $startButton.removeClass('show');
         $startButton.removeClass('downloading');
     });
+
 });
 
 
