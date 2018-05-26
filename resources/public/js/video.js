@@ -28,7 +28,9 @@ define(['doc'], function($) {
         $selectableSound      = $controls.find('#video-volume-selectable'),
         soundProgress         = $soundProgress.first(),
         soundProgressHalfSize = (soundProgress.offsetWidth / 2),
-        playProgressInterval  = 0
+        playProgressInterval  = 0,
+        castMediaInfo         = null,
+        currentMedia          = null;
 
     var initCastOptions = function() {
         cast.framework.CastContext.getInstance().setOptions({
@@ -36,6 +38,26 @@ define(['doc'], function($) {
             chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
             autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
         });
+
+        var videoSrc = $player.find('source').attr('src'),
+            subtitleSrc = $player.find('#subtitle').attr('src');
+
+        var subtitle = new chrome.cast.media.Track(1, chrome.cast.media.TrackType.TEXT);
+        subtitle.trackContentId = subtitleSrc;
+        subtitle.trackContentType = 'text/vtt';
+        subtitle.subtype = chrome.cast.media.TextTrackType.SUBTITLES;
+        subtitle.name = 'Subtitle';
+        subtitle.language = 'pt-BR';
+        subtitle.customData = null;
+
+        castMediaInfo = new chrome.cast.media.MediaInfo(videoSrc);
+        castMediaInfo.contentType = 'video/mp4';
+        castMediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+        castMediaInfo.customData = null;
+        castMediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;
+        castMediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
+        castMediaInfo.duration = null;
+        castMediaInfo.tracks = [subtitle];
     };
 
     var initControls = function() {
@@ -224,8 +246,34 @@ define(['doc'], function($) {
     $player.on('playing', function () {
         $startButton.removeClass('show');
         $startButton.removeClass('downloading');
+
+        castPlay();
     });
 
+    $player.on('pause', function () {
+        castPause();
+    });
+
+    var castPlay = function() {
+        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+
+        if (castSession != null) {
+            var request = new chrome.cast.media.LoadRequest(castMediaInfo);
+            request.activeTrackIds = [1];
+
+            castSession.loadMedia(request).then(
+              function(how, media) { currentMedia = media },
+              function(errorCode) { console.log('Cast error code: ' + errorCode); });
+        }
+    }
+
+    var castPause = function() {
+        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+
+        if (castSession != null) {
+            currentMedia.pause(null);
+        }
+    }
 });
 
 
