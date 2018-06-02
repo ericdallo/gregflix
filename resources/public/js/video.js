@@ -250,6 +250,10 @@ define(['doc'], function($) {
         castPlay();
     });
 
+    function onMediaDiscovered(how, media) {
+       currentMedia = media;
+    }
+
     $player.on('pause', function () {
         castPause();
     });
@@ -257,12 +261,12 @@ define(['doc'], function($) {
     var castPlay = function() {
         var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
 
-        if (castSession != null) {
+        if (castSession != null && currentMedia == null) {
             var request = new chrome.cast.media.LoadRequest(castMediaInfo);
             request.activeTrackIds = [1];
 
             castSession.loadMedia(request).then(
-              function(how, media) { currentMedia = media },
+              onMediaDiscovered.bind(this, 'loadMedia'),
               function(errorCode) { console.log('Cast error code: ' + errorCode); });
         }
     }
@@ -270,8 +274,8 @@ define(['doc'], function($) {
     var castPause = function() {
         var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
 
-        if (castSession != null) {
-            currentMedia.pause(null);
+        if (castSession != null && currentMedia != null) {
+            currentMedia.pause(null, null, null);
         }
     }
 });
