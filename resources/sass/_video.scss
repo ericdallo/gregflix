@@ -84,52 +84,6 @@
 				}
 			}
 		}
-
-		.option {
-			position: absolute;
-			bottom: -2.5em;
-			text-decoration: none;
-			color: black;
-			background-color: #EEE;
-			padding: 0.5em;
-			font-family: 'Museo Sans';
-			@include transition(margin 0.2s);
-
-			&:after {
-				content: '';
-				position: absolute;
-				width: 0;
-				height: 0;
-			}
-		}
-
-		$triangleSize: 1em;
-
-		.previous-episode {
-			font-size: 1rem;
-			left: $triangleSize;
-
-			&:after {
-				left: -$triangleSize;
-				top: 0;
-				border-right: $triangleSize solid #EEE;
-				border-top: $triangleSize solid transparent;
-				border-bottom: $triangleSize solid transparent;
-			}
-		}
-
-		.next-episode {
-			font-size: 1rem;
-			right: $triangleSize;
-
-			&:after {
-				right: -$triangleSize;
-				top: 0;
-				border-left: $triangleSize solid #EEE;
-				border-top: $triangleSize solid transparent;
-				border-bottom: $triangleSize solid transparent;
-			}
-		}
 	}
 
 	.media {
@@ -194,7 +148,7 @@
 			padding: 0.8em 0;
 			color: $base-blue;
 			display: inline-block;
-			@include transition(background-color 200ms)
+			@include transition(background-color 100ms)
 
 			&:hover {
 				background-color: $base-blue;
@@ -234,14 +188,6 @@
 						display: none;
 					}
 				}
-			}
-
-			.previous-episode:hover {
-				margin-left: -0.5em;
-			}
-
-			.next-episode:hover {
-				margin-right: -0.5em;
 			}
 		}
 
@@ -286,7 +232,7 @@
 						border-right: 1em solid #eee;
 						border-top: 1em solid transparent;
 						border-bottom: 1em solid transparent;
-						@include transition(border-color 200ms)
+						@include transition(border-color 100ms)
 						z-index: 2;
 					}
 

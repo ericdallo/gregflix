@@ -2,3 +2,73 @@
 @import 'logo';
 @import 'header';
 @import 'video';
+
+$triangleSize: 1em;
+$triangleSizeHover: 1.2em;
+
+.video {
+	.video-container {
+
+		.option {
+			position: absolute;
+			bottom: -2.5em;
+			text-decoration: none;
+			color: black;
+			background-color: #EEE;
+			padding: 0.5em;
+			font-family: 'Museo Sans';			
+			@include transition(border-color 0.1s);
+
+			&:after {
+				content: '';
+				position: absolute;
+				width: 0;
+				height: 0;
+			}
+		}
+
+		.previous-episode {
+			font-size: 1rem;
+			left: $triangleSize;
+			border-right: 3px solid #EEE;
+
+			&:after {
+				left: -$triangleSize;
+				top: 0;
+				border-right: $triangleSize solid #EEE;
+				border-top: $triangleSize solid transparent;
+				border-bottom: $triangleSize solid transparent;
+			}
+		}
+
+		.next-episode {
+			font-size: 1rem;
+			right: $triangleSize;
+			border-left: 3px solid #EEE;
+
+			&:after {
+				right: -$triangleSize;
+				top: 0;
+				border-left: $triangleSize solid #EEE;
+				border-top: $triangleSize solid transparent;
+				border-bottom: $triangleSize solid transparent;
+				z-index: 2;
+			}
+		}
+	}
+}
+
+@media (min-width: 799px) {
+	.video {
+		.video-container {
+			.previous-episode:hover {
+				border-right: 3px solid $base-blue;
+
+			}
+
+			.next-episode:hover {
+				border-left: 3px solid $base-blue;
+			}
+		}
+	}
+}
