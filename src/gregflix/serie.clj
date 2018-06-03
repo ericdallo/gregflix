@@ -13,6 +13,7 @@
 		select s.id, s.title, s.slug, s.description, s.url,
   			if (cs.season is null, s.season, cs.season) as season,
   			if (cs.episode is null, s.episode, cs.episode) as episode,
+  			(cs.id is not null) as watched,
   			s.episode_name
   			from serie s 
   			left join current_serie cs on (s.slug = cs.serie_slug and cs.user_id = ?)

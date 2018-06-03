@@ -15,6 +15,9 @@
             <img class="video-img" src="http://file.gregflix.site/series/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
             <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
             <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
+              {% if video.watched = 1 %}
+                <p class='keep-watching'>Continuar assistindo</p>
+              {% endif %}
               <p class="video-title">{{video.title}}</p>
             </a>
             <label for="episodes-{{video.slug}}" class="episodes-flag"></label>
