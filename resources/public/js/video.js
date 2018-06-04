@@ -59,14 +59,19 @@ define(['doc'], function($) {
              if (!player.paused) $controls.addClass('hide');
         });
 
+        $time.text('00:00');
+
         var hours = parseInt(player.duration / 60 / 60, 10),
             mins = parseInt(player.duration / 60, 10),
-            secs = parseInt(player.duration % 60, 10),
-            finalLength = hours === 0 ? mins + ':' + secs : hours + ':' + mins + ':' + secs;
+            secs = parseInt(player.duration % 60, 10);
+
+        if (mins > 60) {
+            mins = mins % 60;
+        }
+
+        var finalLength = hours === 0 ? mins + ':' + secs : hours + ':' + mins + ':' + secs;
 
         $length.text(finalLength);
-
-        $time.text('00:00');
 
         var soundBox = $controls.find('#video-sound-box').first();
 
