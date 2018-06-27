@@ -2,7 +2,7 @@ Number.prototype.leftPad = function (n,str){
     return Array(n-String(this).length+1).join(str||'0')+this;
 }
 
-define(['doc'], function($) {
+define(['doc', 'cast'], function($, $cast) {
     'use strict'
 
     var $document             = $(document),
@@ -33,31 +33,26 @@ define(['doc'], function($) {
         currentMedia          = null;
 
     var initCastOptions = function() {
-        cast.framework.CastContext.getInstance().setOptions({
-          receiverApplicationId:
-            chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
-            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-        });
 
         var videoSrc = $player.find('source').attr('src'),
             subtitleSrc = $player.find('#subtitle').attr('src');
 
-        var subtitle = new chrome.cast.media.Track(1, chrome.cast.media.TrackType.TEXT);
-        subtitle.trackContentId = subtitleSrc;
-        subtitle.trackContentType = 'text/vtt';
-        subtitle.subtype = chrome.cast.media.TextTrackType.SUBTITLES;
-        subtitle.name = 'Subtitle';
-        subtitle.language = 'pt-BR';
-        subtitle.customData = null;
+        $cast.init(videoSrc, subtitleSrc, {
+            'connected': function() {
+                $startButton.addClass('show');
 
-        castMediaInfo = new chrome.cast.media.MediaInfo(videoSrc);
-        castMediaInfo.contentType = 'video/mp4';
-        castMediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
-        castMediaInfo.customData = null;
-        castMediaInfo.streamType = chrome.cast.media.StreamType.BUFFERED;
-        castMediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
-        castMediaInfo.duration = null;
-        castMediaInfo.tracks = [subtitle];
+                player.muted = true;
+                $sound.addClass('mute');
+            },
+            'played': function() {
+                $startButton.removeClass('show');
+                $playButton.addClass('paused');
+            },
+            'paused': function() {
+                $startButton.addClass('show');
+                $playButton.removeClass('paused');
+            },
+        });
     };
 
     var initControls = function() {
@@ -246,8 +241,6 @@ define(['doc'], function($) {
     $player.on('playing', function () {
         $startButton.removeClass('show');
         $startButton.removeClass('downloading');
-
-        castPlay();
     });
 
     function onMediaDiscovered(how, media) {
@@ -255,29 +248,7 @@ define(['doc'], function($) {
     }
 
     $player.on('pause', function () {
-        castPause();
+        $cast.pause();
     });
 
-    var castPlay = function() {
-        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-
-        if (castSession != null && currentMedia == null) {
-            var request = new chrome.cast.media.LoadRequest(castMediaInfo);
-            request.activeTrackIds = [1];
-
-            castSession.loadMedia(request).then(
-              onMediaDiscovered.bind(this, 'loadMedia'),
-              function(errorCode) { console.log('Cast error code: ' + errorCode); });
-        }
-    }
-
-    var castPause = function() {
-        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-
-        if (castSession != null && currentMedia != null) {
-            currentMedia.pause(null, null, null);
-        }
-    }
 });
-
-
