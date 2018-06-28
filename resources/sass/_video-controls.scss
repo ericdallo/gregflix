@@ -1,5 +1,11 @@
 $controlsHeight: 2.2rem;
 
+.hide {
+	visibility: hidden;
+	opacity: 0;
+	@include animation(hide-controls 2s linear);
+}
+
 .video-controls {
 	position: absolute;
 	bottom: 0;
@@ -12,11 +18,6 @@ $controlsHeight: 2.2rem;
 	&.show {
 		opacity: 1;
 		visibility: visible;
-	}
-
-	&.hide {
-		opacity: 0;
-		@include animation(hide-controls 2s linear);
 	}
 
 	.play {

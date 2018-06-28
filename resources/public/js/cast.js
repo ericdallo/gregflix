@@ -3,49 +3,61 @@ define('cast', ['doc'], function($) {
 
     var remotePlayer,
         remotePlayerController,
-        mediaInfo,
-        currentMedia,
-        videoCallback = {};
+        mediaInfo;
 
-    var onConnected = function() {
+    var connectionChanged = function() {
 
         if (remotePlayer.isConnected) {
             setupRemotePlayer();
-            videoCallback.connected();
+            $.broadcast('cast-connected');
+        } else {
+            $.broadcast('cast-disconnected');
         }
     };
 
-    function onMediaDiscovered(how, media) {
-       currentMedia = media;
-    }
-
     var setupRemotePlayer = function() {
-        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+        var session = cast.framework.CastContext.getInstance().getCurrentSession();
 
-        if (castSession != null && currentMedia == null) {
+        if (session != null) {
             var request = new chrome.cast.media.LoadRequest(mediaInfo);
             request.activeTrackIds = [1];
 
-            castSession.loadMedia(request).then(onMediaDiscovered.bind(this, 'loadMedia'),function(errorCode) { console.log('Cast error code: ' + errorCode); });
+            session.loadMedia(request);
         }
 
         remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.IS_PAUSED_CHANGED, function() {
             if (remotePlayer.isPaused) {
-                videoCallback.paused();
+                $.broadcast('cast-paused');
             } else {
-                videoCallback.played();
+                $.broadcast('cast-played');
             }
         });
 
         remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.VOLUME_LEVEL_CHANGED, function() {
-            videoCallback.volumeChanged(remotePlayer.volumeLevel);
+            $.broadcast('cast-volume-changed', {volumeLevel: remotePlayer.volumeLevel});
+        });
+
+        remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED, function() {
+            $.broadcast('cast-time-changed', {time: remotePlayer.currentTime});
         });
         
     };
 
+    var playOrPause = function() {
+        var session = cast.framework.CastContext.getInstance().getCurrentSession();
+
+        if (session != null) {
+            remotePlayerController.playOrPause();
+        }
+    };
+
+    var seek = function(time) {
+        remotePlayer.currentTime = time;
+        remotePlayerController.seek();
+    }
+
     return {
-        'init': function(videoSrc, subtitleSrc, callback) {
-            videoCallback = callback;
+        'init': function(videoSrc, subtitleSrc) {
 
             cast.framework.CastContext.getInstance().setOptions({
               receiverApplicationId:
@@ -72,15 +84,23 @@ define('cast', ['doc'], function($) {
 
             remotePlayer = new cast.framework.RemotePlayer();
             remotePlayerController = new cast.framework.RemotePlayerController(remotePlayer);
-            remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, onConnected.bind(this));
+            remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, connectionChanged.bind(this));
         },
 
         'pause': function() {
-            var session = cast.framework.CastContext.getInstance().getCurrentSession();
+            playOrPause();
+        },
 
-            if (session != null && currentMedia != null) {
-                currentMedia.pause(null, null, null);
-            }
+        'play': function() {
+            playOrPause();
+        },
+
+        'playPause': function() {
+            playOrPause();
+        },
+
+        'seekTo': function(time) {
+            seek(time);
         }
     }
 });
