@@ -2,7 +2,7 @@ Number.prototype.leftPad = function (n,str){
     return Array(n-String(this).length+1).join(str||'0')+this;
 }
 
-define(['doc'], function($) {
+define(['doc', 'cast'], function($, $cast) {
     'use strict'
 
     var $document             = $(document),
@@ -12,6 +12,7 @@ define(['doc'], function($) {
         controls              = $controls.first(),
         $startButton          = $('.start-video'),
         $playButton           = $controls.find('#video-play'),
+        $fullscreen           = $controls.find('.fullscreen'),
         $fullScreenButton     = $controls.find('#video-fullscreen'),
         $playProgress         = $controls.find('#video-play-progress'),
         $selectableProgress   = $controls.find('#video-progress-selectable'),
@@ -28,7 +29,16 @@ define(['doc'], function($) {
         $selectableSound      = $controls.find('#video-volume-selectable'),
         soundProgress         = $soundProgress.first(),
         soundProgressHalfSize = (soundProgress.offsetWidth / 2),
-        playProgressInterval  = 0;
+        playProgressInterval  = 0,
+        castOn                = false;
+
+    var initCastOptions = function() {
+
+        var videoSrc = $player.find('source').attr('src'),
+            subtitleSrc = $player.find('#subtitle').attr('src');
+
+        $cast.init(videoSrc, subtitleSrc);
+    };
 
     var initControls = function() {
         $controls.addClass('show');
@@ -36,11 +46,30 @@ define(['doc'], function($) {
         $player.removeAttr('controls');
     }();
 
+    var play = function(){
+        $startButton.removeClass('show');
+        $startButton.removeClass('downloading');
+
+        player.play();
+        $cast.play();
+    };
+
+    var pause = function(){
+        player.pause();
+        $cast.pause();
+    };
+
     var playPause = function() {
-        (player.paused || player.ended) ? player.play() : player.pause()
+        if (castOn) {
+            $cast.playPause();
+            return;
+        }
+
+        (player.paused || player.ended) ? play() : pause()
     };
 
     $player.on('loadeddata', function() {
+        initCastOptions();
         $startButton.removeClass('loading');
 
         $player.on('mouseover', function() {
@@ -87,18 +116,22 @@ define(['doc'], function($) {
         $sound.toggleClass('mute');
     });
 
+    var setProgressBar = function(time) {
+        var hours = parseInt(time / 60 / 60, 10),
+            mins = parseInt(time / 60, 10),
+            secs = parseInt(time % 60, 10),
+            currentTime = hours === 0 ? 
+                mins.leftPad(2) + ':' + secs.leftPad(2) : 
+                hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
+
+        $time.text(currentTime);
+
+        playProgress.style.left = ( (time / player.duration) * (progressBox.offsetWidth) - playProgressHalfSize ) + "px";
+    };
+
     var trackPlayProgress = function() {
         (function progressTrack() {
-            var hours = parseInt(player.currentTime / 60 / 60, 10),
-                mins = parseInt(player.currentTime / 60, 10),
-                secs = parseInt(player.currentTime % 60, 10),
-                currentTime = hours === 0 ? 
-                    mins.leftPad(2) + ':' + secs.leftPad(2) : 
-                    hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
-
-            $time.text(currentTime);
-
-            playProgress.style.left = ( (player.currentTime / player.duration) * (progressBox.offsetWidth) - playProgressHalfSize ) + "px";
+            setProgressBar(player.currentTime);
             playProgressInterval = setTimeout(progressTrack, 50); 
          })(); 
     };
@@ -142,7 +175,8 @@ define(['doc'], function($) {
         var progressBox = $controls.find('#video-progress-box').first();
 
         var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(progressBox)) / progressBox.offsetWidth) ); 
-        player.currentTime = newPercent * player.duration; 
+        player.currentTime = newPercent * player.duration;
+        $cast.seekTo(player.currentTime);
         playProgress.style.left = newPercent * (progressBox.offsetWidth) - playProgressHalfSize + "px";
     }
 
@@ -157,7 +191,7 @@ define(['doc'], function($) {
     $playProgress.on('mousedown', function() {
         stopTrackPlayProgress();
 
-        playPause();
+        play();
 
         $document.on('mousemove', function(e) {
             setPlayProgress(e.pageX);
@@ -212,10 +246,36 @@ define(['doc'], function($) {
         $startButton.addClass('show');
     });
 
-    $player.on('playing', function () {
+    $player.on('cast-connected', function() {
+        castOn = true;
         $startButton.removeClass('show');
-        $startButton.removeClass('downloading');
+        $playButton.addClass('paused');
+        $fullscreen.addClass('hide');
+
+        player.muted = true;
+        pause();
     });
+
+    $player.on('cast-disconnected', function() {
+        castOn = false;
+        $fullscreen.removeClass('hide');
+
+        player.muted = false;
+    });
+
+    $player.on('cast-played', function() {
+        $startButton.removeClass('show');
+        $playButton.addClass('paused');
+    });
+
+    $player.on('cast-paused', function() {
+        $startButton.addClass('show');
+        $playButton.removeClass('paused');
+    });
+
+    $player.on('cast-time-changed', function(event) {
+        player.currentTime = event.detail.time;
+        setProgressBar(event.detail.time);
+    });
+
 });
-
-
