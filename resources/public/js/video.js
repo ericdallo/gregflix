@@ -34,6 +34,8 @@ define(['doc', 'cast'], function($, $cast) {
 
     var initCastOptions = function() {
 
+        player.disableRemotePlayback = true;
+
         var videoSrc = $player.find('source').attr('src'),
             subtitleSrc = $player.find('#subtitle').attr('src');
 
