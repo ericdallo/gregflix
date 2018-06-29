@@ -12,7 +12,7 @@
       <div class="caroussel-inner">
         {% for video in series %}
           <div class="video" tabindex="{{forloop.counter}}">
-            <img class="video-img" src="https://file.gregflix.site/series/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
+            <img class="video-img" src="//file.gregflix.site/series/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
             <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
             <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
               {% if video.watched = 1 %}
@@ -50,7 +50,7 @@
       <div class="caroussel-inner">
         {% for video in movies %}
           <div class="video" tabindex="{{series|length}}">
-            <img class="video-img" src="https://file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
+            <img class="video-img" src="//file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
             <a href="/movies/{{video.slug}}" class="video-details">
               <p class="video-title">{{video.title}}</p>
             </a>
