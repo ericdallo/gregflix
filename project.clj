@@ -1,6 +1,6 @@
 (defproject gregflix "0.0.1"
   :description "Gregflix"
-  :url "http://example.com/FIXME"
+  :url "https://gregflix.site"
   :dependencies
       [[org.clojure/clojure "1.9.0"]
        [ring/ring-core "1.6.3"]
