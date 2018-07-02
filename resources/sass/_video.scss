@@ -75,7 +75,7 @@
 			}
 
 			&.downloading {
-				background: url('//file.gregflix.site/images/video/downloading.gif') no-repeat center;
+				background: url('//s3-sa-east-1.amazonaws.com/file.gregflix.site/images/video/downloading.gif') no-repeat center;
 				background-size: 100%;
 				border: none;
 
@@ -178,7 +178,7 @@
 				font-size: 1rem;
 
 				&.loading {
-					background: url('//file.gregflix.site/images/video/loading.gif') no-repeat center;
+					background: url('//s3-sa-east-1.amazonaws.com/file.gregflix.site/images/video/loading.gif') no-repeat center;
 					background-size: 100%;
 					border: none;
 					opacity: 1;
