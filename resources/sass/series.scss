@@ -1,0 +1,40 @@
+@import 'base';
+@import 'logo';
+@import 'header';
+
+$cardHeight: 20em;
+$cardWidth: 16em;
+
+.content {
+    padding: 2em;
+    position: relative;
+
+    .title {
+        font-size: 1.8em;
+        font-family: 'Museo Sans';
+    }
+
+    .videos {
+        text-align: center;
+        width: 100%;
+    }
+
+}
+
+.video {
+    display: inline-block;
+    margin: 1.5em;
+    background-color: red;
+    height: $cardHeight;
+    width: $cardWidth;
+    position: relative;
+
+    .video-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: $cardWidth;
+      height: $cardHeight;
+    }
+    
+}

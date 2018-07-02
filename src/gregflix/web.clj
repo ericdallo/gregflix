@@ -20,6 +20,8 @@
 		(render-file "login.html" req))
 	(GET "/" []
 		(friend/authorize #{:gregflix.auth/user} (render-file "home.html" (home-handler/home))))
+	(GET "/series" []
+		(friend/authorize #{:gregflix.auth/user} (render-file "series.html" (serie-handler/all))))
 	(GET "/series/:slug/s/:season/e/:episode" [slug season :<< as-int episode :<< as-int]
 		(friend/authorize #{:gregflix.auth/user} (render-file "show-serie.html" (serie-handler/show slug season episode))))
 	(GET "/movies/:slug" [slug]

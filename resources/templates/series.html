@@ -1,0 +1,17 @@
+{% extends "page.html"%}
+{% block title %}Series{% endblock%}
+{% block css %}series{% endblock%}
+{% block body %}
+{% include "_header.html" %}
+<main class="content">
+  <h2 class="title">Series</h2>
+  <article class="videos">
+    {% for video in series %}
+      <section class="video">
+        <img class="video-img" src="//s3-sa-east-1.amazonaws.com/file.gregflix.site/series/{{video.slug}}/preview-hd.png" alt="{{video.title}} preview"/>
+        
+      </section>
+    {% endfor %}
+  </article>
+</main>
+{% endblock %}
