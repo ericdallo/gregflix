@@ -1,0 +1,29 @@
+@import 'base';
+@import 'logo';
+@import 'custom-background';
+
+.page {
+	text-align: center;
+
+	.logo {
+		margin-top: 0.5em;
+		font-size: 5em;
+	}
+
+	.not-found {
+		font-size: 3.5em;
+		letter-spacing: 0.1em;
+		margin-top: 2em;
+		color: white;
+		font-family: "Bebas Neue";
+		font-weight: 300;
+	}
+
+	.explanation {
+		font-size: 3em;
+		margin-top: 0.5em;
+		color: white;
+		font-family: "Museo Sans";
+		font-weight: 300;
+	}
+}

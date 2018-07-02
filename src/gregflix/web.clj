@@ -27,7 +27,7 @@
 
 	(friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
 	(route/resources "/")
-	(route/not-found "Not Found"))
+	(route/not-found (render-file "404.html" {})))
 
 (def app
 	(-> app-routes
