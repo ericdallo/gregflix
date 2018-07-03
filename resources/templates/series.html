@@ -7,10 +7,17 @@
   <h2 class="title">Series</h2>
   <article class="videos">
     {% for video in series %}
-      <section class="video">
-        <img class="video-img" src="//s3-sa-east-1.amazonaws.com/file.gregflix.site/series/{{video.slug}}/preview-hd.png" alt="{{video.title}} preview"/>
-        
-      </section>
+      <a href="#{{video.slug}}">
+        <section id="{{video.slug}}" class="video-container">
+          <h3 class="name">{{video.title}}</h3>
+          <div class="video" tabindex="{{forloop.counter}}">
+            <img class="video-img" src="//s3-sa-east-1.amazonaws.com/file.gregflix.site/series/{{video.slug}}/preview-hd.png" alt="{{video.title}} preview"/>
+          </div>
+          <div class="details">
+            <a href="#">Back</a>
+          </div>
+        </section>
+      </a>
     {% endfor %}
   </article>
 </main>
