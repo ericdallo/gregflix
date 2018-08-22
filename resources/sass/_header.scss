@@ -144,9 +144,9 @@
                 cursor: pointer;
             }
 
-            &.home:before { background: url($images-dir + 'home.png') no-repeat center; background-size: 100%; }
-            &.serie:before { background: url($images-dir + 'serie.png') no-repeat center; background-size: 100%; }
-            &.movie:before { background: url($images-dir + 'movie.png') no-repeat center; background-size: 100%; }
+            &.home:before { background: url($local-images-dir + 'home.png') no-repeat center; background-size: 100%; }
+            &.serie:before { background: url($local-images-dir + 'serie.png') no-repeat center; background-size: 100%; }
+            &.movie:before { background: url($local-images-dir + 'movie.png') no-repeat center; background-size: 100%; }
 
             a {
                 padding-left: 3em;

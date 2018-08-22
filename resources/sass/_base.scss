@@ -3,7 +3,8 @@
 @import 'colors';
 @import 'mixins';
 
-$images-dir: '/images/';
+$local-images-dir: '/images/';
+$images-dir: '//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/images/';
 
 body {
 	background:
