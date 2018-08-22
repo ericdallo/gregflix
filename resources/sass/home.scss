@@ -18,7 +18,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
     background: transparent;
 }
 
-.caroussel-title {
+.title {
   position: absolute;
   width: 100%;
   font-size: 1.8em;
@@ -32,17 +32,18 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
 
 .caroussel {
   white-space: nowrap;
-  text-align: center;
+  
   overflow-x: scroll;
   overflow-y: hidden;
-  position: relative;  
+  position: relative; 
 
-  .caroussel-inner {
+  .container {
+    
     margin:(($mobileVideoHeight / 2) + 1em) 0 1em 0;
     transition: $duration transform;
   }
-
 }
+
 .video {
   position: relative;
   display: inline-block;
@@ -234,51 +235,48 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   $videoWidth: 15em;
   $videoHeight:$videoWidth / (16/9);
 
-  .caroussel-title {
-    left: 3em;
+  .caroussel {
+    white-space: normal;
+    overflow-x: auto;
+    overflow-y: auto;
+    position: relative;
+    padding: 1.5em 0;
+
+    .container {
+      margin: 2em 3em;
+    }
+  }
+
+  .title {
+    display: inline-block;
     width: calc(100% - 3em);
     margin: 1em 0;
+    left: 3em;
 
     h2 {
       text-align: left;
     }
   }
 
-  .caroussel {
-    padding: 0 3em;
-
-    .caroussel-inner {
-      margin:($videoHeight / 2) 0;
-      &:hover {
-        transform: translate3d($moveLeft, 0, 0);
-
-        .video {
-          opacity: .3;
-
-          &:hover {
-            transform: scale($growFactor);
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-
   .video {
     width: $videoWidth;
     height: $videoHeight;
+    border: 2px solid white;
+    margin: 0.5em 0.1em;
+    transform-origin: center center;
 
     &:focus,
     &:hover {
       transform: scale($growFactor);
       opacity: 1;
+      z-index: 14;
 
       .video-details {
         opacity: 1;
       }
 
       ~ .video {
-        transform: translate3d($moveRight, 0, 0);
+        
       }
     }
 

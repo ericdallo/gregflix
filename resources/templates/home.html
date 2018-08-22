@@ -5,11 +5,11 @@
 {% include "_header.html" %}
 <main class="content">
   <article>
-    <div class="caroussel-title">
+    <div class="title">
       <h2>Series</h2>
     </div>
     <section class="series caroussel">
-      <div class="caroussel-inner">
+      <div class="container">
         {% for video in series %}
           <div class="video" tabindex="{{forloop.counter}}">
             <img class="video-img" src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/series/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
@@ -43,11 +43,11 @@
     </section>
   </article>
   <article>
-    <div class="caroussel-title">
+    <div class="title">
       <h2>Movies</h2>
     </div>
     <section class="movies caroussel">
-      <div class="caroussel-inner">
+      <div class="container">
         {% for video in movies %}
           <div class="video" tabindex="{{series|length}}">
             <img class="video-img" src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
