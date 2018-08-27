@@ -165,6 +165,9 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   top: 0;
   width: $mobileVideoWidth;
   height: $mobileVideoHeight;
+  font-family: 'Museo Sans';
+  text-align: center;
+  background: url($images-dir + 'video/loading-preview.png') center center;
 }
 .video-details {
   position: absolute;
@@ -220,6 +223,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
 .keep-watching {
   color: white;
   margin-top: 0.5em;
+  margin-left: 0.5em;
 }
 
 .video-title {
