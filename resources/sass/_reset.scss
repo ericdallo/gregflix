@@ -66,3 +66,6 @@ video::-webkit-media-controls-return-to-realtime-button,
 video::-webkit-media-controls-toggle-closed-captions-button {
 	filter: brightness(0) invert(1);
 }
+video::-internal-media-controls-overlay-cast-button {
+    display: none;
+}

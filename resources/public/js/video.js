@@ -248,6 +248,11 @@ define(['doc', 'cast'], function($, $cast) {
         $startButton.addClass('show');
     });
 
+    $player.on('playing', function () {
+        $startButton.removeClass('show');
+        $startButton.removeClass('downloading');
+    });
+
     $player.on('cast-connected', function() {
         castOn = true;
         $startButton.removeClass('show');

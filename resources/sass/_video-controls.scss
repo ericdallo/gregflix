@@ -58,6 +58,7 @@ $controlsHeight: 2.2rem;
 		display: none;
 		position: relative;
 		font-size: 0.8rem;
+		font-family: 'Museo Sans';
 	    user-select: none;
 
 		span {
@@ -125,7 +126,7 @@ $controlsHeight: 2.2rem;
 			border: none;
 			vertical-align: text-bottom;
 			height: 100%;
-			background: url('/images/video/sound-on.png') no-repeat center;
+			background: url($images-dir + 'video/sound-on.png') no-repeat center;
 			background-size: 1.6em;
 			padding: 0;
 
@@ -134,7 +135,7 @@ $controlsHeight: 2.2rem;
 			}
 
 			&.mute {
-				background: url('/images/video/sound-off.png') no-repeat center;
+				background: url($images-dir + 'video/sound-off.png') no-repeat center;
 				background-size: 1.6em;
 			}
 		}
@@ -182,7 +183,7 @@ $controlsHeight: 2.2rem;
 			height: 100%;
 			border: none;
 			vertical-align: text-bottom;
-			background: url('/images/video/fullscreen-on.png') no-repeat center;
+			background: url($images-dir + 'video/fullscreen-on.png') no-repeat center;
 			background-size: 1.2em;
 			padding: 0;
 

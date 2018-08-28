@@ -55,7 +55,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
 
   .episodes-flag {
     position: absolute;
-    background: url('/images/arrow-down-white.png') center center no-repeat;
+    background: url($local-images-dir + 'arrow-down-white.png') center center no-repeat;
     width: 2em;
     height: 1em;
     right: 0;
@@ -77,7 +77,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
     &:checked {
       ~ .episodes-flag {
         @include transform(rotate(180deg));
-        background-image: url('/images/arrow-down.png');
+        background-image: url($local-images-dir + 'arrow-down.png');
       }
 
       ~ .video-details {
@@ -167,7 +167,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   height: $mobileVideoHeight;
   font-family: 'Museo Sans';
   text-align: center;
-  background: url($local-images-dir + 'video/loading-preview.gif') center center;
+  background: url($images-dir + 'video/loading-preview.gif') center center;
 }
 .video-details {
   position: absolute;
