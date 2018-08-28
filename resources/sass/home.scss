@@ -167,7 +167,7 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   height: $mobileVideoHeight;
   font-family: 'Museo Sans';
   text-align: center;
-  background: url($images-dir + 'video/loading-preview.png') center center;
+  background: url($local-images-dir + 'video/loading-preview.gif') center center;
 }
 .video-details {
   position: absolute;
