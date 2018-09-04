@@ -49,12 +49,7 @@
     <section class="movies caroussel">
       <div class="container">
         {% for video in movies %}
-          <div class="video" tabindex="{{series|length}}">
-            <img class="video-img" src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
-            <a href="/movies/{{video.slug}}" class="video-details">
-              <p class="video-title">{{video.title}}</p>
-            </a>
-          </div>
+          {% include "_mini-video.html" %}
         {% endfor %}
       </div>
     </section>

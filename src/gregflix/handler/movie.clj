@@ -2,4 +2,6 @@
 	(:require [gregflix.movie :as movies]))
 
 (defn show [slug]
-	{:video (movies/find-by slug)})
+	(let [movie (movies/find-by slug)]
+		{:video movie
+		 :relateds (movies/find-all-related-by (get movie :id))}))

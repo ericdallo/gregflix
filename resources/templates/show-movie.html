@@ -19,6 +19,14 @@
         <a target="_blank" href="{{video.url}}" download class="download-video">Download video</a>
         <a target="_blank" href="{{video.url|replace:.mp4:.srt}}" download class="download-subtitle">Download subtitle</a>
       </section>
+      {% if relateds|not-empty %}
+        <section class="relateds">
+          <h2 class="subtitle">Relateds movies</h2>
+          {% for video in relateds %}
+            {% include "_mini-video.html" %}
+          {% endfor %}
+        </section>
+      {% endif %}
     </article>
   </article>
 </main>

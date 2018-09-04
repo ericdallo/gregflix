@@ -2,3 +2,119 @@
 @import 'logo';
 @import 'header';
 @import 'video';
+
+$videoWidth: 15em;
+$videoHeight:$videoWidth / (16/9);
+
+.subtitle {
+  font-family: 'Museo Sans';
+  text-align: center;
+  width: 100%;
+  font-size: 1.6em;
+  margin: .5em 0;
+}
+
+.relateds {
+  .video {
+    position: relative;
+    display: block;
+    width: $videoWidth;
+    height: $videoHeight;
+    border: 2px solid white;
+    transform-origin: center center;
+    text-decoration: none;
+    margin: 0.5em auto;
+
+    .video-img {
+      width: $videoWidth;
+      height: $videoHeight;
+    }
+  }
+
+  .video-title {
+    position: absolute;
+    bottom: 0;
+    padding: 0.5em;
+    color: white;
+  }
+
+  .video-details {
+    position: absolute;
+    opacity: 0;
+    color: white;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: 250ms all;
+    font-family: 'Museo Sans';
+    text-decoration: none;
+    opacity: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+
+    &:after,
+    &:before {
+      color: white;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+
+    $playBorderSize: 3em;
+    $borderSize: 0.2em;
+    $playSize: 0.9em;
+    $playMargin: -($playBorderSize / 2) - ($borderSize / 2);
+
+    &:after {
+      margin-top: $playMargin;
+      margin-left: $playMargin;
+      width: $playBorderSize;
+      height: $playBorderSize;
+      border: $borderSize solid white;
+      text-align: center;
+      border-radius: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    &:before {
+      margin-left: -($playSize / 1.5);
+      margin-top: -$playSize;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: $playSize 0 $playSize $playSize * 1.8;
+      border-color: transparent transparent transparent #ffffff;
+      z-index: 2;
+    }
+
+  }
+}
+
+@media (min-width: 799px) {
+  .relateds {
+    .video {
+      display: inline-block;
+      margin: 0.5em 0.1em;
+
+      &:focus,
+      &:hover {
+        opacity: 1;
+        z-index: 14;
+
+        .video-details {
+          opacity: 1;
+        }
+
+      }
+    }
+
+    .video-details {
+
+      &:focus {
+        opacity: 1;
+      }
+    }
+  }
+}
