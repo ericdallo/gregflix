@@ -70,6 +70,10 @@ define(['doc', 'cast'], function($, $cast) {
         (player.paused || player.ended) ? play() : pause()
     };
 
+    var isFullScreen = function() {
+       return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+    }
+
     $player.on('loadeddata', function() {
         initCastOptions();
         $startButton.removeClass('loading');
@@ -157,13 +161,29 @@ define(['doc', 'cast'], function($, $cast) {
     });
 
     $fullScreenButton.on('click', function() {
-        if (document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen) {
-            document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen;
-        } else {
-            var requestFullscreen = player.requestFullscreen || player.msRequestFullscreen || player.mozRequestFullScreen || player.webkitRequestFullscreen;
-            requestFullscreen.call(player); 
+        if (!isFullScreen()) {
+            player.removeAttribute('playsinline');
+            player.removeAttribute('webkit-playsinline');
+            play();
+
+            if (player.requestFullscreen) player.requestFullscreen();
+            else if (player.mozRequestFullScreen) player.mozRequestFullScreen();
+            else if (player.webkitRequestFullScreen) player.webkitRequestFullScreen();
+            else if (player.msRequestFullscreen) player.msRequestFullscreen();
         }
     });
+
+    var fullscreenOff = function() {
+        if (!isFullScreen()) {
+            player.setAttribute('playsinline', '');
+            player.setAttribute('webkit-playsinline', '');
+        }
+    };
+
+    $document.on('fullscreenchange', fullscreenOff);
+    $document.on('mozfullscreenchange', fullscreenOff);
+    $document.on('webkitfullscreenchange', fullscreenOff);
+    $document.on('msfullscreenchange', fullscreenOff);
 
     var findPosX = function(box) { 
         var curleft = box.offsetLeft;
