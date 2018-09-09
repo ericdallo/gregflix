@@ -161,16 +161,14 @@ define(['doc', 'cast'], function($, $cast) {
     });
 
     $fullScreenButton.on('click', function() {
-        if (!isFullScreen()) {
-            player.removeAttribute('playsinline');
-            player.removeAttribute('webkit-playsinline');
-            play();
+        player.removeAttribute('playsinline');
+        player.removeAttribute('webkit-playsinline');
+        play();
 
-            if (player.requestFullscreen) player.requestFullscreen();
-            else if (player.mozRequestFullScreen) player.mozRequestFullScreen();
-            else if (player.webkitRequestFullScreen) player.webkitRequestFullScreen();
-            else if (player.msRequestFullscreen) player.msRequestFullscreen();
-        }
+        if (player.requestFullscreen) player.requestFullscreen();
+        else if (player.mozRequestFullScreen) player.mozRequestFullScreen();
+        else if (player.webkitRequestFullScreen) player.webkitRequestFullScreen();
+        else if (player.msRequestFullscreen) player.msRequestFullscreen();
     });
 
     var fullscreenOff = function() {
