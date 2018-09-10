@@ -59,6 +59,10 @@ define('cast', ['doc'], function($) {
     return {
         'init': function(videoSrc, subtitleSrc) {
 
+            if (typeof cast == 'undefined') {
+                return;
+            }
+
             cast.framework.CastContext.getInstance().setOptions({
               receiverApplicationId:
                 chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,

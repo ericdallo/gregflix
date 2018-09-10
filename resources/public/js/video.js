@@ -46,6 +46,8 @@ define(['doc', 'cast'], function($, $cast) {
         $controls.addClass('show');
         $startButton.addClass('show');
         $player.removeAttr('controls');
+
+        $time.text('00:00');
     }();
 
     var play = function(){
@@ -74,8 +76,11 @@ define(['doc', 'cast'], function($, $cast) {
        return !!(document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
     }
 
+    var isIOS = function() {
+        return !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+    }
+
     $player.on('loadeddata', function() {
-        initCastOptions();
         $startButton.removeClass('loading');
 
         $player.on('mouseover', function() {
@@ -94,8 +99,6 @@ define(['doc', 'cast'], function($, $cast) {
              if (!player.paused) $controls.addClass('hide');
         });
 
-        $time.text('00:00');
-
         var hours = parseInt(player.duration / 60 / 60, 10),
             mins = parseInt(player.duration / 60, 10),
             secs = parseInt(player.duration % 60, 10);
@@ -111,6 +114,8 @@ define(['doc', 'cast'], function($, $cast) {
         var soundBox = $controls.find('#video-sound-box').first();
 
         soundProgress.style.left = soundBox.offsetWidth - soundProgressHalfSize + "px";
+
+        initCastOptions();
     });
 
     $player.on('click', playPause);
@@ -161,9 +166,11 @@ define(['doc', 'cast'], function($, $cast) {
     });
 
     $fullScreenButton.on('click', function() {
-        player.removeAttribute('playsinline');
-        player.removeAttribute('webkit-playsinline');
-        play();
+        if (isIOS()) {
+            player.removeAttribute('playsinline');
+            player.removeAttribute('webkit-playsinline');
+            play();
+        }
 
         if (player.requestFullscreen) player.requestFullscreen();
         else if (player.mozRequestFullScreen) player.mozRequestFullScreen();
