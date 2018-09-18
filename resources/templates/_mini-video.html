@@ -1,4 +1,7 @@
 <div class="video" {% if series|not-empty%} tabindex="{{series|length}}" {% endif %}>
+  {% if video.new = 1 %}
+    <div class="new-box"><span>NEW</span></div>
+  {% endif %}
   <img class="video-img" src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
   <a href="/movies/{{video.slug}}" class="video-details">
     <p class="video-title">{{video.title}}</p>

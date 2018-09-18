@@ -53,6 +53,32 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   transition: $duration all;
   transform-origin: center left;
 
+  .new-box {
+    position: absolute;
+    width: 4.5em;
+    height: 8em;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: 10;
+
+    span {
+      position: absolute;
+      display: block;
+      width: 7em;
+      top: 1em;
+      padding: 0.1em 0;
+      font-size: 0.9em;
+      background: $base-blue;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-family: "Museo Sans";
+      letter-spacing: 1px;
+      @include transform(rotate(45deg));
+    }
+  }
+
   .episodes-flag {
     position: absolute;
     background: url($local-images-dir + 'arrow-down-white.png') center center no-repeat;

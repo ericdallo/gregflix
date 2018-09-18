@@ -12,6 +12,9 @@
       <div class="container">
         {% for video in series %}
           <div class="video" tabindex="{{forloop.counter}}">
+            {% if video.new = 1 %}
+              <div class="new-box"><span>NEW</span></div>
+            {% endif %}
             <img class="video-img" src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/series/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
             <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
             <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">

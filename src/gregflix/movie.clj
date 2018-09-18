@@ -15,7 +15,10 @@
   (belongs-to movies {:fk :related_movie_id}))
 
 (defn find-all []
-		(select movies))
+		(exec-raw ["
+    select m.id, m.title, m.slug, m.description, m.url,
+        (m.created_at >= (NOW() - INTERVAL 14 DAY)) as new
+        from movie m;"] :results))
 
 (defn find-by [slug]
 	(first 

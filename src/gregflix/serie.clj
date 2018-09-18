@@ -14,6 +14,7 @@
   			if (cs.season is null, s.season, cs.season) as season,
   			if (cs.episode is null, s.episode, cs.episode) as episode,
   			(cs.id is not null) as watched,
+  			(s.created_at >= (NOW() - INTERVAL 14 DAY)) as new,
   			s.episode_name
   			from serie s 
   			left join current_serie cs on (s.slug = cs.serie_slug and cs.user_id = ?)
@@ -24,8 +25,7 @@
 	(select series
 		(group :season, :slug)
 		(order :slug)
-		(order :season)
-		))
+		(order :season)))
 
 (defn find-all-episodes []
 	(select series
