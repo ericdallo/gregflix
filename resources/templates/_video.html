@@ -1,6 +1,6 @@
 <video id="video-player" autobuffer defaultMuted controls preload="auto" crossorigin="anonymous" class="media" controlsList="nodownload" webkit-playsinline playsinline>
   <source id="source" src="{{video.url}}" type="video/mp4" >
-  <track id="subtitle" label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}"  default >
+  <track id="subtitle" label="Português" kind="subtitles" srclang="pt-BR" src="{{video.url|replace:.mp4:.vtt}}" default >
 </video>
 <span class="start-video loading"></span>
 <section id="video-controls" class="video-controls"> 

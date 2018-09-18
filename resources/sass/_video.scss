@@ -27,6 +27,21 @@
 			}
 		}
 
+		&.show-cover .preview {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.preview {
+			position: absolute;
+			cursor: pointer;
+			margin: auto;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			visibility: hidden;
+		}
+
 		.start-video {
 			cursor: pointer;
 			font-size: 0.75rem;
@@ -72,6 +87,16 @@
 
 			&.fullscreen {
 				position: fixed;
+			}
+
+			&.loading {
+				background: url($images-dir + 'video/loading.gif') no-repeat center;
+				background-size: 100%;
+				border: none;
+
+				&:after {
+					display: none;
+				}
 			}
 
 			&.downloading {
