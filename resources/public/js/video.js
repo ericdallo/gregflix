@@ -44,6 +44,24 @@ define(['doc', 'cast'], function($, $cast) {
         $player.parent().addClass('show-cover');
     }
 
+    var seekTo = function(time) {
+        player.currentTime = time;
+        updateProgressBar();
+        $cast.seekTo(time);
+    };
+
+    var seekLastVideoTime = function() {
+        if (typeof(Storage) === "undefined") {
+            return;
+        }
+
+        seekTo(localStorage.lastVideoTime || 0);
+
+        window.onbeforeunload = function() {
+            localStorage.lastVideoTime = player.currentTime;
+        };
+    };
+
     var initCastOptions = function() {
 
         player.disableRemotePlayback = true;
@@ -126,6 +144,8 @@ define(['doc', 'cast'], function($, $cast) {
         soundProgress.style.left = soundBox.offsetWidth - soundProgressHalfSize + "px";
 
         initCastOptions();
+
+        seekLastVideoTime();
     });
 
     $player.on('click', playPause);
@@ -137,8 +157,9 @@ define(['doc', 'cast'], function($, $cast) {
         $sound.toggleClass('mute');
     });
 
-    var setProgressBar = function(time) {
-        var hours = parseInt(time / 60 / 60, 10),
+    var updateProgressBar = function() {
+        var time = player.currentTime,
+            hours = parseInt(time / 60 / 60, 10),
             mins = parseInt(time / 60, 10),
             secs = parseInt(time % 60, 10),
             currentTime = hours === 0 ? 
@@ -152,7 +173,7 @@ define(['doc', 'cast'], function($, $cast) {
 
     var trackPlayProgress = function() {
         (function progressTrack() {
-            setProgressBar(player.currentTime);
+            updateProgressBar();
             playProgressInterval = setTimeout(progressTrack, 50); 
          })(); 
     };
@@ -211,16 +232,15 @@ define(['doc', 'cast'], function($, $cast) {
         return curleft; 
     }
 
-    var setPlayProgress = function(clickX) {
+    var updatePlayProgress = function(clickX) {
         var progressBox = $controls.find('#video-progress-box').first();
 
         var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(progressBox)) / progressBox.offsetWidth) ); 
-        player.currentTime = newPercent * player.duration;
-        $cast.seekTo(player.currentTime);
-        playProgress.style.left = newPercent * (progressBox.offsetWidth) - playProgressHalfSize + "px";
+
+        seekTo(newPercent * player.duration);
     }
 
-    var setSoundProgress = function(clickX) {
+    var updateSoundProgress = function(clickX) {
         var soundBox = $controls.find('#video-sound-box').first();
 
         var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(soundBox)) / soundBox.offsetWidth) );
@@ -232,7 +252,7 @@ define(['doc', 'cast'], function($, $cast) {
         stopTrackPlayProgress();
 
         $document.on('mousemove', function(e) {
-            setPlayProgress(e.pageX);
+            updatePlayProgress(e.pageX);
         });
 
         $document.on('mouseup', function(e) {
@@ -240,23 +260,23 @@ define(['doc', 'cast'], function($, $cast) {
             $document.off('mouseup');
 
             player.play();
-            setPlayProgress(e.pageX);
+            updatePlayProgress(e.pageX);
             trackPlayProgress();
         });
     });
 
     $selectableProgress.on('click', function(e) {
-        setPlayProgress(e.pageX);
+        updatePlayProgress(e.pageX);
     });
 
     $soundProgress.on('mousedown', function() {
         $document.on('mousemove', function(e) {
-            setSoundProgress(e.pageX);
+            updateSoundProgress(e.pageX);
         });
     });
 
     $selectableSound.on('click', function(e) {
-        setSoundProgress(e.pageX);
+        updateSoundProgress(e.pageX);
     });
 
     $document.on('mouseup', function(e) {
@@ -322,8 +342,7 @@ define(['doc', 'cast'], function($, $cast) {
     });
 
     $player.on('cast-time-changed', function(event) {
-        player.currentTime = event.detail.time;
-        setProgressBar(event.detail.time);
+        seekTo(event.detail.time);
     });
 
 });
