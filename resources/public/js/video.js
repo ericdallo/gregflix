@@ -55,10 +55,12 @@ define(['doc', 'cast'], function($, $cast) {
             return;
         }
 
-        seekTo(localStorage.lastVideoTime || 0);
+        var videoName = $('#video-title').html() + ($('#video-season-episode').html()); 
+
+        seekTo(localStorage.getItem("lastVideoTime." + videoName) || 0);
 
         window.onbeforeunload = function() {
-            localStorage.lastVideoTime = player.currentTime;
+            localStorage.setItem("lastVideoTime." + videoName, player.currentTime);
         };
     };
 
