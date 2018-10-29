@@ -18,7 +18,7 @@
 		(exec-raw ["
     select m.id, m.title, m.slug, m.description, m.url,
         (m.created_at >= (NOW() - INTERVAL 14 DAY)) as new
-        from movie m;"] :results))
+        from movie m order by new desc;"] :results))
 
 (defn find-by [slug]
 	(first 
