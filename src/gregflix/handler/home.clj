@@ -11,4 +11,4 @@
 		{:series (shuffle series),
 		 :series-seasons series-seasons,
 		 :series-episodes series-episodes,
-	 	 :movies (reverse (sort-by :new (shuffle (movies/find-all))))}))
+	 	 :movies (reverse (sort-by (juxt :new :created_at) (shuffle (movies/find-all))))}))

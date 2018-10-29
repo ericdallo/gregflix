@@ -16,7 +16,7 @@
 
 (defn find-all []
 		(exec-raw ["
-      select m.id, m.title, m.slug, m.description, m.url,
+      select m.id, m.title, m.slug, m.description, m.url, m.created_at,
         (m.created_at >= (NOW() - INTERVAL 14 DAY)) as new
         from movie m"] :results))
 
