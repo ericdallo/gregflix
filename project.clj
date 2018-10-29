@@ -15,7 +15,7 @@
        [migratus-lein "0.5.7"]]
   :plugins 
       [[lein-ring "0.12.3"]
-      [lein-sass "0.4.0"]
+      [lein-sass "0.5.0"]
       [migratus-lein "0.5.7"]]
   :ring {:handler gregflix.web/app}
   :sass {:src "resources/sass"

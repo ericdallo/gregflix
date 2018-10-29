@@ -173,7 +173,7 @@
 			padding: 0.8em 0;
 			color: $base-blue;
 			display: inline-block;
-			@include transition(background-color 100ms)
+			@include transition(background-color 100ms);
 
 			&:hover {
 				background-color: $base-blue;
@@ -257,7 +257,7 @@
 						border-right: 1em solid #eee;
 						border-top: 1em solid transparent;
 						border-bottom: 1em solid transparent;
-						@include transition(border-color 100ms)
+						@include transition(border-color 100ms);
 						z-index: 2;
 					}
 
