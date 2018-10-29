@@ -1,10 +1,12 @@
 FROM ericdallo/lein-sass
 
-RUN mkdir -p /app
+COPY . /app
 
 WORKDIR /app
 
-COPY . /app
+RUN mkdir -p /app && \
+    cd /app && \
+    lein uberjar
 
 ENTRYPOINT /app/docker/startup.sh
 
