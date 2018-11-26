@@ -90,6 +90,7 @@ define(['doc', 'cast'], function($, $cast) {
     var pause = function(){
         player.pause();
         $cast.pause();
+        $startButton.removeClass('downloading');
     };
 
     var playPause = function() {
