@@ -5,32 +5,35 @@ Number.prototype.leftPad = function (n,str){
 define(['doc', 'cast'], function($, $cast) {
     'use strict'
 
-    var $document             = $(document),
-        $player               = $('#video-player'),
-        player                = $player.first(),
-        $controls             = $('#video-controls'),
-        controls              = $controls.first(),
-        $startButton          = $('.start-video'),
-        $playButton           = $controls.find('#video-play'),
-        $fullscreen           = $controls.find('.fullscreen'),
-        $fullScreenButton     = $controls.find('#video-fullscreen'),
-        $playProgress         = $controls.find('#video-play-progress'),
-        $selectableProgress   = $controls.find('#video-progress-selectable'),
-        playProgress          = $playProgress.first(),
-        playProgressHalfSize  = (playProgress.offsetWidth / 2),
-        $progressBox          = $controls.find('#video-progress-box'),
-        progressBox           = $progressBox.first(),
-        $length               = $controls.find('#video-length'),
-        $time                 = $controls.find('#video-time'),
-        $sound                = $controls.find('#video-sound'),
-        $soundBox             = $controls.find('#video-sound-box'),
-        soundBox              = $soundBox.first(),
-        $soundProgress        = $controls.find('#video-sound-progress'),
-        $selectableSound      = $controls.find('#video-volume-selectable'),
-        soundProgress         = $soundProgress.first(),
-        soundProgressHalfSize = (soundProgress.offsetWidth / 2),
-        playProgressInterval  = 0,
-        castOn                = false;
+    var $document                = $(document),
+        $player                  = $('#video-player'),
+        player                   = $player.first(),
+        $controls                = $('#video-controls'),
+        controls                 = $controls.first(),
+        $startButton             = $('.start-video'),
+        $playButton              = $controls.find('#video-play'),
+        $fullscreen              = $controls.find('.fullscreen'),
+        $fullScreenButton        = $controls.find('#video-fullscreen'),
+        $currentProgress         = $controls.find('#video-current-progress'),
+        $selectableProgress      = $controls.find('#video-progress-selectable'),
+        currentProgress          = $currentProgress.first(),
+        bufferedProgress         = $controls.find('#video-buffered-progress').first(),
+        currentProgressHalfSize  = (currentProgress.offsetWidth / 2),
+        playedProgress           = $controls.find('#video-played-progress').first(),
+        $progressBox             = $controls.find('#video-progress-box'),
+        progressBox              = $progressBox.first(),
+        $length                  = $controls.find('#video-length'),
+        $time                    = $controls.find('#video-time'),
+        $sound                   = $controls.find('#video-sound'),
+        $soundBox                = $controls.find('#video-sound-box'),
+        soundBox                 = $soundBox.first(),
+        $soundProgress           = $controls.find('#video-sound-progress'),
+        $selectableSound         = $controls.find('#video-volume-selectable'),
+        soundProgress            = $soundProgress.first(),
+        soundProgressHalfSize    = (soundProgress.offsetWidth / 2),
+        currentProgressInterval  = 0,
+        bufferedProgressInterval = 0,
+        castOn                   = false;
 
     var isMobile = function() {
       var check = false;
@@ -149,6 +152,8 @@ define(['doc', 'cast'], function($, $cast) {
         initCastOptions();
 
         seekLastVideoTime();
+
+        trackBufferedProgress();
     });
 
     $player.on('click', playPause);
@@ -171,18 +176,35 @@ define(['doc', 'cast'], function($, $cast) {
 
         $time.text(currentTime);
 
-        playProgress.style.left = ( (time / player.duration) * (progressBox.offsetWidth) - playProgressHalfSize ) + "px";
+        currentProgress.style.left = ( (time / player.duration) * (progressBox.offsetWidth) - currentProgressHalfSize ) + "px";
+        playedProgress.style.width = (currentProgress.style.left);
     };
 
     var trackPlayProgress = function() {
         (function progressTrack() {
             updateProgressBar();
-            playProgressInterval = setTimeout(progressTrack, 50); 
-         })(); 
+            currentProgressInterval = setTimeout(progressTrack, 50); 
+         })();
     };
 
     var stopTrackPlayProgress = function() {
-        clearTimeout(playProgressInterval);
+        clearTimeout(currentProgressInterval);
+    };
+
+    var updateBufferedBar = function() {
+        var duration = player.duration;
+
+        if (duration > 0) {
+            var bufferedEnd = player.buffered.end(player.buffered.length - 1);        
+            bufferedProgress.style.width = ((bufferedEnd / duration) * 100) + "%";
+        }
+    };
+
+    var trackBufferedProgress = function() {
+        (function bufferedTrack() {
+            updateBufferedBar();
+            bufferedProgressInterval = setTimeout(bufferedTrack, 100);
+        })();
     };
 
     $player.on('play', function() {
@@ -236,7 +258,7 @@ define(['doc', 'cast'], function($, $cast) {
     }
 
     var updatePlayProgress = function(clickX) {
-        var progressBox = $controls.find('#video-progress-box').first();
+        var progressBox = $progressBox.first();
 
         var newPercent = Math.max( 0, Math.min(1, (clickX - findPosX(progressBox)) / progressBox.offsetWidth) ); 
 
@@ -251,7 +273,7 @@ define(['doc', 'cast'], function($, $cast) {
         soundProgress.style.left = newPercent * (soundBox.offsetWidth) - soundProgressHalfSize + "px";
     }
 
-    $playProgress.on('mousedown', function() {
+    $currentProgress.on('mousedown', function() {
         stopTrackPlayProgress();
 
         $document.on('mousemove', function(e) {

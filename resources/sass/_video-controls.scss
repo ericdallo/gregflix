@@ -84,26 +84,61 @@ $controlsHeight: 2.2rem;
 			cursor: pointer;
 
 			> div {
+				$height: 4px;
 				background-color: white;
 				vertical-align: middle;
 				width: calc(100% - 0.4rem);
-				height: 2px;
+				height: $height;
 				top: $controlsHeight / 4;
 				position: absolute;
 
-				> span {
+				.current-sound {
 					cursor: pointer;
 					border: 0.4rem solid white;
 					border-radius: 50%;
 					background: white;
 					position: absolute;
-					top: -0.4rem;
-					left: -0.4rem;
+					top: -$height;
+					left: -$height;
 					@include transition(box-shadow 0.1s);
 
 					&:hover {
 						box-shadow: 0px 0px 14px 0px white;
 					}
+				}
+
+				.current-progress {
+					z-index: 3;
+					cursor: pointer;
+					border: 0.4rem solid white;
+					border-radius: 50%;
+					background: white;
+					position: absolute;
+					top: -$height;
+					left: -$height;
+					@include transition(box-shadow 0.1s);
+
+					&:hover {
+						box-shadow: 0px 0px 14px 0px white;
+					}
+				}
+
+				.played-progress {
+					position: absolute;
+					background-color: #A2A2A2;
+					width: 0;
+					height: $height;
+					z-index: 2;
+				}
+
+				.buffered-progress {
+					z-index: 1;
+					position: absolute;
+					background-color: #B2B2B2;
+					height: $height / 2;
+					top: $height / 4;
+					width: 0;
+					left: 0;
 				}
 			}
 		}
@@ -144,6 +179,7 @@ $controlsHeight: 2.2rem;
 	.volume-container {
 		width: 10%;
 		@extend %tooltip-container;
+
 	}
 
 	.cast {
