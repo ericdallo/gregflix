@@ -1,8 +1,6 @@
 $controlsHeight: 2.2rem;
 
 .hide {
-	visibility: hidden;
-	opacity: 0;
 	@include animation(hide-controls 2s linear);
 }
 
@@ -338,5 +336,6 @@ $controlsHeight: 2.2rem;
     }
     100% {
         opacity: 0;
+        visibility: hidden;
     }
 }

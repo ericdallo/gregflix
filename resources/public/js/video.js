@@ -118,19 +118,27 @@ define(['doc', 'cast'], function($, $cast) {
         $player.parent().removeClass('show-cover');
 
         $player.on('mouseover', function() {
+            $controls.addClass('show');
             $controls.removeClass('hide');
         });
 
         $controls.on('mouseover', function() {
-            $controls.removeClass('hide');            
+            $controls.addClass('show');
+            $controls.removeClass('hide');
         });
 
         $player.on('mouseout', function() {
-             if (!player.paused) $controls.addClass('hide');
+             if (!player.paused) {
+                $controls.addClass('hide');
+                $controls.removeClass('show');
+            }
         });
 
         $controls.on('mouseout', function() {
-             if (!player.paused) $controls.addClass('hide');
+             if (!player.paused) {
+                $controls.addClass('hide');
+                $controls.removeClass('show');
+             }
         });
 
         var hours = parseInt(player.duration / 60 / 60, 10),
