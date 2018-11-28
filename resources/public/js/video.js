@@ -202,7 +202,7 @@ define(['doc', 'cast'], function($, $cast) {
     var updateBufferedBar = function() {
         var duration = player.duration;
 
-        if (duration > 0) {
+        if (duration > 0 && player.buffered.length > 0) {
             var bufferedEnd = player.buffered.end(player.buffered.length - 1);        
             bufferedProgress.style.width = ((bufferedEnd / duration) * 100) + "%";
         }
