@@ -3,21 +3,32 @@
 {% block css %}series{% endblock%}
 {% block body %}
 {% include "_header.html" %}
+<script async type="text/javascript" src="/js/series.js" ></script>
 <main class="content">
   <h2 class="title">Series</h2>
+  {% for video in series %}
+    <input id="select-video-switch-{{video.slug}}" type="radio" name="selected-video" class="select-video-switch">
+    <section id="video-details-{{video.slug}}" class="video-details">
+        <a href="#" class="back">⮜</a>
+        <figure class="image">
+          <img src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/series/{{video.slug}}/preview-hd.png" alt="{{video.title}} preview">
+        </figure> 
+        <div class="info">
+          <h3 class="title">{{video.title}}</h3>
+          <p class="description">{{video.description}}</p>  
+        </div>
+      </section>
+  {% endfor %}
   <article class="videos">
     {% for video in series %}
-      <a href="#{{video.slug}}">
-        <section id="{{video.slug}}" class="video-container">
+      <label for="select-video-switch-{{video.slug}}" class="video-container">
+        <section>
           <h3 class="name">{{video.title}}</h3>
-          <div class="video" tabindex="{{forloop.counter}}">
-            <img class="video-img" src="//s3-sa-east-1.amazonaws.com/file.gregflix.site/series/{{video.slug}}/preview-hd.png" alt="{{video.title}} preview"/>
-          </div>
-          <div class="details">
-            <a href="#">Back</a>
-          </div>
+          <figure class="video" tabindex="{{forloop.counter}}">
+            <img class="video-img" src="//gregflix.nyc3.digitaloceanspaces.com/file.gregflix.site/series/{{video.slug}}/preview-hd.png" alt="{{video.title}} preview"/>
+          </figure>
         </section>
-      </a>
+      </label>
     {% endfor %}
   </article>
 </main>
