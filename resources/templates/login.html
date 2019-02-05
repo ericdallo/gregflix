@@ -7,7 +7,7 @@
 	{% include "_logo.html" %}
 	<form action="/login" method="POST" class="login">
 		<div class="{% if query-params.login_failed %}invalid{% endif %} invalid-flag">
-			<input type="text" name="username" placeholder="E-mail" class="email-field" required autofocus >
+			<input type="text" name="username" placeholder="E-mail" class="email-field" value="{{query-params.username}}" required autofocus >
 		</div>
 		<div class="{% if query-params.login_failed %}invalid{% endif %} invalid-flag">
 			<input type="password" name="password" placeholder="Password" class="password-field" required>
