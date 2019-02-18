@@ -176,12 +176,21 @@ define(['doc', 'cast'], function($, $cast) {
     var updateProgressBar = function() {
         var time = player.currentTime,
             hours = parseInt(time / 60 / 60, 10),
-            mins = parseInt(time / 60, 10),
+            mins,
             secs = parseInt(time % 60, 10),
-            currentTime = hours === 0 ? 
-                mins.leftPad(2) + ':' + secs.leftPad(2) : 
-                hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
+            currentTime;
 
+        if (hours === 0) {
+            mins = parseInt(time / 60, 10);
+
+            currentTime = mins.leftPad(2) + ':' + secs.leftPad(2);
+        } else {
+            var hoursPassed = hours * 60;
+            mins = parseInt((time / 60) - hoursPassed, 10);
+
+            currentTime = hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
+        }
+            
         $time.text(currentTime);
 
         currentProgress.style.left = ( (time / player.duration) * (progressBox.offsetWidth) - currentProgressHalfSize ) + "px";
