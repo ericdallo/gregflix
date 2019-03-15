@@ -1,0 +1,9 @@
+<div class="check-field {{containerClass}}">
+    <input type="checkbox" 
+           id="check-{{name}}-{{value}}" 
+           name="{{name}}" 
+           value="{{value}}"
+           {% if disabled %} disabled {% endif %}
+           />
+    <label for="check-{{name}}-{{value}}">{{placeholder}}</label>
+</div>	

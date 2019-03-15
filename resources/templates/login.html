@@ -12,6 +12,7 @@
 		<div class="{% if query-params.login_failed %}invalid{% endif %} invalid-flag">
 			<input type="password" name="password" placeholder="Password" class="password-field" required>
 		</div>
+		{% include "_checkbox.html" with name="remember-me" value="true" containerClass="remember-me" placeholder="Remember me on this device"%}
 		<button class="fab"></button>
 	</form>
 </main>

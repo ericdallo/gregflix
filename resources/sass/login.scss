@@ -1,6 +1,7 @@
 @import 'base';
 @import 'logo';
 @import 'custom-background';
+@import 'components';
 
 .page {
 	text-align: center;
@@ -56,6 +57,10 @@
 			 }
 		}
 
+		.remember-me {
+			margin-top: 1em;
+		}
+
 		$fab-shadow: 4px;
 
 		.fab {
@@ -67,7 +72,7 @@
 			width: 3em;
 			height: 3em;
 			border: none;
-			background: $base-blue-button url($images-dir + 'login/check.svg') no-repeat;
+			background: $base-blue-button url($images-dir + 'components/white-check.svg') no-repeat;
 			background-position: 50%;
 			background-size: 50%;
 			cursor: pointer;
@@ -113,8 +118,8 @@
 
 			.fab {
 				position: absolute;
-				bottom: -4em;
-				right: 0;
+				top: calc(50% - 3em);
+				right: -4em;
 			}
 		}		
 	}
@@ -125,6 +130,10 @@
 		.login {
 			width: 30%;
 			margin-top: 5em;
+
+			.fab {
+				right: -5em;
+			}
 		}		
 	}
 }

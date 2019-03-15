@@ -1,0 +1,61 @@
+.check-field {
+    display: inline-block;
+
+    input[type="checkbox"] {
+        position: absolute;
+        left: -9999px;
+    
+        &:checked {
+    
+            + label:before {
+                background: $checkbox-background url($images-dir + 'components/primary-check.svg') no-repeat;
+                background-position: 50%;
+                border-color: $checkbox-background;
+            }
+        }
+
+        &:disabled {
+            + label {
+                cursor: unset;
+                opacity: 0.5;
+
+                &:before {
+                    opacity: 0.5;
+                    cursor: unset;
+                }
+            }
+        }
+    
+        &:focus {
+            + label:before {
+                border-color: $checkbox-background;
+            }
+        }
+    }
+
+    label {
+        font-family: "Museo Sans";
+        display: block;
+        color: white;
+        font-size: 1.1em;
+        position: relative;
+        line-height: 1.1em;
+        padding-left: 2em;
+        cursor: pointer;
+        @include box-decoration-break(clone);
+
+        &:before {
+            position: absolute;
+            content: '';
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            left: 0;
+            background-color: $checkbox-background;
+            background-position: 50%;
+            border: 1px solid $base-blue;
+
+            @include transition(background 0.2s);
+        }
+    }
+}
