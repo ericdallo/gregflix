@@ -6,4 +6,4 @@
               :subprotocol "mysql"
               :subname "//mysql/gregflix"
               :user "root"
-              :password ""}))
+              :password "123mudar"}))
