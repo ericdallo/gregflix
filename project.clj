@@ -28,5 +28,5 @@
                   :subprotocol "mysql"
                   :subname "//localhost/gregflix"
                   :user "root"
-                  :password "P9xTYHvqyDkEwfEEKKsNcvU4GvyEKPMgXqwm4qkuPB38UE4V9RfRsq"}}
+                  :password ""}}
   :main gregflix.main)

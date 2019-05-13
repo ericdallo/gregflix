@@ -6,4 +6,4 @@
               :subprotocol "mysql"
               :subname "//mysql/gregflix"
               :user "root"
-              :password "P9xTYHvqyDkEwfEEKKsNcvU4GvyEKPMgXqwm4qkuPB38UE4V9RfRsq"})) ;TODO externalize
+              :password (System/getenv "DATABASE_PASSWORD")}))
