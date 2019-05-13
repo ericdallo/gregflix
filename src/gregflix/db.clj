@@ -6,4 +6,4 @@
               :subprotocol "mysql"
               :subname "//mysql/gregflix"
               :user "root"
-              :password "123mudar"}))
+              :password "P9xTYHvqyDkEwfEEKKsNcvU4GvyEKPMgXqwm4qkuPB38UE4V9RfRsq"})) ;TODO externalize
