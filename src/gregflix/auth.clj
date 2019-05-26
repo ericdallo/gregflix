@@ -1,14 +1,14 @@
 (ns gregflix.auth
-	(:require [gregflix.user :as users]
-			  [gregflix.handler.login :as login-handler]
+	(:require [gregflix.user.core :as user]
+			  [gregflix.login.handler :as login-handler]
 			  [ring.util.request :as req]
 			  [cemerick.friend :as friend]
 			  (cemerick.friend [credentials :as creds]
-							   [workflows :as workflows]))
+							           [workflows :as workflows]))
 	(:use [cemerick.friend.util :only (gets)]))
 
 (defn- check-user [{:keys [username password] :as creds}]
-	(when-let [user (users/find-by-username username)]
+	(when-let [user (user/find-by-username username)]
 		(when (creds/bcrypt-verify password (:password user))
 			{:identity (:username user) :roles #{::user} :user user})))
 
@@ -39,8 +39,7 @@
                                    (with-meta creds {::friend/workflow :interactive-form})))]
           (auth-session user-record request)
           ((or (gets :login-failure-handler form-config (::friend/auth-config request)) #'workflows/interactive-login-redirect)
-           (update-in request [::friend/auth-config] merge form-config)
-           ))))))
+           (update-in request [::friend/auth-config] merge form-config)))))))
 
 (defn authenticate [routes]
 	(friend/authenticate routes

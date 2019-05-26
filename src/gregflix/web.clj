@@ -6,13 +6,13 @@
 						[compojure.handler :as handler]
 						[gregflix.auth :as auth]
 						[cemerick.friend :as friend]
-						[gregflix.handler.home :as home-handler]
-						[gregflix.handler.serie :as serie-handler]
-						[gregflix.handler.movie :as movie-handler]))
+						[gregflix.home.handler :as home-handler]
+						[gregflix.serie.handler :as serie-handler]
+						[gregflix.movie.handler :as movie-handler]))
 
 (selmer.parser/set-resource-path! (clojure.java.io/resource "templates"))
 
-(defn as-int [s]
+(defn- as-int [s]
    (Integer. (re-find  #"\d+" s )))
 
 (defroutes app-routes
@@ -32,5 +32,4 @@
 (def app
 	(-> app-routes
 		(auth/authenticate)
-		(handler/site)
-		))
+		(handler/site)))

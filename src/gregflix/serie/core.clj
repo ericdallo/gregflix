@@ -1,4 +1,4 @@
-(ns gregflix.serie
+(ns gregflix.serie.core
   (:use korma.core
   		gregflix.db))
 

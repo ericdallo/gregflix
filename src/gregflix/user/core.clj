@@ -1,4 +1,4 @@
-(ns gregflix.user
+(ns gregflix.user.core
   (:use korma.core
   		gregflix.db))
 

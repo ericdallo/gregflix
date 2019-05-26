@@ -1,7 +1,7 @@
-(ns gregflix.login
+(ns gregflix.login.audit.core
   (:use korma.core
   		gregflix.db)
-  (:require [gregflix.user :as users]))
+  (:require [gregflix.user.core :as users]))
 
 (declare logins users)
 
