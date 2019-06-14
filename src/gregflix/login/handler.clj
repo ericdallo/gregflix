@@ -10,7 +10,7 @@
     (:remote-addr req)))
 
 (defn- get-user-id [req]
-	(let [username (get (get req :params) :username)]
+	(let [username (:username (:params req))]
 		(get (user/find-by-username username) :id)))
 
 (defn- get-device [req]

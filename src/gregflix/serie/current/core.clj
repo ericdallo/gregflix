@@ -23,10 +23,10 @@
                 :serie_slug serie-slug})))
 
 (defn save-current-episode [user serie]
-    (let [user-id (get user :id)
-          serie-slug (get serie :slug)
-          episode (get serie :episode)
-          season (get serie :season)]
+    (let [user-id (:id user)
+          serie-slug (:slug serie)
+          episode (:episode serie)
+          season (:season serie)]
         (if 
             (nil? (first (select current-series
                 (where {:user_id user-id,

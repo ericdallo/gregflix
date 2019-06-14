@@ -14,11 +14,11 @@
 
 (defn- username
   [form-params params]
-  (or (get form-params "username") (:username params "")))
+  (or (:username form-params) (:username params "")))
 
 (defn- password
   [form-params params]
-  (or (get form-params "password") (:password params "")))
+  (or (:password form-params) (:password params "")))
 
 (defn- auth-session [user-record request]
 	(login-handler/audit request)

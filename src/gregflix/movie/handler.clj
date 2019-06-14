@@ -4,4 +4,4 @@
 (defn show [slug]
 	(let [movie (movie/find-by slug)]
 		{:video movie
-		 :relateds (movie/find-all-related-by (get movie :id))}))
+		 :relateds (movie/find-all-related-by (:id movie))}))

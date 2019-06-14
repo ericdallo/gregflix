@@ -4,7 +4,7 @@
 			  [cemerick.friend :as friend]))
 
 (defn show [slug season episode]
-	(let [current-user (get (friend/current-authentication) :user)
+	(let [current-user (:user (friend/current-authentication))
 		  previous-episode (serie/find-by slug season (- episode 1))
 		  next-episode (serie/find-by slug season (+ episode 1))
 		  serie (serie/find-by slug season episode)]
