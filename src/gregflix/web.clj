@@ -7,26 +7,27 @@
             [gregflix.controller.movie :as c-movie]
             [gregflix.controller.serie :as c-serie]
             [gregflix.interceptor.auth :as int-auth]
+            [gregflix.interceptor.component :as int-component]
             [ring.util.response :as r-response]
             [selmer.parser :refer [render-file set-resource-path!]]))
 
 (set-resource-path! (clojure.java.io/resource "templates"))
 
-(defn- as-int [s]
-  (Integer. (re-find  #"\d+" s )))
-
 (defroutes app-routes
-  (GET "/login" [:as req]
-       (render-file "login.html" req))
-  (GET "/" []
+  (GET "/login" []
+       (render-file "login.html" {}))
+  (GET "/" request
        (friend/authorize #{:gregflix.interceptor.auth/user}
-                         (render-file "home.html" (c-home/all-movies-and-series))))
-  (GET "/series/:slug/s/:season/e/:episode" [slug season :<< as-int episode :<< as-int]
+                         (render-file "home.html"
+                                      (c-home/all-movies-and-series request))))
+  (GET "/series/:slug/s/:season/e/:episode" request
        (friend/authorize #{:gregflix.interceptor.auth/user}
-                         (render-file "show-serie.html" (c-serie/get-all slug season episode))))
-  (GET "/movies/:slug" [slug]
+                         (render-file "show-serie.html"
+                                      (c-serie/get-all request))))
+  (GET "/movies/:slug" request
        (friend/authorize #{:gregflix.interceptor.auth/user}
-                         (render-file "show-movie.html" (c-movie/get-all slug))))
+                         (render-file "show-movie.html"
+                                      (c-movie/get-all request))))
 
   (friend/logout (ANY "/logout" request (r-response/redirect "/")))
   (route/resources "/")
@@ -34,5 +35,6 @@
 
 (def app
   (-> app-routes
+      int-component/add
       int-auth/authenticate
       handler/site))
