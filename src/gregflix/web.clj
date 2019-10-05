@@ -17,15 +17,15 @@
   (GET "/login" []
        (render-file "login.html" {}))
   (GET "/" request
-       (friend/authorize #{:gregflix.interceptor.auth/user}
+       (friend/authorize #{:gregflix/user}
                          (render-file "home.html"
                                       (c-home/all-movies-and-series request))))
   (GET "/series/:slug/s/:season/e/:episode" request
-       (friend/authorize #{:gregflix.interceptor.auth/user}
+       (friend/authorize #{:gregflix/user}
                          (render-file "show-serie.html"
                                       (c-serie/get-all request))))
   (GET "/movies/:slug" request
-       (friend/authorize #{:gregflix.interceptor.auth/user}
+       (friend/authorize #{:gregflix/user}
                          (render-file "show-movie.html"
                                       (c-movie/get-all request))))
 

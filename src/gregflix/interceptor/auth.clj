@@ -10,7 +10,9 @@
 (defn- check-user [{:keys [username password]}]
   (when-let [user (db-user/find-by-username username)]
     (when (creds/bcrypt-verify password (:password user))
-      {:identity (:username user) :roles #{::user} :user user})))
+      {:identity (:username user)
+       :roles #{:gregflix/user}
+       :user user})))
 
 (defn- username
   [form-params params]

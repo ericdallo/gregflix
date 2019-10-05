@@ -12,5 +12,5 @@
         serie (db-serie/find-by slug season-as-int episode-as-int)]
     (db-current-serie/save-current-episode user serie)
     {:video serie
-     :previous-episode (not (nil? previous-episode))
-     :next-episode (not (nil? next-episode))}))
+     :previous-episode (boolean previous-episode)
+     :next-episode (boolean next-episode)}))
