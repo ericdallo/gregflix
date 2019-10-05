@@ -1,33 +1,32 @@
 (ns gregflix.movie.core
-  (:use korma.core
-  		gregflix.db))
+  (:require [korma.core :as k]))
 
 (declare movies related-movies)
 
-(defentity movies
-  (table :movie)
-  (entity-fields :id :title :slug :description :url)
-  (has-many related-movies))
+(k/defentity movies
+  (k/table :movie)
+  (k/entity-fields :id :title :slug :description :url)
+  (k/has-many related-movies))
 
-(defentity related-movies
-  (table :related_movie)
-  (entity-fields :current_movie_id :related_movie_id)
-  (belongs-to movies {:fk :related_movie_id}))
+(k/defentity related-movies
+  (k/table :related_movie)
+  (k/entity-fields :current_movie_id :related_movie_id)
+  (k/belongs-to movies {:fk :related_movie_id}))
 
 (defn find-all []
-		(exec-raw ["
+  (k/exec-raw ["
       select m.id, m.title, m.slug, m.description, m.url, m.created_at,
-        (m.created_at >= (NOW() - INTERVAL 14 DAY)) as new
-        from movie m"] :results))
+      (m.created_at >= (NOW() - INTERVAL 14 DAY)) as new
+      from movie m"] :results))
 
 (defn find-by [slug]
-	(first 
-		(select movies
-			(where {:slug slug})
-			(limit 1))))
+  (first
+   (k/select movies
+             (k/where {:slug slug})
+             (k/limit 1))))
 
 (defn find-all-related-by [current-movie-id]
-    (select related-movies
-    	(with movies 
-    		(fields :title :slug :url))
-        (where {:current_movie_id current-movie-id})))
+  (k/select related-movies
+            (k/with movies
+                    (k/fields :title :slug :url))
+            (k/where {:current_movie_id current-movie-id})))
