@@ -3,8 +3,8 @@
             [cemerick.friend.credentials :as creds]
             [cemerick.friend.util :refer [gets]]
             [cemerick.friend.workflows :as workflows]
-            [gregflix.login.handler :as login-handler]
-            [gregflix.user.core :as user]
+            [gregflix.controller.login :as c-login]
+            [gregflix.db.user :as user]
             [ring.util.request :as req]))
 
 (defn- check-user [{:keys [username password] :as creds}]
@@ -21,7 +21,7 @@
   (or (get form-params "password") (:password params "")))
 
 (defn- auth-session [user-record request]
-  (login-handler/audit request)
+  (c-login/audit request)
   (workflows/make-auth user-record
                        {::friend/workflow :interactive-form
                         ::friend/redirect-on-auth? true}))

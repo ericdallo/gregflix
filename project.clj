@@ -1,4 +1,4 @@
-(defproject gregflix "0.0.1"
+(defproject gregflix "1.0.0"
   :description "Gregflix"
   :url "https://gregflix.site"
   :dependencies

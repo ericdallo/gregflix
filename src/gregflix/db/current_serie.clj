@@ -1,4 +1,4 @@
-(ns gregflix.serie.current.core
+(ns gregflix.db.current-serie
   (:require [korma.core :as k]))
 
 (declare current-series)
