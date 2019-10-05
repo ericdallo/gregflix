@@ -1,24 +1,26 @@
-(ns gregflix.auth
+(ns gregflix.interceptor.auth
   (:require [cemerick.friend :as friend]
             [cemerick.friend.credentials :as creds]
             [cemerick.friend.util :refer [gets]]
             [cemerick.friend.workflows :as workflows]
             [gregflix.controller.login :as c-login]
-            [gregflix.db.user :as user]
+            [gregflix.db.user :as db-user]
             [ring.util.request :as req]))
 
-(defn- check-user [{:keys [username password] :as creds}]
-  (when-let [user (user/find-by-username username)]
+(defn- check-user [{:keys [username password]}]
+  (when-let [user (db-user/find-by-username username)]
     (when (creds/bcrypt-verify password (:password user))
       {:identity (:username user) :roles #{::user} :user user})))
 
 (defn- username
   [form-params params]
-  (or (get form-params "username") (:username params "")))
+  (or (get form-params "username")
+      (:username params "")))
 
 (defn- password
   [form-params params]
-  (or (get form-params "password") (:password params "")))
+  (or (get form-params "password")
+      (:password params "")))
 
 (defn- auth-session [user-record request]
   (c-login/audit request)
@@ -34,11 +36,13 @@
       (let [creds {:username (username form-params params)
                    :password (password form-params params)}
             {:keys [username password]} creds]
-        (if-let [user-record (and username password
+        (if-let [user-record (and username
+                                  password
                                   ((gets :credential-fn form-config (::friend/auth-config request))
                                    (with-meta creds {::friend/workflow :interactive-form})))]
           (auth-session user-record request)
-          ((or (gets :login-failure-handler form-config (::friend/auth-config request)) #'workflows/interactive-login-redirect)
+          ((or (gets :login-failure-handler form-config (::friend/auth-config request))
+               #'workflows/interactive-login-redirect)
            (update-in request [::friend/auth-config] merge form-config)))))))
 
 (defn authenticate [routes]

@@ -1,6 +1,5 @@
 (ns gregflix.db.user
-  (:require [korma.core :as k])
-  (:use gregflix.db))
+  (:require [korma.core :as k]))
 
 (declare users)
 

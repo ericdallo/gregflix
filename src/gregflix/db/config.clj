@@ -1,4 +1,4 @@
-(ns gregflix.db
+(ns gregflix.db.config
   (:require [korma.db :as k]))
 
 (k/defdb db (k/mysql

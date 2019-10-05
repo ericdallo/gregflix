@@ -1,6 +1,7 @@
 (ns gregflix.main
   (:gen-class)
-  (:require [gregflix.web :as web]
+  (:require [gregflix.db.config :refer [db]]
+            [gregflix.web :as web]
             [ring.adapter.jetty :as ring]))
 
 (defn -main [& args]
