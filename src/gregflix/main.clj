@@ -1,7 +1,7 @@
 (ns gregflix.main
-	(:gen-class)
-	(:use ring.adapter.jetty)
-	(:require [gregflix.web :as web]))
+  (:gen-class)
+  (:require [gregflix.web :as web]
+            [ring.adapter.jetty :as ring]))
 
 (defn -main [& args]
-	(run-jetty web/app {:port 8080}))
+  (ring/run-jetty web/app {:port 8080}))

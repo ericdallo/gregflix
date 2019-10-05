@@ -1,16 +1,16 @@
 (ns gregflix.auth
-	(:require [gregflix.user.core :as user]
-			  [gregflix.login.handler :as login-handler]
-			  [ring.util.request :as req]
-			  [cemerick.friend :as friend]
-			  (cemerick.friend [credentials :as creds]
-							           [workflows :as workflows]))
-	(:use [cemerick.friend.util :only (gets)]))
+  (:require [cemerick.friend :as friend]
+            [cemerick.friend.credentials :as creds]
+            [cemerick.friend.util :refer [gets]]
+            [cemerick.friend.workflows :as workflows]
+            [gregflix.login.handler :as login-handler]
+            [gregflix.user.core :as user]
+            [ring.util.request :as req]))
 
 (defn- check-user [{:keys [username password] :as creds}]
-	(when-let [user (user/find-by-username username)]
-		(when (creds/bcrypt-verify password (:password user))
-			{:identity (:username user) :roles #{::user} :user user})))
+  (when-let [user (user/find-by-username username)]
+    (when (creds/bcrypt-verify password (:password user))
+      {:identity (:username user) :roles #{::user} :user user})))
 
 (defn- username
   [form-params params]
@@ -21,13 +21,13 @@
   (or (get form-params "password") (:password params "")))
 
 (defn- auth-session [user-record request]
-	(login-handler/audit request)
-	(workflows/make-auth user-record 
-          		{::friend/workflow :interactive-form 
-          		 ::friend/redirect-on-auth? true}))
+  (login-handler/audit request)
+  (workflows/make-auth user-record
+                       {::friend/workflow :interactive-form
+                        ::friend/redirect-on-auth? true}))
 
 (defn- interactive-form
-  [& {:keys [login-uri credential-fn login-failure-handler] :as form-config}]
+  [& form-config]
   (fn [{:keys [request-method params form-params] :as request}]
     (when (and (= (gets :login-uri form-config (::friend/auth-config request)) (req/path-info request))
                (= :post request-method))
@@ -42,6 +42,6 @@
            (update-in request [::friend/auth-config] merge form-config)))))))
 
 (defn authenticate [routes]
-	(friend/authenticate routes
-			{:credential-fn check-user
-			 :workflows [(interactive-form)]}))
+  (friend/authenticate routes
+                       {:credential-fn check-user
+                        :workflows [(interactive-form)]}))
