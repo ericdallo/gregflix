@@ -4,11 +4,11 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [gregflix.auth :as auth]
-            [gregflix.home.handler :as home-handler]
-            [gregflix.movie.handler :as movie-handler]
-            [gregflix.serie.handler :as serie-handler]
-            [selmer.parser :refer [render-file set-resource-path!]]
-            [ring.util.response :as r-response]))
+            [gregflix.controller.movie :as c-movie]
+            [gregflix.controller.serie :as c-serie]
+            [gregflix.controller.home :as c-home]
+            [ring.util.response :as r-response]
+            [selmer.parser :refer [render-file set-resource-path!]]))
 
 (set-resource-path! (clojure.java.io/resource "templates"))
 
@@ -19,11 +19,14 @@
   (GET "/login" [:as req]
        (render-file "login.html" req))
   (GET "/" []
-       (friend/authorize #{:gregflix.auth/user} (render-file "home.html" (home-handler/home))))
+       (friend/authorize #{:gregflix.auth/user}
+                         (render-file "home.html" (c-home/home))))
   (GET "/series/:slug/s/:season/e/:episode" [slug season :<< as-int episode :<< as-int]
-       (friend/authorize #{:gregflix.auth/user} (render-file "show-serie.html" (serie-handler/show slug season episode))))
+       (friend/authorize #{:gregflix.auth/user}
+                         (render-file "show-serie.html" (c-serie/get-all slug season episode))))
   (GET "/movies/:slug" [slug]
-       (friend/authorize #{:gregflix.auth/user} (render-file "show-movie.html" (movie-handler/show slug))))
+       (friend/authorize #{:gregflix.auth/user}
+                         (render-file "show-movie.html" (c-movie/get-all slug))))
 
   (friend/logout (ANY "/logout" request (r-response/redirect "/")))
   (route/resources "/")
@@ -31,5 +34,5 @@
 
 (def app
   (-> app-routes
-      (auth/authenticate)
-      (handler/site)))
+      auth/authenticate
+      handler/site))

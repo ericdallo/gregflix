@@ -26,8 +26,7 @@
         serie-slug (:slug serie)
         episode (:episode serie)
         season (:season serie)]
-    (if
-        (nil? (first (k/select current-series
+    (if (nil? (first (k/select current-series
                                (k/where {:user_id user-id,
                                          :serie_slug serie-slug})
                                (k/limit 1))))

@@ -1,4 +1,4 @@
-(ns gregflix.serie.core
+(ns gregflix.db.serie
   (:require [korma.core :as k]))
 
 (declare series)

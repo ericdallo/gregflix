@@ -1,6 +1,6 @@
-(ns gregflix.movie.handler
-  (:require [gregflix.movie.core :as movie]))
+(ns gregflix.controller.movie
+  (:require [gregflix.db.movie :as movie]))
 
-(defn show [slug]
+(defn get-all [slug]
   {:video (movie/find-by slug)
    :relateds (movie/find-all-related-by (:id (movie/find-by slug)))})

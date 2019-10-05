@@ -1,4 +1,4 @@
-(ns gregflix.movie.core
+(ns gregflix.db.movie
   (:require [korma.core :as k]))
 
 (declare movies related-movies)

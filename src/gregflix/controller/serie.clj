@@ -1,9 +1,9 @@
-(ns gregflix.serie.handler
+(ns gregflix.controller.serie
   (:require [cemerick.friend :as friend]
-            [gregflix.serie.core :as serie]
+            [gregflix.db.serie :as serie]
             [gregflix.serie.current.core :as current-serie]))
 
-(defn show [slug season episode]
+(defn get-all [slug season episode]
   (let [current-user (:user (friend/current-authentication))
         previous-episode (serie/find-by slug season (- episode 1))
         next-episode (serie/find-by slug season (+ episode 1))
