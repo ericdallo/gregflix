@@ -1,14 +1,9 @@
 (ns gregflix.db.user
-  (:require [korma.core :as k]))
+  (:require [datomic.api :as d]))
 
-(declare users)
-
-(k/defentity users
-  (k/table :user)
-  (k/entity-fields :id :username :password))
-
-(defn find-by-username [username]
-  (first
-   (k/select users
-           (k/where {:username username})
-           (k/limit 1))))
+(defn find-by-username [db username]
+  (-> '[:find  (pull ?user [*])
+         :in    $ ?username
+        :where [?user :user/username ?username]]
+      (d/q db username)
+      ffirst))

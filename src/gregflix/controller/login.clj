@@ -9,9 +9,10 @@
         first)
     (:remote-addr req)))
 
-(defn- get-user-id [req]
-  (let [username (get (get req :params) :username)]
-    (get (db-user/find-by-username username) :id)))
+(defn- get-user-id [{{:keys [username]} :params
+                     {:keys [db]} :components}]
+  (let [user (db-user/find-by-username db username)]
+    (:user/id user)))
 
 (defn- get-device [req]
   (if (.contains (get-in req [:headers "user-agent"]) "Mobile")

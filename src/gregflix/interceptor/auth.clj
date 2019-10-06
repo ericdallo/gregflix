@@ -4,15 +4,17 @@
             [cemerick.friend.util :refer [gets]]
             [cemerick.friend.workflows :as workflows]
             [gregflix.controller.login :as c-login]
+            [gregflix.db.config :as db-config]
             [gregflix.db.user :as db-user]
             [ring.util.request :as req]))
 
 (defn- check-user [{:keys [username password]}]
-  (when-let [user (db-user/find-by-username username)]
-    (when (creds/bcrypt-verify password (:password user))
-      {:identity (:username user)
-       :roles #{:gregflix/user}
-       :user user})))
+  (let [db (db-config/datomic-db)]
+    (when-let [user (db-user/find-by-username db username)]
+      (when (creds/bcrypt-verify password (:user/password user))
+        {:identity (:user/username user)
+         :roles #{:gregflix/user}
+         :user user}))))
 
 (defn- username
   [form-params params]

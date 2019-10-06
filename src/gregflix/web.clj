@@ -35,6 +35,7 @@
 
 (def app
   (-> app-routes
-      int-component/add
+      int-component/add-auth
       int-auth/authenticate
+      int-component/add-db
       handler/site))
