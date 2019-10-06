@@ -22,7 +22,7 @@
                       :serie_slug serie-slug})))
 
 (defn save-current-episode [user serie]
-  (let [user-id (:id user)
+  (let [user-id (:user/id user)
         serie-slug (:slug serie)
         episode (:episode serie)
         season (:season serie)]

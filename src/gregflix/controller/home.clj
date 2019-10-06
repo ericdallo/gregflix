@@ -4,7 +4,7 @@
             [gregflix.logic.movie :as l-movie]))
 
 (defn all-movies-and-series [{{:keys [user]} :auth}]
-  (let [current-user-id (:id user)
+  (let [current-user-id (:user/id user)
         series (db-serie/find-all-group-by-slug current-user-id)
         series-seasons (db-serie/find-all-seasons)
         series-episodes (db-serie/find-all-episodes)

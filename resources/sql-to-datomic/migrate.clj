@@ -18,8 +18,6 @@
                       prn))))
 
 ;; to insert to datomic
-(require '[datomic.api :as d])
-
 (def uri "datomic:free://localhost:4334/gregflix?password=123mudar")
 
 (d/create-database uri)

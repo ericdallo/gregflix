@@ -13,5 +13,8 @@
               :user "root"
               :password (System/getenv "DATABASE_PASSWORD")}))
 
+(defn datomic-conn []
+  (d/connect datomic-uri))
+
 (defn datomic-db []
-  (d/db (d/connect datomic-uri)))
+  (d/db (datomic-conn)))
