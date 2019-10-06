@@ -1,5 +1,6 @@
 (ns gregflix.db.movie
-  (:require [korma.core :as k]))
+  (:require [korma.core :as k]
+            [datomic.api :as d]))
 
 (declare movies related-movies)
 
@@ -13,17 +14,18 @@
   (k/entity-fields :current_movie_id :related_movie_id)
   (k/belongs-to movies {:fk :related_movie_id}))
 
-(defn find-all []
-  (k/exec-raw ["
-      select m.id, m.title, m.slug, m.description, m.url, m.created_at,
-      (m.created_at >= (NOW() - INTERVAL 14 DAY)) as new
-      from movie m"] :results))
+(defn find-all [db]
+  (-> '[:find  (pull ?movie [*])
+        :where [?movie :movie/id ?id]]
+      (d/q db)
+      flatten))
 
-(defn find-by [slug]
-  (first
-   (k/select movies
-             (k/where {:slug slug})
-             (k/limit 1))))
+(defn find-by [db slug]
+  (-> '[:find  (pull ?movie [*])
+        :in $ ?slug
+        :where [?movie :movie/slug ?slug]]
+      (d/q db slug)
+      ffirst))
 
 (defn find-all-related-by [current-movie-id]
   (k/select related-movies

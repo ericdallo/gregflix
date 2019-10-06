@@ -135,3 +135,50 @@
 (d/transact conn login-audit-schema)
 
 (->> "sql-to-datomic/login_audit.edn" io/resource slurp read-string (map login-audit-to-datomic) (d/transact conn))
+
+;; creating movie schema
+(defn movie-to-datomic
+  [{:keys [id
+           title
+           slug
+           description
+           url
+           created_at]}]
+
+  {:movie/id id
+   :movie/title title
+   :movie/slug slug
+   :movie/url url
+   :movie/description description
+   :movie/created-at created_at})
+
+(def movie-schema [
+      {:db/ident :movie/id
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one
+       :db/unique :db.unique/identity}
+      {:db/ident :movie/title
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :movie/slug
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one
+       :db/unique :db.unique/identity}
+      {:db/ident :movie/url
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :movie/description
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :movie/created-at
+       :db/valueType :db.type/instant
+       :db/cardinality :db.cardinality/one}])
+
+(d/transact conn movie-schema)
+
+(->> "sql-to-datomic/movie.edn" io/resource slurp read-string (map movie-to-datomic) (d/transact conn))
+
+(def db (d/db conn))
+
+(d/q '[:find ?slug
+       :where [_ :movie/slug ?slug]] db)

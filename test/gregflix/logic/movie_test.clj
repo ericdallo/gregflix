@@ -1,37 +1,42 @@
 (ns gregflix.logic.movie-test
   (:require [gregflix.logic.movie :as l-movie]
-            [midje.sweet :refer :all]))
+            [midje.sweet :refer :all]
+            [clj-time.core :as t]
+            [clj-time.coerce :as tc]))
 
-(def movies-new-last [{:id 1
-                       :new false
-                       :created_at "2019-01-01"}
-                      {:id 2
-                       :new true
-                       :created_at "2019-02-01"}])
+(defn- to-date [year month day]
+  (tc/to-date (t/date-time year month day)))
 
-(def ordered-movies-new-last [{:id 2
-                               :new true
-                               :created_at "2019-02-01"}
-                              {:id 1
-                               :new false
-                               :created_at "2019-01-01"}])
+(def movies-new-last [#:movie{:id 1
+                              :new false
+                              :created-at (to-date 2019 9 10)}
+                      #:movie{:id 2
+                              :new true
+                              :created-at (to-date 2019 10 3)}])
 
-(def movies-created-last [{:id 1
-                           :new true
-                           :created_at "2019-01-01"}
-                          {:id 2
-                           :new true
-                           :created_at "2019-02-01"}])
-(def ordered-movies-created-last [{:id 2
-                                   :new true
-                                   :created_at "2019-02-01"}
-                                  {:id 1
-                                   :new true
-                                   :created_at "2019-01-01"}])
+(def ordered-movies-new-last [#:movie{:id 2
+                                      :new true
+                                      :created-at (to-date 2019 10 3)}
+                              #:movie{:id 1
+                                      :new false
+                                      :created-at (to-date 2019 9 10)}])
+
+(def movies-created-last [#:movie{:id 1
+                                  :new true
+                                  :created-at (to-date 2019 10 4)}
+                          #:movie{:id 2
+                                  :new true
+                                  :created-at (to-date 2019 10 5)}])
+(def ordered-movies-created-last [#:movie{:id 2
+                                          :new true
+                                          :created-at (to-date 2019 10 5)}
+                                  #:movie{:id 1
+                                          :new true
+                                          :created-at (to-date 2019 10 4)}])
 
 (facts "sorting movies"
   (fact "when new movie is last"
-    (l-movie/sorted-by-new movies-new-last) => ordered-movies-new-last)
+    (l-movie/sorted-with-new (t/date-time 2019 10 6) movies-new-last) => ordered-movies-new-last)
 
   (fact "when boths are new but created-at is newer"
-    (l-movie/sorted-by-new movies-created-last) => ordered-movies-created-last))
+    (l-movie/sorted-with-new (t/date-time 2019 10 6) movies-created-last) => ordered-movies-created-last))

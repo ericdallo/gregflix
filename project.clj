@@ -13,6 +13,7 @@
        [korma "0.4.3"]
        [mysql/mysql-connector-java "5.1.6"]
        [migratus "1.0.6"]
+       [clj-time "0.15.2"]
        [migratus-lein "0.5.7"]
        [midje "1.9.9"]]
   :plugins 
