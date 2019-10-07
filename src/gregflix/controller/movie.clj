@@ -4,6 +4,9 @@
 
 (defn get-all [{{:keys [slug]} :params
                 {:keys [db]}   :components}]
-  (let [movie (db-movie/find-by db slug)]
+  (let [movie (db-movie/find-by db slug)
+        related-movies (->> (db-movie/find-all-related-by db movie)
+                            (map misc/unnamespaced)
+                            (map :related-movie))]
     {:video (misc/unnamespaced movie)
-     :relateds (db-movie/find-all-related-by (:movie/id movie))}))
+     :relateds related-movies}))

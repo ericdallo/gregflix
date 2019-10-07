@@ -182,3 +182,33 @@
 
 (d/q '[:find ?slug
        :where [_ :movie/slug ?slug]] db)
+
+;; creating related-movie schema
+(defn related-movie-to-datomic
+  [{:keys [id
+           current_movie_id
+           related_movie_id]}]
+
+  {:related-movie/id id
+   :related-movie/current-movie [:movie/id current_movie_id]
+   :related-movie/related-movie [:movie/id related_movie_id]})
+
+(def related-movie-schema [
+      {:db/ident :related-movie/id
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one
+       :db/unique :db.unique/identity}
+      {:db/ident :related-movie/current-movie
+       :db/valueType :db.type/ref
+       :db/isComponent true
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :related-movie/related-movie
+       :db/valueType :db.type/ref
+       :db/cardinality :db.cardinality/one
+       :db/isComponent true}])
+
+(d/transact conn related-movie-schema)
+
+(->> "sql-to-datomic/related_movie.edn" io/resource slurp read-string (map related-movie-to-datomic) (d/transact conn))
+
+(def db (d/db conn))
