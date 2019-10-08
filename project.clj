@@ -14,7 +14,7 @@
        [midje "1.9.9"]]
   :plugins 
       [[lein-ring "0.12.3"]
-      [lein-sass "0.5.0"]
+      [lein-sass "0.4.0"]
       [lein-midje "3.2.1"]]
   :ring {:handler gregflix.web/app}
   :sass {:src "resources/sass"
