@@ -18,11 +18,27 @@
                       prn))))
 
 ;; to insert to datomic
+(require '[datomic.api :as d]
+         '[clojure.java.io :as io])
+
 (def uri "datomic:free://localhost:4334/gregflix?password=123mudar")
 
 (d/create-database uri)
 
 (def conn (d/connect uri))
+
+(def db (d/db conn))
+
+;; find all attrs
+(d/q '[:find ?attr ?type ?card
+       :where
+       [_ :db.install/attribute ?a]
+       [?a :db/valueType ?t]
+       [?a :db/cardinality ?c]
+       [?a :db/ident ?attr]
+       [?t :db/ident ?type]
+       [?c :db/ident ?card]]
+     db)
 
 (defn read-edn
   [filename]
@@ -35,17 +51,6 @@
 (defn load-schema
   [filename]
   (d/transact conn (read-edn filename)))
-
-;; find all attrs
-(d/q '[:find ?attr ?type ?card
-       :where
-       [_ :db.install/attribute ?a]
-       [?a :db/valueType ?t]
-       [?a :db/cardinality ?c]
-       [?a :db/ident ?attr]
-       [?t :db/ident ?type]
-       [?c :db/ident ?card]]
-     db)
 
 ;; creating user schema
 
@@ -90,8 +95,6 @@
 
 (->> "sql-to-datomic/user.edn" io/resource slurp read-string (map user-to-datomic) (d/transact conn))
 
-(def db (d/db conn))
-
 ;; creating login-audit schema
 
 (def login-audit-schema [
@@ -115,7 +118,6 @@
       {:db/ident :login-audit/updated-at
        :db/valueType :db.type/instant
        :db/cardinality :db.cardinality/one}])
-
 
 (defn login-audit-to-datomic
   [{:keys [id
@@ -180,9 +182,6 @@
 
 (def db (d/db conn))
 
-(d/q '[:find ?slug
-       :where [_ :movie/slug ?slug]] db)
-
 ;; creating related-movie schema
 (defn related-movie-to-datomic
   [{:keys [id
@@ -211,4 +210,102 @@
 
 (->> "sql-to-datomic/related_movie.edn" io/resource slurp read-string (map related-movie-to-datomic) (d/transact conn))
 
-(def db (d/db conn))
+;; creating serie schema
+(defn serie-to-datomic
+  [{:keys [id
+           title
+           slug
+           description
+           url
+           season
+           episode
+           episode_name
+           created_at]}]
+
+  {:serie/id id
+   :serie/title title
+   :serie/slug slug
+   :serie/url url
+   :serie/description description
+   :serie/season season
+   :serie/episode episode
+   :serie/episode-name episode_name
+   :serie/created-at created_at})
+
+(def serie-schema [
+      {:db/ident :serie/id
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one
+       :db/unique :db.unique/identity}
+      {:db/ident :serie/title
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/slug
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/url
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/description
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/season
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/episode
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/episode-name
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :serie/created-at
+       :db/valueType :db.type/instant
+       :db/cardinality :db.cardinality/one}])
+
+(d/transact conn serie-schema)
+
+;(d/transact conn [[:db/retract :serie/slug :db/unique :db.unique/identity]])
+
+(->> "sql-to-datomic/serie.edn" io/resource slurp read-string (map serie-to-datomic) (d/transact conn))
+
+;; creating current-serie schema
+(defn current-serie-to-datomic
+  [{:keys [id
+           user_id
+           serie_slug
+           season
+           episode
+           created_at]}]
+
+  {:current-serie/id id
+   :current-serie/user user_id
+   :current-serie/slug serie_slug
+   :current-serie/season season
+   :current-serie/episode episode
+   :current-serie/created-at created_at})
+
+(def current-serie-schema [
+      {:db/ident :current-serie/id
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one
+       :db/unique :db.unique/identity}
+      {:db/ident :current-serie/user
+       :db/valueType :db.type/ref
+       :db/isComponent true
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :current-serie/slug
+       :db/valueType :db.type/string
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :current-serie/season
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :current-serie/episode
+       :db/valueType :db.type/long
+       :db/cardinality :db.cardinality/one}
+      {:db/ident :current-serie/created-at
+       :db/valueType :db.type/instant
+       :db/cardinality :db.cardinality/one}])
+
+(d/transact conn current-serie-schema)
+
+(->> "sql-to-datomic/current_serie.edn" io/resource slurp read-string (map current-serie-to-datomic) (d/transact conn))

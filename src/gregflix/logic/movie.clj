@@ -6,7 +6,7 @@
   (let [created-at    (tc/from-date (:movie/created-at movie))
         two-weeks-ago (t/minus date (t/days 14))
         new?          (t/after? created-at two-weeks-ago)]
-    (assoc movie :movie/new new?)))
+    (assoc movie :movie/new? new?)))
 
 (defn sorted-with-new
   [date movies]
