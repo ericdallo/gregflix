@@ -2,7 +2,7 @@
   (:require [datomic.api :as d]))
 
 (def datomic-uri (str "datomic:free://localhost:4334/gregflix?password="
-                      (or (System/getenv "DATOMIC_PASSWORD")
+                      (or (System/getenv "DATOMIC_DB_PASSWORD")
                           "123mudar")))
 
 (defn datomic-conn []
