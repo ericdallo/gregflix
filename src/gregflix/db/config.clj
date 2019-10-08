@@ -1,9 +1,12 @@
 (ns gregflix.db.config
-  (:require [korma.db :as k]))
+  (:require [datomic.api :as d]))
 
-(k/defdb db (k/mysql
-             {:classname "com.mysql.jdbc.Driver"
-              :subprotocol "mysql"
-              :subname "//mysql/gregflix"
-              :user "root"
-              :password (System/getenv "DATABASE_PASSWORD")}))
+(def datomic-uri (str "datomic:free://localhost:4334/gregflix?password="
+                      (or (System/getenv "DATOMIC_PASSWORD")
+                          "123mudar")))
+
+(defn datomic-conn []
+  (d/connect datomic-uri))
+
+(defn datomic-db []
+  (d/db (datomic-conn)))

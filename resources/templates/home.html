@@ -12,13 +12,13 @@
       <div class="container">
         {% for video in series %}
           <div class="video" tabindex="{{forloop.counter}}">
-            {% if video.new = 1 %}
+            {% if video.new? %}
               <div class="new-box"><span>NEW</span></div>
             {% endif %}
             <img class="video-img" src="//file.gregflix.site/series/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
             <input type="checkbox" id="episodes-{{video.slug}}" name="episodes" class="episodes-switch">
             <a href="/series/{{video.slug}}/s/{{video.season}}/e/{{video.episode}}" class="video-details">
-              {% if video.watched = 1 %}
+              {% if video.watched? %}
                 <p class='keep-watching'>Continuar assistindo</p>
               {% endif %}
               <p class="video-title">{{video.title}}</p>
@@ -32,7 +32,7 @@
                     {% for episode in series-episodes %}
                       {% ifequal episode.slug video.slug %}
                         {% ifequal episode.season season.season %}
-                          <a href="/series/{{episode.slug}}/s/{{season.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode_name}}</a>
+                          <a href="/series/{{episode.slug}}/s/{{season.season}}/e/{{episode.episode}}" class="link">{{episode.episode}} - {{episode.episode-name}}</a>
                         {% endifequal %}
                       {% endifequal %}
                     {% endfor %}      

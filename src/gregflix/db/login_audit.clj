@@ -1,13 +1,13 @@
 (ns gregflix.db.login-audit
-  (:require [korma.core :as k]))
+  (:require [datomic.api :as d]))
 
-(declare logins users)
+(defn- create-audit [ip user-id device]
+  [#:login-audit{:ip ip
+                 :user [:user/id user-id]
+                 :device device
+                 :created-at (java.util.Date.)
+                 :updated-at (java.util.Date.)}])
 
-(k/defentity logins
-  (k/table :login_audit)
-  (k/entity-fields :id :ip :device)
-  (k/belongs-to users))
-
-(defn save [ip user-id device]
-  (k/insert logins
-            (k/values {:ip ip :user_id user-id :device device})))
+(defn save [conn ip user-id device]
+  (d/transact conn
+              (create-audit ip user-id device)))
