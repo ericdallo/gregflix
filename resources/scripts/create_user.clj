@@ -25,5 +25,3 @@
          (subvec 2)
          create-user)
      (d/transact conn))
-
-#(d/transact conn (create-user (subvec (vec *command-line-args*) 2)))
