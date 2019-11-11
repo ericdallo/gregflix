@@ -1,1 +1,0 @@
-ALTER TABLE serie ADD COLUMN `episode_name` varchar(100) NULL AFTER `episode`;
