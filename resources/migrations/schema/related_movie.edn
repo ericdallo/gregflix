@@ -1,0 +1,10 @@
+[{:db/ident :related-movie/id
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique :db.unique/identity}
+ {:db/ident :related-movie/current-movie
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :related-movie/related-movie
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one}]
