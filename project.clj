@@ -10,6 +10,7 @@
                  [com.datomic/datomic-free "0.9.5697"]
                  [selmer "1.11.6"]
                  [clj-time "0.15.2"]
+                 [org.clojure/data.csv "0.1.4"]
                  [midje "1.9.9"]]
   :plugins [[lein-ring "0.12.3"]
             [lein-sass "0.4.0"]
