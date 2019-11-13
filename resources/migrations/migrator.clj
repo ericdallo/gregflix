@@ -63,16 +63,41 @@
 (defn remove-keys-if [m pred]
   (apply merge (for [[k v] m :when (not (pred v))] {k v})))
 
+
+(defn find-id-by-user-temp-id
+  [temp-id]
+  (-> '{:find [?id]
+        :in [$ ?temp-id]
+        :where [[?temp-id :user/id ?id]]}
+      (d/q (db local-uri) temp-id)
+      (ffirst)
+      str))
+
+(defn find-id-by-movie-temp-id
+  [temp-id]
+  (-> '{:find [?id]
+        :in [$ ?temp-id]
+        :where [[?temp-id :movie/id ?id]]}
+      (d/q (db local-uri) temp-id)
+      (ffirst)
+      str))
+
 (defn fix-types [m]
   (apply merge (for [[k v] m]
 
                  (cond
-                   (or (= k :db/id)
-                       (= k :current-serie/user)
-                       (= k :login-audit/user)
-                       (= k :related-movie/current-movie)
-                       (= k :related-movie/related-movie))
+
+                   (or (= k :user/temp-id)
+                       (= k :movie/temp-id)
+                       (= k :login-audit/user))
                    {k (Long/valueOf v)}
+
+                   (= k :current-serie/user)
+                   {k [:user/temp-id (Long/valueOf v)]}
+
+                   (or (= k :related-movie/current-movie)
+                       (= k :related-movie/related-movie))
+                   {k [:movie/temp-id (Long/valueOf v)]}
 
                    (.contains (name k) "id")
                    {k (uuid)}
@@ -95,8 +120,7 @@
        (remove-keys-if empty?)
        (dissoc :user/updated-at)
        (dissoc :login-audit/user)
-       fix-types
-       #_clojure.pprint/pprint))
+       fix-types))
 
 (defn parse-csv [path]
   (let [reader (io/reader path)
@@ -111,10 +135,10 @@
 (defn restore
   []
   (let [conn (d/connect local-uri)
-        data (parse-csv "resources/migrations/dump.csv")]
-    data
-    #_@(d/transact conn data)))
+        data (vec (parse-csv "resources/migrations/dump.csv"))]
+    ;data
+    (map (fn [row] @(d/transact conn (-> [] (conj row)))) data)))
 
-(d/q '{:find [?title]
-       :where [[_ :serie/id ?title]]}
+(d/q '{:find [?user]
+       :where [[?e :current-serie/user ?user]]}
      (db local-uri))
