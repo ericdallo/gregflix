@@ -1,34 +1,33 @@
 (ns gregflix.db.serie
   (:require [datomic.api :as d]))
 
+(defn- find-all
+  [db]
+  (d/q '{:find [[(pull ?e [*]) ...]]
+         :where [[?e :serie/slug]]}
+       db))
+
 (defn find-all-group-by-slug [db]
-  (->> (-> '{:find [[(pull ?e [*]) ...]]
-              :where [[?e :serie/slug]]}
-           (d/q db))
+  (->> (find-all db)
        (group-by :serie/slug)
        vals
        (map first)))
 
 (defn find-all-seasons [db]
-  (->> (-> '{:find [[(pull ?serie [*]) ...]]
-             :where [[?serie :serie/slug]]}
-           (d/q db))
+  (->> (find-all db)
        (group-by #(select-keys % [:serie/slug :serie/season]))
        vals
        (map first)
        (sort-by :serie/season)))
 
 (defn find-all-episodes [db]
-  (->> (-> '{:find [[(pull ?serie [*]) ...]]
-             :where [[?serie :serie/slug]]}
-           (d/q db))
+  (->> (find-all db)
        (group-by #(select-keys % [:serie/slug
                                   :serie/season
                                   :serie/episode]))
        vals
        (map first)
        (sort-by :serie/episode)))
-
 
 (defn find-by [db slug season episode]
   (-> '{:find  [(pull ?serie [*]) .]
