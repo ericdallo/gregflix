@@ -139,15 +139,13 @@
   []
   (let [conn (d/connect local-uri)
         data (parse-csv "resources/migrations/dump.csv")]
-    data
+    #_data
     (map (fn [row]
            (clojure.pprint/pprint (-> [] (conj row)))
            @(d/transact conn (-> [] (conj row))))
          data)))
 
-(d/q '{:find [(count ?rm)]
+(d/q '{:find [(count ?movie)]
        :in [$]
-       :where [
-               [?movie :movie/slug "star-wars-episode-vii"]
-               [?rm :related-movie/current-movie ?movie]]}
+       :where [[?movie :serie/id]]}
      (db local-uri))

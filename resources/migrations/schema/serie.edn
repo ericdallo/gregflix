@@ -7,8 +7,7 @@
   :db/cardinality :db.cardinality/one}
  {:db/ident :serie/slug
   :db/valueType :db.type/string
-  :db/cardinality :db.cardinality/one
-  :db/unique :db.unique/identity}
+  :db/cardinality :db.cardinality/one}
  {:db/ident :serie/url
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one}
