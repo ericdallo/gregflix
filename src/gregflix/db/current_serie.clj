@@ -11,14 +11,16 @@
                   :created-at (java.util.Date.)})
 
 (defn find-current-serie [db user-id slug]
-  (-> '{:find [(pull ?e [*]) .]
+  (-> '{:find [(pull ?cs [*]) .]
         :in [$ ?user-id ?slug]
-        :where [[?e :current-serie/user ?user-id]
-                [?e :current-serie/slug ?slug]]}
+        :where [[?user :user/id ?user-id]
+                [?cs :current-serie/user ?user]
+                [?cs :current-serie/slug ?slug]]}
       (d/q db user-id slug)))
 
 (defn upsert![conn user serie]
-  (let [current-serie (find-current-serie (d/db conn) (:user/id user) (:serie/slug serie))
-        id (or (:current-serie/id current-serie)
-               (java.util.UUID/randomUUID))]
-      (d/transact conn [(create id user serie)])))
+  (if-let [current-serie (find-current-serie (d/db conn) (:user/id user) (:serie/slug serie))]
+    (let [updated-serie (merge current-serie {:current-serie/season (:serie/season serie)
+                                              :current-serie/episode (:serie/episode serie)})]
+      (d/transact conn [updated-serie]))
+    (d/transact conn [(create (java.util.UUID/randomUUID) user serie)])))

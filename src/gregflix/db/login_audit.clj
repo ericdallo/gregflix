@@ -12,4 +12,4 @@
 (defn save [conn ip user-id device]
   (let [audit (-> (java.util.UUID/randomUUID)
                   (create ip user-id device))]
-    (d/transact conn audit)))
+    (d/transact conn [audit])))

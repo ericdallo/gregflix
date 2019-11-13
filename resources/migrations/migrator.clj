@@ -10,7 +10,6 @@
 (def data-fmt (f/formatter "EEE MMM dd HH:mm:ss yyyy" tz))
 
 (def local-uri "datomic:free://localhost:4334/gregflix?password=123mudar")
-(def prod-uri (str "datomic:free://gregflix.site:4334/gregflix?password="))
 
 (defn uuid [] (java.util.UUID/randomUUID))
 
@@ -121,8 +120,6 @@
        (dissoc :user/updated-at)
        (dissoc :db/cas)
        (dissoc :db/retractEntity)
-;       (dissoc :user/temp-id)
- ;      (dissoc :movie/temp-id)
        fix-types))
 
 (defn parse-csv [path]
@@ -139,13 +136,6 @@
   []
   (let [conn (d/connect local-uri)
         data (parse-csv "resources/migrations/dump.csv")]
-    #_data
     (map (fn [row]
-           (clojure.pprint/pprint (-> [] (conj row)))
            @(d/transact conn (-> [] (conj row))))
          data)))
-
-(d/q '{:find [(count ?movie)]
-       :in [$]
-       :where [[?movie :serie/id]]}
-     (db local-uri))
