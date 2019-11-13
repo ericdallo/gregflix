@@ -1,0 +1,16 @@
+[{:db/ident :login-audit/id
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/unique :db.unique/identity}
+ {:db/ident :login-audit/ip
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :login-audit/user
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :login-audit/device
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :login-audit/created-at
+  :db/valueType :db.type/instant
+  :db/cardinality :db.cardinality/one}]
