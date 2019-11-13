@@ -66,41 +66,41 @@
 
 (defn find-id-by-user-temp-id
   [temp-id]
-  (-> '{:find [?id]
+  (-> '{:find [?id .]
         :in [$ ?temp-id]
-        :where [[?temp-id :user/id ?id]]}
-      (d/q (db local-uri) temp-id)
-      (ffirst)
-      str))
+        :where [[?user :user/temp-id ?temp-id]
+                [?user :user/id ?id]]}
+      (d/q (db local-uri) temp-id)))
 
 (defn find-id-by-movie-temp-id
   [temp-id]
-  (-> '{:find [?id]
+  (-> '{:find [?id .]
         :in [$ ?temp-id]
-        :where [[?temp-id :movie/id ?id]]}
-      (d/q (db local-uri) temp-id)
-      (ffirst)
-      str))
+        :where [[?movie :movie/temp-id ?temp-id]
+                [?movie :movie/id ?id]]}
+      (d/q (db local-uri) temp-id)))
 
 (defn fix-types [m]
   (apply merge (for [[k v] m]
 
                  (cond
-
-                   (or (= k :user/temp-id)
-                       (= k :movie/temp-id)
-                       (= k :login-audit/user))
-                   {k (Long/valueOf v)}
-
                    (= k :current-serie/user)
-                   {k [:user/temp-id (Long/valueOf v)]}
+                   {k [:user/id (find-id-by-user-temp-id (Long/valueOf v))]}
 
                    (or (= k :related-movie/current-movie)
                        (= k :related-movie/related-movie))
-                   {k [:movie/temp-id (Long/valueOf v)]}
+                   {k [:movie/id (find-id-by-movie-temp-id (Long/valueOf v))]}
 
-                   (.contains (name k) "id")
+                   (or (= k :user/id)
+                       (= k :current-serie/id)
+                       (= k :movie/id)
+                       (= k :serie/id)
+                       (= k :related-movie/id))
                    {k (uuid)}
+
+                   (or (= k :user/temp-id)
+                       (= k :movie/temp-id))
+                   {k (Long/valueOf v)}
 
                    (.contains (name k) "-at")
                    {k (c/to-date (f/parse data-fmt v))}
@@ -119,7 +119,10 @@
   (-> row
        (remove-keys-if empty?)
        (dissoc :user/updated-at)
-       (dissoc :login-audit/user)
+       (dissoc :db/cas)
+       (dissoc :db/retractEntity)
+;       (dissoc :user/temp-id)
+ ;      (dissoc :movie/temp-id)
        fix-types))
 
 (defn parse-csv [path]
@@ -135,10 +138,16 @@
 (defn restore
   []
   (let [conn (d/connect local-uri)
-        data (vec (parse-csv "resources/migrations/dump.csv"))]
-    ;data
-    (map (fn [row] @(d/transact conn (-> [] (conj row)))) data)))
+        data (parse-csv "resources/migrations/dump.csv")]
+    data
+    (map (fn [row]
+           (clojure.pprint/pprint (-> [] (conj row)))
+           @(d/transact conn (-> [] (conj row))))
+         data)))
 
-(d/q '{:find [?user]
-       :where [[?e :current-serie/user ?user]]}
+(d/q '{:find [(count ?rm)]
+       :in [$]
+       :where [
+               [?movie :movie/slug "star-wars-episode-vii"]
+               [?rm :related-movie/current-movie ?movie]]}
      (db local-uri))
