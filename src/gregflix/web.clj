@@ -18,16 +18,16 @@
        (render-file "login.html" {}))
   (GET "/" request
        (friend/authorize #{:gregflix/user}
-                         (render-file "home.html"
-                                      (c-home/all-movies-and-series request))))
+         (render-file "home.html"
+           (c-home/all-movies-and-series request))))
   (GET "/series/:slug/s/:season/e/:episode" request
        (friend/authorize #{:gregflix/user}
-                         (render-file "show-serie.html"
-                                      (c-serie/get-serie request))))
+         (render-file "show-serie.html"
+           (c-serie/get-serie request))))
   (GET "/movies/:slug" request
        (friend/authorize #{:gregflix/user}
-                         (render-file "show-movie.html"
-                                      (c-movie/get-movie request))))
+         (render-file "show-movie.html"
+           (c-movie/get-movie request))))
 
   (friend/logout (ANY "/logout" request (r-response/redirect "/")))
   (route/resources "/")

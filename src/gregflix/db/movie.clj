@@ -13,8 +13,9 @@
       (d/q db slug)))
 
 (defn find-all-related-by [db current-movie]
-  (-> '{:find [[(pull ?related [*]) ...]]
+  (-> '{:find [[(pull ?related-movie [*]) ...]]
         :in [$ ?current-movie-id]
         :where [[?current-movie :movie/id ?current-movie-id]
-                [?related :related-movie/current-movie ?current-movie]]}
+                [?related :related-movie/current-movie ?current-movie]
+                [?related :related-movie/related-movie ?related-movie]]}
       (d/q db (:movie/id current-movie))))
