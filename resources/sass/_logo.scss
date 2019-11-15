@@ -4,32 +4,58 @@
 }
 
 .logo {
-    font-size: 2em;
-    font-family: 'Bebas Neue';
-    color: white;
-    perspective: 1000px;
-    perspective-origin: 50% 0;
-    display: inline-flex;
+  font-size: 2em;
+  font-family: 'Bebas Neue';
+  color: white;
+  perspective: 1000px;
+  perspective-origin: 50% 0;
+  display: inline-flex;
+  min-height: 1.3em;
 
-    span {
-        display: inline-block;
+  span {
+    display: inline-block;
 
-        $letters: 8;
-        @for $i from 1 through $letters {
-          $offset: $i - ceil($letters / 2);
-          $trans: if($offset > 0, -89.5deg, 89.5deg);
+    $letters: 8;
+    @for $i from 1 through $letters {
+        $offset: $i - ceil($letters / 2);
+        $trans: if($offset > 0, -89.5deg, 89.5deg);
 
-          &:nth-child(#{$i}) {
-            transform-origin: 50% + 50%/$offset 200%;
-            font-size: if($offset == 0,
-              0.95em,
-              if($offset < 1,
-                1em + 0.02 * abs($offset) * abs($offset),
-                1em + 0.015 * abs($offset) * abs($offset)));
-            transform:
-                if($offset == 0, scale(1, 1), scale(95.9 - abs($offset) * 10, 1))
-                if($offset == 0, translatey(0%), rotatey($trans));
-          }
+        &:nth-child(#{$i}) {
+          $delay: $i / 12;
+          @include animation(pop-letter 5s linear ($delay + s) infinite);
+          transform-origin: 50% + 50%/$offset 200%;
+          font-size: if($offset == 0,
+                        0.95em,
+                        if($offset < 1,
+                           1em + 0.02 * abs($offset) * abs($offset),
+                           1em + 0.015 * abs($offset) * abs($offset)));
+          transform:
+            if($offset == 0, scale(1, 1), scale(95.9 - abs($offset) * 10, 1))
+              if($offset == 0, translatey(0%), rotatey($trans));
         }
     }
+  }
+
+  @keyframes pop-letter {
+    0% {
+        margin-top: 0;
+    }
+
+    47% {
+        margin-top: 0;
+    }
+
+    50% {
+        margin-top: -0.1em;
+    }
+
+    53% {
+        margin-top: 0;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+  }
+
 }
