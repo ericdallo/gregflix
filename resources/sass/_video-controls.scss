@@ -1,9 +1,5 @@
 $controlsHeight: 2.2rem;
 
-.hide {
-	@include animation(hide-controls 2s linear);
-}
-
 .video-controls {
 	position: absolute;
 	bottom: 0;
@@ -57,7 +53,7 @@ $controlsHeight: 2.2rem;
 		position: relative;
 		font-size: 0.8rem;
 		font-family: 'Museo Sans';
-	    user-select: none;
+		user-select: none;
 
 		span {
 			line-height: 0.2rem;
@@ -97,7 +93,7 @@ $controlsHeight: 2.2rem;
 					background: white;
 					position: absolute;
 					top: -$height;
-					left: -$height;
+					left: calc(100% - #{$height} - #{$height / 2});
 					@include transition(box-shadow 0.1s);
 
 					&:hover {
@@ -177,7 +173,6 @@ $controlsHeight: 2.2rem;
 	.volume-container {
 		width: 10%;
 		@extend %tooltip-container;
-
 	}
 
 	.cast {

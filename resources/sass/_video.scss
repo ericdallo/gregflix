@@ -9,20 +9,20 @@
 		$playBorderSize: 6em;
 		$borderSize: 0.4em;
 		$playSize: 1.8em;
-		$playMargin: -($playBorderSize / 2) - ($borderSize / 2);
+		$playMargin: ($playBorderSize / 2) - ($borderSize / 2);
 
 		&:hover {
 			.start-video {
 				width: $playBorderSize * 1.1;
 				height: $playBorderSize * 1.1;
-				margin-left: $playMargin * 1.1;
-				margin-top: $playMargin * 1.1;
+				top: calc(50% - (#{$playMargin} * 1.1));
+				left: calc(50% - (#{$playMargin} * 1.1));
 
 				&:after {
 					$playSizeIncreassed: $playSize * 1.1;
 					border-width: $playSizeIncreassed 0 $playSizeIncreassed $playSizeIncreassed * 1.8;
-					margin-left: -($playSizeIncreassed / 1.5);
-					margin-top: -$playSizeIncreassed;
+					top: calc(50% - #{$playSizeIncreassed});
+					left: calc(50% - (#{$playSizeIncreassed} / 1.5));
 				}
 			}
 		}
@@ -49,11 +49,9 @@
 			position: absolute;
 			width: $playBorderSize;
 			height: $playBorderSize;
-			display: block;
-			margin-left: $playMargin;
-			margin-top: $playMargin;
-			left: 50%;
-			top: 50%;
+			display: flex;
+			left: calc(50% - #{$playMargin});
+			top: calc(50% - #{$playMargin});
 			z-index: 2147483647; // Chrome fullscreen magical-number
 			border: $borderSize solid white;
 			border-radius: 50%;
@@ -64,16 +62,14 @@
 			&:after {
 				@include transition(0.1s);
 				position: absolute;
-				top: 50%;
-				left: 50%;
-				margin-left: -($playSize / 1.5);
-				margin-top: -$playSize;
+				top: calc(50% - #{$playSize});
+				left: calc(50% - (#{$playSize} / 1.5));
 				content: '';
 				width: 0;
 				height: 0;
 				border-style: solid;
 				border-width: $playSize 0 $playSize $playSize * 1.8;
-				border-color: transparent transparent transparent #ffffff;
+				border-color: transparent transparent transparent white;
 			}
 
 			&.show {

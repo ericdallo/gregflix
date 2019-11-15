@@ -16,3 +16,7 @@ body {
 		linear-gradient(90deg,#F4F4F4 2%, white 0, white 98%,#F4F4F4 0%)0 0  white;
 		background-size:40px 60px;
 }
+
+.hide {
+	@include animation(hide-controls 2s linear);
+}
