@@ -1,13 +1,13 @@
 (ns gregflix.controller.serie
   (:require [compojure.coercions :as comp-coercions]
+            [gregflix.db.config :as db-config]
             [gregflix.db.current-serie :as db-current-serie]
             [gregflix.db.serie :as db-serie]
-            [gregflix.misc :as misc]
-            [gregflix.db.config :as db-config]))
+            [gregflix.misc :as misc]))
 
 (defn get-serie [{{:keys [slug season episode]} :params
-                {:keys [user]} :auth
-                {:keys [db]} :components}]
+                  {:keys [user]} :auth
+                  {:keys [db]} :components}]
   (let [season-as-int (comp-coercions/as-int season)
         episode-as-int (comp-coercions/as-int episode)
         previous-episode (db-serie/find-by db slug season-as-int (- episode-as-int 1))

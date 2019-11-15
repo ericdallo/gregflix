@@ -1,8 +1,8 @@
 (ns gregflix.logic.movie-test
-  (:require [gregflix.logic.movie :as l-movie]
-            [midje.sweet :refer :all]
+  (:require [clj-time.coerce :as tc]
             [clj-time.core :as t]
-            [clj-time.coerce :as tc]))
+            [gregflix.logic.movie :as l-movie]
+            [midje.sweet :refer :all]))
 
 (defn- to-date [year month day]
   (tc/to-date (t/date-time year month day)))
