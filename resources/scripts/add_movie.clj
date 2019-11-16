@@ -18,14 +18,12 @@
       (d/q (d/db conn))))
 
 (defn create-movie [args]
-  (let [tx-tempid (d/tempid :db.part/tx)
-        last-id (find-last-id)]
-    [[:db/add tx-tempid :movie/id (inc last-id)]
-     [:db/add tx-tempid :movie/title (nth args 0)]
-     [:db/add tx-tempid :movie/slug  (nth args 1)]
-     [:db/add tx-tempid :movie/url  (to-url (nth args 1) (nth args 2))]
-     [:db/add tx-tempid :movie/description  (nth args 3)]
-     [:db/add tx-tempid :movie/created-at (java.util.Date.)]]))
+  [#:movie{:id          (java.util.UUID/randomUUID)
+           :title       (nth args 0)
+           :slug        (nth args 1)
+           :url         (to-url (nth args 1) (nth args 2))
+           :description (nth args 3)
+           :created-at  (java.util.Date.)}])
 
 (->> (-> *command-line-args*
          vec

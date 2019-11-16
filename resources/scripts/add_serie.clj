@@ -1,8 +1,7 @@
 (use '[leiningen.exec :only (deps)])
 (deps '[[com.datomic/datomic-free "0.9.5697"]])
 
-(require '[datomic.api :as d]
-         '[clojure.pprint :as pp])
+(require '[datomic.api :as d])
 
 (def conn (d/connect (second *command-line-args*)))
 
@@ -24,17 +23,15 @@
       (d/q (d/db conn))))
 
 (defn create-serie [args]
-  (let [tx-tempid (d/tempid :db.part/tx)
-        last-id (find-last-id)]
-    [[:db/add tx-tempid :serie/id (inc last-id)]
-     [:db/add tx-tempid :serie/title (nth args 0)]
-     [:db/add tx-tempid :serie/slug  (nth args 1)]
-     [:db/add tx-tempid :serie/url  (to-url (nth args 1) (nth args 2) (nth args 3) (nth args 4))]
-     [:db/add tx-tempid :serie/description  (nth args 6)]
-     [:db/add tx-tempid :serie/season  (parse-int (nth args 3))]
-     [:db/add tx-tempid :serie/episode  (parse-int (nth args 4))]
-     [:db/add tx-tempid :serie/episode-name  (nth args 5)]
-     [:db/add tx-tempid :serie/created-at (java.util.Date.)]]))
+  [#:serie{:id           (java.util.UUID/randomUUID)
+           :title        (nth args 0)
+           :slug         (nth args 1)
+           :url          (to-url (nth args 1) (nth args 2) (nth args 3) (nth args 4))
+           :description  (nth args 6)
+           :season       (parse-int (nth args 3))
+           :episode      (parse-int (nth args 4))
+           :episode-name (nth args 5)
+           :created-at   (java.util.Date.)}])
 
 (->> (-> *command-line-args*
          vec

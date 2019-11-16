@@ -11,14 +11,11 @@
       (d/q (d/db conn))))
 
 (defn create-user [args]
-  (let [tx-tempid (d/tempid :db.part/tx)
-        last-id (find-last-id)]
-    [[:db/add tx-tempid :user/id (inc last-id)]
-     [:db/add tx-tempid :user/username (nth args 0)]
-     [:db/add tx-tempid :user/name  (nth args 1)]
-     [:db/add tx-tempid :user/password  (nth args 2)]
-     [:db/add tx-tempid :user/created-at  (java.util.Date.)]
-     [:db/add tx-tempid :user/updated-at  (java.util.Date.)]]))
+  [#:user{:id         (java.util.UUID/randomUUID)
+          :username   (nth args 0)
+          :name       (nth args 1)
+          :password   (nth args 2)
+          :created-at (java.util.Date.)}])
 
 (->> (-> *command-line-args*
          vec
