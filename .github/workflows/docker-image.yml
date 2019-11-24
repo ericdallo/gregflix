@@ -7,13 +7,13 @@ on:
 
 jobs:
   build-docker:
-    name: Build docker image and publish to Github Packages
+    name: Build docker image and publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Get tag
         id: tag
-        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10}) 
       - name: Echo tag
         run: echo ${{ steps.tag.outputs.tag }}
   #       - name: Build and publish image
