@@ -30,5 +30,12 @@ jobs:
         uses: WyriHaximus/github-action-get-previous-tag@0.1.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Remove "v" from tag
+        id: replace-tag
+        uses: frabert/replace-string-action@v1.1
+        with:
+          pattern: 'v(.+)'
+          string: ${{ steps.latest-tag.outputs.tag}}
+          replace-with: '$1'
       - name: Echo tag
-        run: echo ${{ steps.latest-tag.outputs.tag }}
+        run: echo ${{ steps.replace-tag.outputs.replaced }}
