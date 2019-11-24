@@ -38,9 +38,6 @@ jobs:
           string: ${{ steps.latest-tag.outputs.tag}}
           replace-with: '$1'
       - name: Buid and publish docker image
-        env:
-          IMAGE_TAG: ${{ steps.replace-tag.outputs.tag }}
         run: |
-          echo $IMAGE_TAG
           docker login docker.pkg.github.com --username $GITHUB_ACTOR --password ${{ secrets.GITHUB_TOKEN }}
-          docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:$IMAGE_TAG /home/runner/work/gregflix/gregflix
+          docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:${{ steps.replace-tag.outputs.replace }} /home/runner/work/gregflix/gregflix
