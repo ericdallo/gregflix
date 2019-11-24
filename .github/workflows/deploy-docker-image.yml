@@ -41,5 +41,6 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.replace-tag.outputs.tag }}
         run: |
+          echo $IMAGE_TAG
           docker login docker.pkg.github.com --username $GITHUB_ACTOR --password ${{ secrets.GITHUB_TOKEN }}
           docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:$IMAGE_TAG /home/runner/work/gregflix/gregflix
