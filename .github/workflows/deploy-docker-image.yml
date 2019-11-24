@@ -42,4 +42,4 @@ jobs:
         with:
           username: ericdallo
           personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
-          imageTag: ${{ steps.replace-tag.outputs.tag }}
+          imageTag: "${{ steps.replace-tag.outputs.tag }}"
