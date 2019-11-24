@@ -19,11 +19,9 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     steps:
-      - name: get latest git tag
-        id: vars
-        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      - uses: actions/checkout@master
       - name: Echo tag
-        run: echo ${{ steps.vars.outputs.tag }}
+        run: echo ${GITHUB_REF:10}
 #       - name: Build and publish image
 #         uses: matootie/github-docker@v1.0.1
 #         with:
