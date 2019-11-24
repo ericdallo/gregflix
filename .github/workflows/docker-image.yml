@@ -44,4 +44,5 @@ jobs:
           docker login docker.pkg.github.com --username $GITHUB_ACTOR --password ${{ secrets.GITHUB_TOKEN }}
           docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:$IMAGE_TAG /home/runner/work/gregflix/gregflix
           docker push docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:$IMAGE_TAG
+          docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:latest /home/runner/work/gregflix/gregflix
           docker push docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:latest
