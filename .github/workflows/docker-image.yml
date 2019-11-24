@@ -15,13 +15,18 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: patch
-        WITH_V: true
   
   build-docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Build and publish image
-        uses: matootie/github-docker@v1.0.1
-        with:
-          username: ericdallo
-          personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: get latest git tag
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      - name: Echo tag
+        run: echo ${{ steps.vars.outputs.tag }}
+#       - name: Build and publish image
+#         uses: matootie/github-docker@v1.0.1
+#         with:
+#           username: ericdallo
+#           personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
+#           imageTag: ${{ format }}
