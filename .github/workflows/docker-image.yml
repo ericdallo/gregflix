@@ -1,0 +1,25 @@
+name: Build Docker image
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-docker:
+    name: Build docker image and publish to Github Packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Get tag
+        id: tag
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      - name: Echo tag
+        run: echo ${{ steps.tag.outputs.tag }}
+  #       - name: Build and publish image
+  #         uses: matootie/github-docker@v1.0.1
+  #         with:
+  #           username: ericdallo
+  #           personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
+  #           imageTag: ${{ format }}
+
