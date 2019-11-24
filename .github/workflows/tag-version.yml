@@ -1,4 +1,4 @@
-name: Tag new version
+name: Tag new version and build docker image
 
 on:
   push:
@@ -18,3 +18,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: patch
         WITH_V: true
+
+  build-docker:
+    name: Build and public docker image
+    needs: tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest tag
+        id: latest-tag
+        uses: WyriHaximus/github-action-get-previous-tag@0.1.0
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Echo tag
+        run: echo ${{ steps.latest-tag.outputs.tag }}
