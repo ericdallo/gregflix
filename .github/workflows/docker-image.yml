@@ -16,3 +16,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: patch
         WITH_V: true
+  
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and publish image
+        uses: matootie/github-docker@v1.0.1
+        with:
+          username: ericdallo
+          personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
