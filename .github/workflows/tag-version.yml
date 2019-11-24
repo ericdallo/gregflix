@@ -24,6 +24,7 @@ jobs:
     needs: tag
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: Get latest tag
         id: latest-tag
         uses: WyriHaximus/github-action-get-previous-tag@0.1.0
