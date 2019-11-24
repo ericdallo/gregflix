@@ -1,9 +1,9 @@
 name: Build Docker image
 
 on:
-  push: 
-    branches: 
-      - refs/tags/*
+  push:
+    tags:
+    - '*'
 
 jobs:
   build-docker:
