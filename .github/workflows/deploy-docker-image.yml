@@ -40,4 +40,4 @@ jobs:
       - name: Buid and publish docker image
         run: |
           docker login docker.pkg.github.com --username $GITHUB_ACTOR --password ${{ secrets.GITHUB_TOKEN }}
-          docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:${{ steps.replace-tag.outputs.replace }} /home/runner/work/gregflix/gregflix
+          docker build --tag docker.pkg.github.com/$GITHUB_REPOSITORY/gregflix:${{ steps.replace-tag.outputs.replaced }} /home/runner/work/gregflix/gregflix
