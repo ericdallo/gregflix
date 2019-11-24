@@ -8,30 +8,30 @@
   (tc/to-date (t/date-time year month day)))
 
 (def movies-new-last [#:movie{:id 1
-                              :new false
+                              :new? false
                               :created-at (to-date 2019 9 10)}
                       #:movie{:id 2
-                              :new true
+                              :new? true
                               :created-at (to-date 2019 10 3)}])
 
 (def ordered-movies-new-last [#:movie{:id 2
-                                      :new true
+                                      :new? true
                                       :created-at (to-date 2019 10 3)}
                               #:movie{:id 1
-                                      :new false
+                                      :new? false
                                       :created-at (to-date 2019 9 10)}])
 
 (def movies-created-last [#:movie{:id 1
-                                  :new true
+                                  :new? true
                                   :created-at (to-date 2019 10 4)}
                           #:movie{:id 2
-                                  :new true
+                                  :new? true
                                   :created-at (to-date 2019 10 5)}])
 (def ordered-movies-created-last [#:movie{:id 2
-                                          :new true
+                                          :new? true
                                           :created-at (to-date 2019 10 5)}
                                   #:movie{:id 1
-                                          :new true
+                                          :new? true
                                           :created-at (to-date 2019 10 4)}])
 
 (facts "sorting movies"

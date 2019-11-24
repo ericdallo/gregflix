@@ -20,5 +20,4 @@
   :sass {:src "resources/sass"
          :output-directory "resources/public/css"
          :style :compressed}
-  :hooks [leiningen.sass]
   :main gregflix.main)
