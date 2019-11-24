@@ -1,0 +1,13 @@
+name: Tag and build docker image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Tag Bump and `latest` tag update
+        uses: WiktorJ/github-tag-action@2.0.0
