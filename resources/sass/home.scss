@@ -185,6 +185,15 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   }
 }
 
+@keyframes placeHolderShimmer {
+    0%{
+        background-position: 100% 0
+    }
+    100%{
+        background-position: -100% 0
+    }
+}
+
 .video-img {
   position: absolute;
   left: 0;
@@ -193,7 +202,13 @@ $mobileVideoHeight:$mobileVideoWidth / (16/9);
   height: $mobileVideoHeight;
   font-family: 'Museo Sans';
   text-align: center;
-  background: url($images-dir + 'video/loading-preview.gif') center center;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 300% 1em;
 }
 .video-details {
   position: absolute;
