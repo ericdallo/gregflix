@@ -11,3 +11,5 @@ jobs:
     steps:
       - name: Github Tag Bump and `latest` tag update
         uses: WiktorJ/github-tag-action@2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
