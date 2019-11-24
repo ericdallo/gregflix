@@ -38,8 +38,5 @@ jobs:
           string: ${{ steps.latest-tag.outputs.tag}}
           replace-with: '$1'
       - name: Buid and publish docker image
-        uses: matootie/github-docker@v1.0.1
-        with:
-          username: ericdallo
-          personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
-          imageTag: "${{ steps.replace-tag.outputs.tag }}"
+        run: |
+          docker login docker.pkg.github.com --username $GITHUB_ACTOR --password ${{ secrets.GITHUB_TOKEN }}
