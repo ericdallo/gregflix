@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Echo tag
-        run: echo ${GITHUB_REF:10}
+        run: echo ${{ github.ref }}
 #       - name: Build and publish image
 #         uses: matootie/github-docker@v1.0.1
 #         with:
