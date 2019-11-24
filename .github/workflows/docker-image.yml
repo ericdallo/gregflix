@@ -13,13 +13,11 @@ jobs:
       - uses: actions/checkout@master
       - name: Get tag
         id: tag
-        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10}) 
-      - name: Echo tag
-        run: echo ${{ steps.tag.outputs.tag }}
-  #       - name: Build and publish image
-  #         uses: matootie/github-docker@v1.0.1
-  #         with:
-  #           username: ericdallo
-  #           personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
-  #           imageTag: ${{ format }}
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:11}) 
+      - name: Build and publish image
+        uses: matootie/github-docker@v1.0.1
+        with:
+          username: ericdallo
+          personalAccessToken: ${{ secrets.GITHUB_TOKEN }}
+          imageTag: ${{ steps.tag.outputs.tag }}
 
