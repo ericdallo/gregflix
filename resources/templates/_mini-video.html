@@ -1,5 +1,5 @@
 <div class="video" {% if series|not-empty%} tabindex="{{series|length}}" {% endif %}>
-  {% if video.new? = 1 %}
+  {% if video.new? %}
     <div class="new-box"><span>NEW</span></div>
   {% endif %}
   <img class="video-img" src="//file.gregflix.site/movies/{{video.slug}}/preview.png" alt="{{video.title}} preview"/>
