@@ -9,7 +9,8 @@
             [gregflix.interceptor.auth :as int-auth]
             [gregflix.interceptor.component :as int-component]
             [ring.util.response :as r-response]
-            [selmer.parser :refer [render-file set-resource-path!]]))
+            [selmer.parser :refer [render-file set-resource-path!]]
+            [clojure.java.io :as clojure.java.io]))
 
 (set-resource-path! (clojure.java.io/resource "templates"))
 
@@ -29,7 +30,7 @@
          (render-file "show-movie.html"
            (c-movie/get-movie request))))
 
-  (friend/logout (ANY "/logout" request (r-response/redirect "/")))
+  (friend/logout (ANY "/logout" _ (r-response/redirect "/")))
   (route/resources "/")
   (route/not-found (render-file "404.html" {})))
 

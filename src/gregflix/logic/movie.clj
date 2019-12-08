@@ -4,8 +4,8 @@
 
 (defn- with-new [movie date]
   (let [created-at    (tc/from-date (:movie/created-at movie))
-        two-weeks-ago (t/minus date (t/days 14))
-        new?          (t/after? created-at two-weeks-ago)]
+        one-month-ago (t/minus date (t/months 1))
+        new?          (t/after? created-at one-month-ago)]
     (assoc movie :movie/new? new?)))
 
 (defn sorted-with-new

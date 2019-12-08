@@ -9,7 +9,6 @@ define(['doc', 'cast'], function($, $cast) {
         $player                  = $('#video-player'),
         player                   = $player.first(),
         $controls                = $('#video-controls'),
-        controls                 = $controls.first(),
         $startButton             = $('.start-video'),
         $playButton              = $controls.find('#video-play'),
         $fullscreen              = $controls.find('.fullscreen'),
@@ -25,14 +24,11 @@ define(['doc', 'cast'], function($, $cast) {
         $length                  = $controls.find('#video-length'),
         $time                    = $controls.find('#video-time'),
         $sound                   = $controls.find('#video-sound'),
-        $soundBox                = $controls.find('#video-sound-box'),
-        soundBox                 = $soundBox.first(),
         $soundProgress           = $controls.find('#video-sound-progress'),
         $selectableSound         = $controls.find('#video-volume-selectable'),
         soundProgress            = $soundProgress.first(),
         soundProgressHalfSize    = (soundProgress.offsetWidth / 2),
         currentProgressInterval  = 0,
-        bufferedProgressInterval = 0,
         castOn                   = false;
 
     var isMobile = function() {
@@ -220,7 +216,7 @@ define(['doc', 'cast'], function($, $cast) {
     var trackBufferedProgress = function() {
         (function bufferedTrack() {
             updateBufferedBar();
-            bufferedProgressInterval = setTimeout(bufferedTrack, 100);
+            setTimeout(bufferedTrack, 100);
         })();
     };
 
@@ -321,7 +317,7 @@ define(['doc', 'cast'], function($, $cast) {
         updateSoundProgress(e.pageX);
     });
 
-    $document.on('mouseup', function(e) {
+    $document.on('mouseup', function() {
         $document.off('mousemove');
     });
 
