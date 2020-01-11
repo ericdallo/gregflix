@@ -1,10 +1,11 @@
 (ns migrations.migrator
-  (:require [clojure.java.io :as io]
-            [datomic.api :as d]
+  (:require [clj-time.coerce :as c]
             [clj-time.core :as t]
             [clj-time.format :as f]
-            [clj-time.coerce :as c]
-            [clojure.data.csv :as csv]))
+            [clojure.data.csv :as csv]
+            [clojure.java.io :as io]
+            [datomic.api :as d])
+  (:import java.util.UUID))
 
 (def tz (t/time-zone-for-id "America/Sao_Paulo"))
 (def data-fmt (f/formatter "EEE MMM dd HH:mm:ss yyyy" tz))
@@ -139,3 +140,15 @@
     (map (fn [row]
            @(d/transact conn (-> [] (conj row))))
          data)))
+
+(defn retract-serie
+  [conn slug season episode]
+  (let [id (-> '{:find [?id .]
+               :in [$ ?slug ?season ?episode]
+               :where [[?serie :serie/slug ?slug]
+                       [?serie :serie/season ?season]
+                       [?serie :serie/episode ?episode]
+                       [?serie :serie/id ?id]]}
+               (d/q (d/db conn) slug season episode))
+        datom [[:db/retractEntity [:serie/id id]]]]
+    @(d/transact conn datom)))
