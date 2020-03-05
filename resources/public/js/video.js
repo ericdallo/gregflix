@@ -141,7 +141,7 @@ define(['doc', 'cast'], function($, $cast) {
             mins = parseInt(player.duration / 60, 10),
             secs = parseInt(player.duration % 60, 10);
 
-        if (mins > 60) {
+        if (mins >= 60) {
             mins = mins % 60;
         }
 
@@ -186,7 +186,7 @@ define(['doc', 'cast'], function($, $cast) {
 
             currentTime = hours.leftPad(2) + ':' + mins.leftPad(2) + ':' + secs.leftPad(2);
         }
-            
+
         $time.text(currentTime);
 
         currentProgress.style.left = ( (time / player.duration) * (progressBox.offsetWidth) - currentProgressHalfSize ) + "px";
